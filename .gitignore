@@ -1,0 +1,29 @@
+# manuscript lives in Overleaf, not here
+latex/
+overleaf_bundle/
+build_overleaf_bundle.py
+*.zip
+PLAN.md
+
+# data (third-party; see README)
+data/
+*.mat
+*.npz
+
+# build artefacts / scratch
+notebook/cache/
+*.log
+*.bak
+*.v1bak
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# generated figures (regenerate with the notebook / make_concept_figure.py)
+figures/*.png
+figures/*.pdf
+fig1_leakage_concept.png
+
+# generated LaTeX table (belongs to the manuscript)
+audit/audit_supplement_table.tex
+fig1_leakage_concept.pdf

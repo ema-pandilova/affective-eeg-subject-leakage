@@ -1,0 +1,11 @@
+numpy
+scipy
+pandas
+scikit-learn
+xgboost
+antropy
+matplotlib
+nbformat
+statsmodels
+# EEGNet control only (optional):
+# torch
