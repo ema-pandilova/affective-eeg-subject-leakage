@@ -27,3 +27,7 @@ fig1_leakage_concept.png
 # generated LaTeX table (belongs to the manuscript)
 audit/audit_supplement_table.tex
 fig1_leakage_concept.pdf
+
+# rev1 revision artefacts: out-of-fold predictions, bootstrap draws and logs stay local
+results/rev1/**/oof/
+results/rev1/*.npy
