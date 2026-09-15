@@ -52,16 +52,37 @@ print("DEAP/DREAMER video V/A clean SI values:", sorted(deap_all))
 print(f"  median={statistics.median(deap_all):.3f}  min={min(deap_all):.3f}  max={max(deap_all):.3f}")
 
 # ---- LaTeX supplementary longtable of all coded emotion-EEG papers ----
+# paper_id -> references.bib key, so the audit rows enter the reference list instead of
+# printing as bare author-year text. Every emotion-EEG row must map to a real cited key.
+BIBKEY = {
+    "Koelstra2012": "koelstra2012deap", "Zheng2015": "zheng2015seed",
+    "Katsigiannis2018": "katsigiannis2018dreamer", "Alhagry2017": "alhagry2017lstm",
+    "Tripathi2017": "tripathi2017deap", "YangCNNRNN2018": "yang2018cnnrnn",
+    "Song2018": "song2018dgcnn", "Zhong2020": "zhong2020rgnn", "Li2018hcnn": "li2018hcnn",
+    "Li2018bidann": "li2018bidann", "Li2020r2g": "li2020r2g", "Tao2020": "tao2020acrnn",
+    "Cui2020": "cui2020racnn", "Wang2018plv": "wang2018plv", "Ding2022": "ding2022tsception",
+    "Jia2020": "jia2020sst", "Zhang2020gcb": "zhang2020gcb", "Du2022": "du2022atdd",
+    "Topic2021": "topic2021", "Tuncer2021": "tuncer2021", "Song2021iag": "song2021iag",
+    "Liu2021_3dcnn": "liu2021_3dcnn", "Rayatdoost2018": "rayatdoost2018crosscorpus",
+    "Cimtay2020": "cimtay2020", "Pandey2022": "pandey2019subjectindependent",
+    "Lan2018": "lan2018da", "Li2020_multisource": "li2020multisource", "Tang2023": "tang2023stiln",
+    "Wang2024_ssl": "wang2024cascaded", "Kukhilava2025": "kukhilava2025benchmark",
+    "Zhang2025_mdjpt": "zhang2025mdjpt", "Jiang2024_labram": "jiang2024labram",
+    "Yang2023_biot": "yang2023biot",
+}
+missing = [r["paper_id"] for r in emo if r["paper_id"] not in BIBKEY]
+assert not missing, f"audit rows with no bib key: {missing}"
+
 def esc(s):
     return s.replace("&", "\\&").replace("_", "\\_").replace("%", "\\%")
-def short_cite(s):
-    # first author et al. + short title fragment from the CSV citation field
-    s = s.split(",")[0]
-    return esc(s)
+def study_cell(r):
+    # first author + \cite so the study is findable in the reference list
+    first = esc(r["citation"].split(",")[0].split(" et al")[0].split(" &")[0].strip())
+    return f"{first} \\cite{{{BIBKEY[r['paper_id']]}}}"
 lines = [
  r"% Auto-generated from literature_audit.csv by build_audit_supplement.py -- do not hand-edit.",
  r"\footnotesize",
- r"\begin{longtable}{@{}p{1.9cm}cp{1.5cm}p{2.3cm}p{1.2cm}p{2.1cm}cccc@{}}",
+ r"\begin{longtable}{@{}p{2.3cm}cp{1.5cm}p{2.3cm}p{1.2cm}p{2.1cm}ccc@{}}",
  r"\caption{Complete audit of the 33 emotion-EEG studies (dataset anchors, method papers, and clean "
  r"subject-independent baselines). Two axes are graded separately. \emph{Risk} grades the SPLIT only: whether "
  r"participants bridge the train/test boundary. \emph{Norm.\ class} grades the normalization scope on its own "
@@ -82,7 +103,7 @@ lines = [
  r"\bottomrule\endlastfoot",
 ]
 for r in emo:
-    cells = [short_cite(r["citation"]) + " " + r["year"][2:], r["year"],
+    cells = [study_cell(r), r["year"],
              esc(r["datasets"]), esc(r["eval_protocol"]),
              esc(r["statistical_unit"]), esc(r.get("normalization_class", r["normalization_scope"])),
              r["subject_independent_eval"], r["leakage_risk"], r["confidence"]]
