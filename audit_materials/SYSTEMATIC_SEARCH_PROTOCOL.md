@@ -148,7 +148,12 @@ python compute_agreement.py coding_rubric_v1.1.csv coderA.csv coderB.csv --boot 
 
 For each categorical field it reports percent agreement, Cohen's kappa, Gwet's AC1 and PABAK, each
 with a 95% percentile bootstrap interval resampling studies (2,000 draws), and a sensitivity analysis
-without `unclear` answers. Numeric fields are compared within 0.005 after percentages are converted
+without `unclear` answers. Two fields have a defensible category order, `C1` (no, generic, explicit)
+and `S5` (not_reported, inferred, explicit), and a linearly weighted kappa is reported for those as
+well, because a disagreement between adjacent categories is milder than one between the extremes.
+Every other field is treated as nominal: its categories have no order, and several carry an `unclear`
+or `na` level that sits outside any ordering, so weighting would impose a scale the rubric does not
+define. Screening agreement on `E1` and `E2` is computed the same way with `--stage screen`. Numeric fields are compared within 0.005 after percentages are converted
 to proportions. Questions are compared only for studies where both coders reached them. The script
 refuses to run on two sheets from the same coder or on a sheet whose coder name looks like a
 language model.
@@ -192,7 +197,13 @@ a reviewer comment explicitly requires it.
 | `partB/search_log.csv` | The queries as actually run, with date and counts |
 | `partB/records_raw.csv`, `partB/records_deduped.csv` | Retrieved records, before and after de-duplication |
 | `partB/screening_order.csv` | The 2,202-record frame in seeded random order, screening columns blank |
-| `partB/prisma_counts.csv` | PRISMA stage counts; screening rows filled in by the coders |
+| `partB/prisma_counts.csv` | PRISMA identification counts |
+| `partB/CODER_INSTRUCTIONS.md` | What the two coders do, start to finish |
+| `partB/coderA_screening.csv`, `partB/coderB_screening.csv` | One blank screening sheet per coder, identical rows in the frozen order |
+| `partB/coderA_calibration.csv`, `partB/coderB_calibration.csv` | The three calibration records of section 6, taken from the tail of the order so they cannot collide with the sample |
+| `partB/make_coder_pack.py` | Regenerates the sheets above from the frozen order |
+| `partB/make_coding_sheets.py` | Turns the two finished screening sheets into the coding sheets, the bench work package and the PRISMA screening counts |
+| `partB/adjudication_template.csv` | Where the adjudicator records each resolved screening disagreement |
 | `prisma_flow_counts_template.csv` | Stage counts for the PRISMA diagram |
 | `compute_agreement.py` | Agreement statistics with bootstrap intervals |
 | `study_links.csv` | Resolved DOI, venue, peer-review status and an open full text where one exists, for the 33 Part A studies |

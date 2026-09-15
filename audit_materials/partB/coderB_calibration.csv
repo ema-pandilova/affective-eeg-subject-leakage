@@ -1,0 +1,4 @@
+screen_position,doi,title,year,venue,type,language,url,coder_name,date_screened,E1,E2,note
+2200,10.3390/s19214736,A Multi-Column CNN Model for Emotion Recognition from EEG Signals,2019,Sensors,article,en,https://doi.org/10.3390/s19214736,,,,,
+2201,10.1007/s11063-018-9829-1,EEG Emotion Recognition Based on Graph Regularized Sparse Linear Regression,2018,Neural Processing Letters,article,en,https://doi.org/10.1007/s11063-018-9829-1,,,,,
+2202,10.21203/rs.3.rs-3020597/v1,Enhancement of Hybrid Deep Neural Network Using Activation Function for EEG based Emotion Recognition,2023,Research Square,preprint,en,https://doi.org/10.21203/rs.3.rs-3020597/v1,,,,,

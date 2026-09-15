@@ -6,8 +6,11 @@ Gwet's AC1 and PABAK, each with a 95% percentile bootstrap CI that resamples PAP
 sensitivity analysis that drops papers where either coder answered "unclear".
 
 Usage:
-  python compute_agreement.py coding_rubric_v1.1.csv audit-code-coderA-<date>.csv audit-code-coderB-<date>.csv
-        [--boot 2000] [--seed 20260914] [--out agreement.csv]
+  python compute_agreement.py coding_rubric_v1.1.csv coderA.csv coderB.csv
+        [--stage code|screen] [--boot 2000] [--seed 20260914] [--out agreement.csv]
+
+--stage screen scores the screening decision (E1 eligibility and E2 reason) from the two screening
+sheets; --stage code, the default, scores the coding fields from the two coding sheets.
 
 Inputs are the three CSVs exported from the page's Export tab, after both coders have locked.
 The script refuses to run if the two sheets carry the same coder name, if a coder name looks
@@ -27,6 +30,33 @@ import sys
 import numpy as np
 
 LLM_MARKERS = ("llm", "gpt", "claude", "gemini", "chatgpt", "copilot", "bard", "assistant")
+
+# Fields whose categories have a defensible order, and that order. Linearly weighted kappa is reported
+# for these in addition to the unweighted statistic, because a disagreement between adjacent
+# categories is milder than one between the extremes. Every other field is nominal: its categories
+# have no order, several carry an "unclear" or "na" level that sits outside any ordering, and
+# weighting them would impose a scale the rubric does not define.
+ORDINAL = {
+    "C1": ["no", "generic", "explicit"],              # strength of the population-level claim
+    "S5": ["not_reported", "inferred", "explicit"],   # how firmly the split is reported
+}
+
+
+def weighted_kappa(a, b, order):
+    """Linearly weighted kappa over an ordered category list. None when a coder used a category
+    outside the declared order, so an undeclared level can never be silently treated as adjacent."""
+    idx = {c: i for i, c in enumerate(order)}
+    if any(x not in idx for x in a) or any(x not in idx for x in b):
+        return None
+    n, k = len(a), len(order)
+    if n == 0 or k < 2:
+        return None
+    w = lambda i, j: 1 - abs(i - j) / (k - 1)
+    po = sum(w(idx[x], idx[y]) for x, y in zip(a, b)) / n
+    pa = [a.count(c) / n for c in order]
+    pb = [b.count(c) / n for c in order]
+    pe = sum(w(i, j) * pa[i] * pb[j] for i in range(k) for j in range(k))
+    return None if pe >= 1 else (po - pe) / (1 - pe)
 
 
 def num_norm(x):
@@ -80,11 +110,16 @@ def boot_ci(a, b, boot, rng):
 
 
 def read_sheet(path):
+    """Rows keyed by study id. Coding sheets carry `pid`; screening sheets are keyed by their position
+    in the frozen order, because no study id exists until screening has fixed the sample."""
     rows = list(csv.DictReader(open(path, newline="", encoding="utf-8-sig")))
     if not rows:
         sys.exit(f"{path}: empty sheet")
+    key = next((k for k in ("pid", "screen_position") if k in rows[0]), None)
+    if key is None:
+        sys.exit(f"{path}: no 'pid' or 'screen_position' column, so rows cannot be paired across sheets")
     names = {r.get("coder_name", "").strip() for r in rows if r.get("coder_name", "").strip()}
-    return {r["pid"]: r for r in rows}, (names.pop() if len(names) == 1 else "|".join(sorted(names)))
+    return {r[key]: r for r in rows}, (names.pop() if len(names) == 1 else "|".join(sorted(names)))
 
 
 def main():
@@ -95,15 +130,20 @@ def main():
     ap.add_argument("--boot", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=20260914)
     ap.add_argument("--out", default="")
+    ap.add_argument("--stage", default="code", choices=["code", "screen"],
+                    help="which rubric stage to score: the coding fields (default) or the screening fields")
     args = ap.parse_args()
 
     cb = [r for r in csv.DictReader(open(args.codebook, newline="", encoding="utf-8-sig"))
-          if r["stage"] == "code" and r["type"] in ("cat", "num")]
+          if r["stage"] == args.stage and r["type"] in ("cat", "num")]
     if not cb:
-        cb = [r for r in csv.DictReader(open(args.codebook, newline="", encoding="utf-8-sig")) if r["type"] in ("cat", "num")]
+        sys.exit(f"no {args.stage}-stage categorical or numeric fields in {args.codebook}")
     A, name_a = read_sheet(args.sheet_a)
     B, name_b = read_sheet(args.sheet_b)
 
+    if not name_a.strip() or not name_b.strip():
+        sys.exit("REFUSED: at least one sheet has no coder_name. Each coder fills in coder_name on every "
+                 "row and signs the sheet off as final before agreement is computed.")
     if name_a.strip().lower() == name_b.strip().lower():
         sys.exit(f"REFUSED: both sheets name the same coder ({name_a}); the two sheets must come from different people")
     for nm in (name_a, name_b):
@@ -147,13 +187,13 @@ def main():
             b.append(xb)
         if typ == "num":
             ok = [same_num(x, y) for x, y in zip(a, b)]
-            out_rows.append([field, r["primary"], len(ok), "", f"{np.mean(ok):.3f}" if ok else "", "", "", "", one_sided, skipped,
-                             "exact match within 0.005"])
+            out_rows.append([field, r["primary"], len(ok), "", f"{np.mean(ok):.3f}" if ok else "", "", "", "", "",
+                             one_sided, skipped, "exact match within 0.005"])
             continue
         cats = sorted(set(a) | set(b))
         if len(cats) < 2:
             out_rows.append([field, r["primary"], len(a), len(cats), f"{np.mean([x == y for x, y in zip(a, b)]):.3f}" if a else "",
-                             "", "", "", one_sided, skipped, "single category used by both coders; kappa undefined"])
+                             "", "", "", "", one_sided, skipped, "single category used by both coders; kappa undefined"])
             continue
         s = stats(a, b, cats)
         ci = boot_ci(a, b, args.boot, rng)
@@ -163,11 +203,13 @@ def main():
         fmt = lambda k: f"{s[k]:.3f} [{ci[k][0]:.3f}, {ci[k][1]:.3f}]"
         marg = "A: " + "; ".join(f"{c}={a.count(c)}" for c in cats) + " | B: " + "; ".join(f"{c}={b.count(c)}" for c in cats)
         note = f"without unclear n={len(keep)} kappa={sens.get('kappa', float('nan')):.3f} AC1={sens.get('AC1', float('nan')):.3f} || {marg}" if sens else marg
-        out_rows.append([field, r["primary"], len(a), len(cats), fmt("Po"), fmt("kappa"), fmt("AC1"), fmt("PABAK"),
+        wk = weighted_kappa(a, b, ORDINAL[field]) if field in ORDINAL else None
+        wk_s = f"{wk:.3f}" if wk is not None else ("category outside declared order" if field in ORDINAL else "nominal")
+        out_rows.append([field, r["primary"], len(a), len(cats), fmt("Po"), fmt("kappa"), wk_s, fmt("AC1"), fmt("PABAK"),
                          one_sided, skipped, note])
 
     header = ["field", "primary", "n_papers", "categories_used", "percent_agreement [95% CI]", "cohen_kappa [95% CI]",
-              "gwet_ac1 [95% CI]", "pabak [95% CI]", "one_sided", "not_applicable", "notes"]
+              "weighted_kappa", "gwet_ac1 [95% CI]", "pabak [95% CI]", "one_sided", "not_applicable", "notes"]
     w = csv.writer(open(args.out, "w", newline="") if args.out else sys.stdout)
     w.writerow(header)
     w.writerows(out_rows)
