@@ -1,6 +1,7 @@
 # Literature audit: systematic search and double-coding protocol
 
-Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.0, 14 September 2026.
+Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.1, 15 September 2026
+(version 1.0, 14 September 2026; see the change log).
 This protocol is fixed before any search is run or any study is coded. Changes after that point are
 recorded in the change log at the end, with the date and the reason.
 
@@ -151,9 +152,14 @@ are always the pre-adjudication values.
 | `search_log_template.csv` | Search log for Part B |
 | `prisma_flow_counts_template.csv` | Stage counts for the PRISMA diagram |
 | `compute_agreement.py` | Agreement statistics with bootstrap intervals |
+| `study_links.csv` | Resolved DOI, venue, peer-review status and an open full text where one exists, for the 33 Part A studies |
 
 ## Change log
 
 | Date | Change | Reason |
 |---|---|---|
 | 14 September 2026 | Version 1.0 | |
+| 15 September 2026 | Version 1.1. `study_links.csv` added. | Retrieval aid only. Every Part A study was resolved against Crossref and OpenAlex; 15 of the 33 have an open full text and 18 need library access. No coding field is pre-filled. |
+| 15 September 2026 | Two Part A studies are arXiv preprints: `Kukhilava2025` and `Wang2024_ssl`. | Section 4 excludes preprints, but Part A re-codes the submitted 33 as they were assembled rather than a set filtered by this protocol. Both remain in Part A and are marked in `study_links.csv`; coders record them as not peer reviewed (`E2`) as the rubric directs. The exclusion rule applies without exception to the Part B sample. |
+| 15 September 2026 | `Zhang2025_mdjpt` repointed from arXiv 2510.22197 to the version of record, NeurIPS 38 (2025), doi 10.52202/085713-5515. | A peer-reviewed version appeared after the sheet was built. Section 7 requires coding from the version of record. |
+| 15 September 2026 | `Jiang2024_labram` DOI filled with arXiv 2405.18765. | The sheet carried no identifier. The version of record is the ICLR 2024 conference paper, which has no publisher DOI; the arXiv identifier is given for retrieval only and the paper is peer reviewed. |
