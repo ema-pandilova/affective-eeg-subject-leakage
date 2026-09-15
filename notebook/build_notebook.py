@@ -50,6 +50,13 @@ fits a train-fold scaler, so it is a robustness check rather than an isolated ch
 
 **Data:** official DEAP preprocessed Python files `s01.dat...s32.dat`, and `DREAMER.mat`. Set the paths below.
 
+> **Use DEAP from its custodians, not a mirror.** A redistributed copy of the preprocessed release
+> carries valence and arousal reflected on the rating scale (`9 - x`) on 439 of the 1,280 trials, which
+> also shifts the median and so flips 733 valence and 696 arousal binary labels. This notebook reads
+> the ratings straight out of each `.dat` file, so it inherits whatever your copy contains. Run
+> `deap_labels.py` to check yours against the official `participant_ratings.xls` before reporting
+> any DEAP number.
+
 **Runtime:** roughly 20-30 min total on a laptop CPU (feature extraction dominates).
 """))
 
@@ -285,19 +292,29 @@ thing that changes is **how the data is split**.
    windows of a trial can no longer straddle the split. On DREAMER this alone accounts for most of the
    apparent signal.
 2. **Participant identity leaks.** Going from protocol 2 to protocol 3 changes nothing except that no
-   participant appears on both sides. On DEAP this is the larger of the two channels. Which channel
-   dominates is **dataset-dependent**, which is exactly why the intermediate control is necessary: a
-   pooled-to-subject-grouped comparison removes both at once and cannot attribute the loss to either.
-3. **The prior is the route.** Re-run with per-subject-median labels, which flatten each participant's base
-   rate to ~0.50, and the advantage that participant overlap conferred largely disappears. Participant
-   overlap pays chiefly by handing the model each participant's habitual **label prior**.
+   participant appears on both sides. Which channel dominates is **dataset- and target-dependent**:
+   on DEAP, identity is much the larger channel for arousal and roughly matches correlated windows for
+   valence; on DREAMER, correlated windows dominate both. That variation is exactly why the
+   intermediate control is necessary: a pooled-to-subject-grouped comparison removes both at once and
+   cannot attribute the loss to either.
+3. **The label prior is most of the route.** Re-run with per-subject-median labels, which flatten each
+   participant's base rate to ~0.50, and the advantage that participant overlap conferred essentially
+   disappears in all four dataset-target cells: it falls to +0.031 for DEAP valence, +0.007 for DEAP
+   arousal, -0.028 for DREAMER valence and +0.049 for DREAMER arousal. Participant overlap pays
+   chiefly by handing the model each participant's habitual **label prior**. Note that this
+   comparison is a blunt instrument, because per-subject-median labels need the held-out
+   participant's own ratings. The paper pursues the mechanism with a no-EEG participant-prior
+   baseline, a within/between decomposition and class-balanced reweighting, and finds the label-prior
+   account holds for arousal while leaving the DEAP valence advantage unexplained.
 4. **Identity is available to be exploited.** The same features decode *which participant* produced a
    recording at ~99% (DEAP) and ~88% (DREAMER), against chance of 3% and 4%.
 
 Because the two datasets use different headsets, the collapse cannot be a hardware artefact.
 
 **The reproducible take-away:** a leak-free, subject-independent protocol is the only one whose number
-speaks to population-level emotion decoding, and under it this pipeline does not beat chance. Note also
+speaks to population-level emotion decoding, and under it this pipeline performs modestly: AUC from
+0.454 to 0.565 across the four dataset-target cells here, against 0.70 to 0.84 under the pooled
+protocol. The paper reports the same range, 0.455 to 0.565, across three datasets. Note also
 that the intervals here resample **subjects**; had we resampled windows, the DREAMER arousal cell would
 have appeared *significantly below chance* purely as an artefact of treating correlated windows as
 independent."""))
