@@ -1,7 +1,7 @@
 {
   "git": {
-    "commit": "975e51b88b0c6299e740c281b5814e971f8772ad",
-    "branch": "frontiers-rev1",
+    "commit": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+    "branch": "main",
     "pipeline_files": [
       "notebook/run_protocols.py",
       "notebook/deap_labels.py",

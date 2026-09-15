@@ -2170,7 +2170,7 @@
   "_manifest": {
     "command": "rev1_protocols.py --deap-labels dat --tag gate_dat --gate",
     "deap_labels": "dat",
-    "runtime_s": 570.5,
+    "runtime_s": 606.8,
     "python": "3.10.12",
     "numpy": "1.26.4",
     "scipy": "1.15.3",
@@ -2178,8 +2178,8 @@
     "xgboost": "3.2.0",
     "seed": 17,
     "git": {
-      "commit": "975e51b88b0c6299e740c281b5814e971f8772ad",
-      "branch": "frontiers-rev1",
+      "commit": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+      "branch": "main",
       "pipeline_files": [
         "notebook/run_protocols.py",
         "notebook/deap_labels.py",

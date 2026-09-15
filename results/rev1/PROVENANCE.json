@@ -1,8 +1,8 @@
 {
-  "written": "2026-09-15T16:49:23+02:00",
+  "written": "2026-09-16T00:04:50+02:00",
   "git": {
-    "commit": "975e51b88b0c6299e740c281b5814e971f8772ad",
-    "branch": "frontiers-rev1",
+    "commit": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+    "branch": "main",
     "pipeline_files": [
       "notebook/run_protocols.py",
       "notebook/deap_labels.py",
@@ -15,10 +15,10 @@
     "dirty_pipeline_files": []
   },
   "commit_recorded_by_each_output": {
-    "deap_label_verification.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
-    "gate_dat/protocols.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
-    "corrected/protocols.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
-    "label_correction_diff.json": "975e51b88b0c6299e740c281b5814e971f8772ad"
+    "deap_label_verification.json": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+    "gate_dat/protocols.json": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+    "corrected/protocols.json": "ba54e1983bd893ca70edfe2f1fed6cad4121541b",
+    "label_correction_diff.json": "ba54e1983bd893ca70edfe2f1fed6cad4121541b"
   },
   "definitive": true,
   "reproduction_gate": {
@@ -33,12 +33,12 @@
     "data/deap/metadata/participant_ratings.xls": "e3269144e3018848760b0f1a7b2301912cee402012911f427728e3a04bbdfb94"
   },
   "outputs_sha256": {
-    "deap_label_verification.json": "6bbf5d8109af2fa7b17ea5fdd1eaefce73e95b3659af63c6631ae58b50a49f87",
-    "gate_dat/protocols.json": "4551fa4f22882e509133d17f7d6fcf982e0ea3983d0a470644ac33e129a8fac7",
+    "deap_label_verification.json": "05897cdc62f192a0d9f42360cdd4b7bb28366943b3c367885774e7167bfe5e42",
+    "gate_dat/protocols.json": "246090b1f28cbfc74b7b19319a790c3d3d401a7f34e6958bc737b40098f7cc93",
     "gate_dat/gate_report.json": "bbf04212ddf86926694052758c8b0e5db646053c1bb333ca091ef813ba17dd6a",
-    "corrected/protocols.json": "3f59d653aa4fbcffd2107f4819244d022c4b435cdc4d19c9b7b96556c7620ecc",
-    "label_correction_diff.json": "3279b7ed62c540a3002bd094bde4a18754c4359d63fe1a0d201c2890830cc0c0",
-    "LABEL_CORRECTION.md": "3c61e13f5f66dc1eb21b13dc02139f417eef0fe3d31163cbd7e8be4cc0170376"
+    "corrected/protocols.json": "cdbda7b5a91bd9db72d68bb3f775f8ef0c1115d06ddce27845eb46ddb5b4ab4e",
+    "label_correction_diff.json": "1f900c66bab69cddc4aab063a259c4dbb6eecc689ed9b82bebe11d4406bb0ba8",
+    "LABEL_CORRECTION.md": "2e0d48b0c23b14c3b5e10c20a3cda2122ee4ee9ea290317d4233a5fe4da3d863"
   },
   "not_versioned": "OOF .npz files, bootstrap draw .npy files and logs stay local (ignored by git)."
 }
