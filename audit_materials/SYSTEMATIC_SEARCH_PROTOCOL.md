@@ -153,6 +153,7 @@ are always the pre-adjudication values.
 | `prisma_flow_counts_template.csv` | Stage counts for the PRISMA diagram |
 | `compute_agreement.py` | Agreement statistics with bootstrap intervals |
 | `study_links.csv` | Resolved DOI, venue, peer-review status and an open full text where one exists, for the 33 Part A studies |
+| `bench/` | The Audit Coding Bench: a self-contained offline page for coding, with the codebook and the 33 study records. Coder name fields ship blank. |
 
 ## Change log
 

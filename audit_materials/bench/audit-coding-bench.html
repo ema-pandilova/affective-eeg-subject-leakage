@@ -1,0 +1,1468 @@
+<title>Audit Coding Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">
+<style>
+:root{
+  --ground:#EDF0EF; --panel:#FFFFFF; --panel-2:#F5F7F6; --ink:#15202A; --muted:#56626C; --faint:#7B868D;
+  --rule:#D6DCDA; --rule-strong:#B8C2BE;
+  --coderA:#1D5FA6; --coderA-soft:#E2EBF6; --coderB:#9E4F1B; --coderB-soft:#F5E7DC;
+  --adj:#5A4698; --adj-soft:#EBE7F5; --coord:#2C5B4E; --coord-soft:#DFEBE6;
+  --ok:#2B764A; --ok-soft:#DFEFE5; --bad:#AD352C; --bad-soft:#F6E1DE; --warn:#855F0E; --warn-soft:#F4EBD4;
+  --on-role:#FFFFFF;
+  --shadow:0 1px 2px rgba(21,32,42,.06),0 8px 24px rgba(21,32,42,.07);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --role:var(--coord); --role-soft:var(--coord-soft);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1316; --panel:#151C20; --panel-2:#1A2327; --ink:#E3E9E7; --muted:#A0ACA8; --faint:#7F8B88;
+    --rule:#29343A; --rule-strong:#3B4950;
+    --coderA:#7DB1EC; --coderA-soft:#19293A; --coderB:#E59C69; --coderB-soft:#33241A;
+    --adj:#B1A2EC; --adj-soft:#26213A; --coord:#84C4AE; --coord-soft:#17302A;
+    --ok:#66C28D; --ok-soft:#163125; --bad:#F0877C; --bad-soft:#3A1D1A; --warn:#E3B858; --warn-soft:#332913;
+    --on-role:#0E1316; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1316; --panel:#151C20; --panel-2:#1A2327; --ink:#E3E9E7; --muted:#A0ACA8; --faint:#7F8B88;
+  --rule:#29343A; --rule-strong:#3B4950;
+  --coderA:#7DB1EC; --coderA-soft:#19293A; --coderB:#E59C69; --coderB-soft:#33241A;
+  --adj:#B1A2EC; --adj-soft:#26213A; --coord:#84C4AE; --coord-soft:#17302A;
+  --ok:#66C28D; --ok-soft:#163125; --bad:#F0877C; --bad-soft:#3A1D1A; --warn:#E3B858; --warn-soft:#332913;
+  --on-role:#0E1316; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+body[data-role="A"]{--role:var(--coderA);--role-soft:var(--coderA-soft)}
+body[data-role="B"]{--role:var(--coderB);--role-soft:var(--coderB-soft)}
+body[data-role="adj"]{--role:var(--adj);--role-soft:var(--adj-soft)}
+body[data-role="coord"]{--role:var(--coord);--role-soft:var(--coord-soft)}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--topH,120px) + 12px);scroll-padding-bottom:80px}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.55 var(--sans);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1240px;margin-inline:auto}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h2{font-size:22px;font-weight:600;letter-spacing:-.01em}
+h3{font-size:16px;font-weight:600}
+p{margin:0}
+a{color:var(--role)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--role);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+[hidden]{display:none!important}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:var(--ground);border-bottom:1px solid var(--rule);margin-inline:-16px;padding-inline:16px}
+.top-in{max-width:1240px;margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:12px}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto;min-width:0}
+.brand b{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.brand span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.conn i{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block}
+.conn.live i{background:var(--ok)} .conn.off i{background:var(--warn)}
+.rolepill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--role);background:var(--role-soft);color:var(--ink);border-radius:999px;padding:4px 6px 4px 12px;font-size:13.5px}
+.rolepill strong{color:var(--role);font-weight:600}
+.rolepill button{border:0;background:var(--panel);border-radius:999px;padding:3px 10px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+.rolepill button:hover{color:var(--ink)}
+.tabs{display:flex;gap:2px;flex-wrap:wrap;width:100%;border-top:1px solid var(--rule);padding-top:8px}
+.tabs button{border:0;background:transparent;padding:7px 12px;border-radius:7px;cursor:pointer;color:var(--muted);font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--panel);color:var(--ink);box-shadow:inset 0 -2px 0 var(--role)}
+.tabs button:disabled{opacity:.45;cursor:not-allowed}
+.tabs .count{font-family:var(--mono);font-size:11.5px;margin-left:6px;color:var(--faint)}
+
+/* generic */
+main{padding-block:20px}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:10px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--role);background:var(--role);color:var(--on-role);padding:8px 14px;border-radius:8px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+.btn.ghost:hover{border-color:var(--role);filter:none}
+.btn.danger{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.btn.sm{padding:5px 10px;font-size:13px}
+label.fld{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);font-weight:500}
+input[type="text"],input[type="number"],input[type="password"],select,textarea{background:var(--panel);border:1px solid var(--rule-strong);border-radius:7px;padding:8px 10px;color:var(--ink);width:100%;min-width:0}
+textarea{resize:vertical;min-height:64px;line-height:1.45}
+input:disabled,textarea:disabled,select:disabled{background:var(--panel-2);color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--rule);background:var(--panel-2);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.chip.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
+.chip.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.chip.role{background:var(--role-soft);border-color:transparent;color:var(--role)}
+.note{border-left:3px solid var(--role);background:var(--role-soft);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px}
+.note.warn{border-color:var(--warn);background:var(--warn-soft)}
+.note.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tblwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--panel-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* role picker */
+.intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+.intro h1{font-family:var(--serif);font-size:34px;font-weight:600;letter-spacing:-.015em;line-height:1.12}
+.intro p.lead{margin-top:12px;color:var(--muted);max-width:60ch}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rolecard{--c:var(--coord);--cs:var(--coord-soft);text-align:left;border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:118px}
+.rolecard:hover{border-color:var(--c);box-shadow:var(--shadow)}
+.rolecard .rk{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--c)}
+.rolecard .rk i{width:10px;height:10px;border-radius:3px;background:var(--c);display:inline-block}
+.rolecard .nm{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink)}
+.rolecard .ds{font-size:13px;color:var(--muted)}
+.rolecard.A{--c:var(--coderA)} .rolecard.B{--c:var(--coderB)} .rolecard.adj{--c:var(--adj)}
+.steps{margin-top:22px;display:grid;gap:10px;counter-reset:s}
+.steps div{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:14px}
+.steps div::before{counter-increment:s;content:counter(s);font-family:var(--mono);font-size:12px;width:22px;height:22px;border-radius:50%;border:1px solid var(--rule-strong);display:grid;place-items:center;color:var(--muted);margin-top:1px}
+
+/* work layout */
+.work{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px;align-items:start}
+.queue{position:sticky;top:calc(var(--topH,120px) + 12px);max-height:calc(100vh - var(--topH,120px) - 28px);display:flex;flex-direction:column}
+.queue-head{padding:12px 14px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:8px}
+.bar{height:6px;border-radius:99px;background:var(--panel-2);overflow:hidden;border:1px solid var(--rule)}
+.bar b{display:block;height:100%;background:var(--role)}
+.qlist{overflow:auto;padding:6px}
+.qitem{display:grid;grid-template-columns:18px 1fr;gap:10px;width:100%;text-align:left;border:0;background:transparent;padding:8px 8px;border-radius:7px;cursor:pointer;color:var(--ink)}
+.qitem:hover{background:var(--panel-2)}
+.qitem[aria-current="true"]{background:var(--role-soft)}
+.qitem .t{font-size:13.5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.qitem .m{font-size:11.5px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+.dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--rule-strong);margin-top:3px;position:relative}
+.dot.prog{border-color:var(--role);background:linear-gradient(90deg,var(--role) 50%,transparent 50%)}
+.dot.done{border-color:var(--ok);background:var(--ok)}
+.dot.done::after{content:"";position:absolute;left:3.5px;top:1px;width:3.5px;height:7px;border:solid var(--panel);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.qselect{display:none}
+.paperhead{padding:18px 20px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.paperhead .ptitle:focus{outline:none}
+.paperhead .ptitle:focus-visible{outline:2px solid var(--role);outline-offset:4px}
+.paperhead .ptitle{font-family:var(--serif);font-size:21px;font-weight:600;line-height:1.28;letter-spacing:-.005em}
+.paperhead .pmeta{font-size:13.5px;color:var(--muted)}
+.abstract{font-size:14px;color:var(--muted);max-width:75ch;margin-top:4px}
+.form{padding:6px 20px 20px}
+.grp{padding-block:16px;border-bottom:1px solid var(--rule)}
+.grp:last-child{border-bottom:0}
+.grp > h3{display:flex;align-items:baseline;gap:10px}
+.grp .gi{font-size:13.5px;color:var(--muted);margin-top:4px;max-width:75ch}
+.q{margin-top:14px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 12px}
+.q .code{font-family:var(--mono);font-size:12.5px;color:var(--role);font-weight:500;padding-top:2px}
+.q .lbl{font-weight:500}
+.q .lbl .pri{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule-strong);border-radius:4px;padding:0 5px;margin-left:8px;vertical-align:2px}
+.q .rule{grid-column:2;font-size:13px;color:var(--muted);max-width:78ch}
+.q .ctl{grid-column:2;margin-top:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px}
+.opt{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--rule);border-radius:7px;padding:7px 10px;cursor:pointer;background:var(--panel);font-size:14px;line-height:1.35}
+.opt:hover{border-color:var(--rule-strong)}
+.opt input{margin:2px 0 0;accent-color:var(--role)}
+.opt:has(input:checked){border-color:var(--role);background:var(--role-soft)}
+.opt:has(input:disabled){cursor:default}
+.formfoot{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--rule);padding:12px 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-radius:0 0 10px 10px}
+.formfoot .save{margin-right:auto;font-size:13px;color:var(--muted)}
+.missing{font-size:13px;color:var(--warn)}
+
+/* compare/resolve */
+.side{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.side .sv{border-radius:8px;padding:9px 12px;font-size:14px}
+.side .sv.A{background:var(--coderA-soft)} .side .sv.B{background:var(--coderB-soft)}
+.side .sv .who{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.side .sv.A .who{color:var(--coderA)} .side .sv.B .who{color:var(--coderB)}
+.quote{font-family:var(--serif);font-size:14px;color:var(--muted);margin-top:6px;white-space:pre-wrap}
+.ditem{padding:14px 16px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
+.ditem:last-child{border-bottom:0}
+.kbar{display:inline-block;width:70px;height:6px;border-radius:9px;background:var(--panel-2);border:1px solid var(--rule);vertical-align:middle;margin-left:8px;overflow:hidden}
+.kbar b{display:block;height:100%}
+
+/* modal + toast */
+.scrim{position:fixed;inset:0;background:rgba(10,15,18,.45);display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--panel);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow);width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.modal textarea.dump{min-height:220px;font-family:var(--mono);font-size:12px}
+.toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:60;max-width:min(420px,calc(100vw - 32px))}
+.toast{background:var(--ink);color:var(--panel);padding:10px 14px;border-radius:8px;font-size:14px;box-shadow:var(--shadow)}
+.toast.bad{background:var(--bad-soft);color:var(--ink);border-left:4px solid var(--bad)}
+
+@media (max-width:900px){
+  .intro{grid-template-columns:1fr}
+  .work{grid-template-columns:1fr}
+  .queue{position:static;max-height:none}
+  .qlist{display:none}
+  .qselect{display:block}
+}
+@media (max-width:560px){
+  .roles{grid-template-columns:1fr}
+  .side{grid-template-columns:1fr}
+  .q{grid-template-columns:1fr}
+  .q .rule,.q .ctl{grid-column:1}
+  .intro h1{font-size:28px}
+  .brand span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="top" id="top">
+  <div class="top-in">
+    <div class="brand"><b>Audit Coding Bench</b><span>Affective-EEG leakage audit, double coding for manuscript 1953177</span></div>
+    <span class="conn" id="conn"><i></i><span>Connecting</span></span>
+    <span id="rolepill"></span>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Sections" hidden></nav>
+  </div>
+</div>
+<main class="wrap" id="view"></main>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ------------------------------------------------------------------ codebook v1.1 */
+const CODEBOOK_VERSION = "1.1";
+const YNU = [["yes","Yes"],["no","No"],["unclear","Unclear"]];
+const NORM_OPTS = [["none","None described"],["instance","Per window or per trial only (for example baseline subtraction within a trial)"],["train_only","Fit on training data only"],["participant_all","Per participant, session or recording, over all of that data"],["dataset_all","Over the whole dataset before the split"],["unclear","Mentioned, but the scope cannot be determined"]];
+const TARGET_OPTS = [["none","No"],["unlabeled","Unlabeled test-participant data (domain adaptation, transductive learning)"],["labeled","Labeled test-participant data (calibration, fine-tuning, few-shot)"],["na","Not applicable"],["unclear","Unclear"]];
+const CB = {
+  screen: {
+    groups: [{
+      title: "Eligibility",
+      intro: "Start from the title and abstract. Open the full text whenever the abstract does not settle one of the criteria.",
+      fields: [
+        {id:"E1", type:"cat", primary:true, label:"Is this study eligible for the audit sample?",
+         rule:"Eligible only if all three hold: (1) a peer-reviewed primary study, meaning a journal article or a peer-reviewed conference paper, reporting its own emotion-decoding experiment; (2) at least one result from EEG alone, not EEG fused with other signals, on DEAP, DREAMER or a SEED-family dataset, which is the same test the full-text check X1 applies; (3) the full text can be obtained. Choose Unsure when you cannot decide; the adjudicator settles it.",
+         options:[["eligible","Eligible"],["not_eligible","Not eligible"],["unsure","Unsure"]]},
+        {id:"E2", type:"cat", when:{E1:"not_eligible"}, label:"Main reason it is not eligible",
+         rule:"Pick the first reason that applies, in this order.",
+         options:[["review","Review, survey or tutorial"],["no_decoding","No emotion-decoding experiment"],["frame","No EEG-only result on DEAP, DREAMER or a SEED-family dataset"],["duplicate","Duplicate or earlier version of an included study"],["not_peer_reviewed","Not peer reviewed (preprint, thesis)"],["no_full_text","Full text not obtainable"],["other","Other, explained in the note"]]},
+        {id:"note", type:"text", label:"Note", rule:"Anything the adjudicator should know."}
+      ]
+    }]
+  },
+  code: {
+    groups: [
+      {title:"Full-text check", fields:[
+        {id:"X1", type:"cat", primary:true, label:"On the full text, is this a primary emotion-decoding study with an EEG-only result on DEAP, DREAMER or a SEED-family dataset?",
+         rule:"Code the version of record at the DOI. If you can only obtain another version, a preprint or an accepted manuscript, code that one and say so in the note. No for reviews, for studies of other tasks or datasets, and for studies whose only results fuse EEG with other signals. The dataset-origin papers for DEAP, DREAMER and SEED report their own EEG-only classification and are Yes. When No, say why in the note; the remaining questions are skipped.",
+         options:[["yes","Yes"],["no","No"]]}
+      ]},
+      {title:"Headline result", when:{X1:"yes"},
+       intro:"The headline result is the first performance value (accuracy, F1, AUC or similar, not an improvement over a baseline) stated in the abstract for an EEG-only emotion-decoding result on DEAP, DREAMER or a SEED-family dataset. Skip earlier values that fuse modalities or come from other datasets. If the abstract gives no such value, use the first main results table that reports one, and take the EEG-only row of the proposed method, or the best EEG-only row when the paper proposes no method, as in dataset and benchmark papers. Whenever valence and arousal are reported together, code valence.",
+       fields:[
+        {id:"H1", type:"cat", label:"Dataset of the headline result",
+         options:[["DEAP","DEAP"],["DREAMER","DREAMER"],["SEED","SEED"],["SEED-IV","SEED-IV"],["SEED-V","SEED-V"],["SEED-VII","SEED-VII"]]},
+        {id:"H2", type:"cat", label:"Task of the headline result",
+         options:[["valence_binary","Valence, two classes"],["arousal_binary","Arousal, two classes"],["quadrant","Valence-arousal quadrants, four classes"],["discrete","Discrete emotion categories (for example SEED three classes)"],["other","Other"]]},
+        {id:"H3", type:"cat", label:"Metric of the headline result",
+         options:[["accuracy","Accuracy"],["f1","F1"],["auc","AUC"],["other","Other"]]},
+        {id:"H4", type:"num", label:"Headline value",
+         rule:"As printed, in the metric of H3. A percentage such as 94.5 is fine; it is converted to 0.945 for comparison. If a range or several folds are given, enter the highest value."}
+      ]},
+      {title:"How the headline result was evaluated", when:{X1:"yes"}, fields:[
+        {id:"S1", type:"cat", label:"Evaluation design",
+         rule:"Code the labeled data that trained the model before any adaptation or calibration, which T1 records separately. If the test participants were in that training data: one model per participant is Subject-dependent when the test data come from sessions also used in training, and Cross-session when the test session was not used; one model shared by several participants is Pooled, whatever the sessions. If the test participants were not in it: Participant-independent when some labeled training data came from the same dataset, including leave-one-subject-out across sessions, and Cross-dataset when none did.",
+         options:[["subject_dependent","Subject-dependent: a separate model for each participant, tested on sessions used in training"],["pooled","Pooled: one model, participants mixed across training and test"],["independent","Participant-independent within the dataset (leave-one-subject-out or participants grouped)"],["cross_dataset","Cross-dataset: trained on one dataset, tested on another"],["cross_session","Cross-session: a separate model for each participant, tested on a session not used in training"],["unclear","Unclear"]]},
+        {id:"S2", type:"cat", primary:true, label:"Were participants disjoint between training and test?",
+         rule:"Yes only if no labeled data from any test participant, meaning no window, trial or session, was used to train the model. Judge the split alone: unlabeled test-participant data belongs in T1, calibration or fine-tuning on the test participant belongs in T1, and tuning on test results belongs in M1. Subject-dependent, pooled and cross-session designs are No.",
+         options:YNU},
+        {id:"S3", type:"cat", primary:true, label:"Were trials disjoint between training and test?",
+         rule:"Yes only if no window cut from a test trial, meaning one viewing of one clip, appears in training. Random k-fold or a random split made after cutting trials into windows is No. A participant-disjoint split counts as Yes.",
+         options:YNU},
+        {id:"S4", type:"cat", label:"Were stimuli disjoint between training and test?",
+         rule:"Yes only if no clip shown in the test set was used in training by any participant. Standard leave-one-subject-out on DEAP, DREAMER or SEED is No, because every participant watched the same clips.",
+         options:YNU},
+        {id:"U1", type:"cat", label:"Unit on which the headline metric is computed",
+         rule:"Window when each window or segment prediction is scored as a separate test case, even if accuracies are averaged per participant afterwards. Trial when there is one prediction per trial, either from trial-level features or from window predictions aggregated to the trial. Participant when there is one prediction per participant. Code this regardless of the evaluation design.",
+         options:[["window","Window or segment"],["trial","Trial"],["participant","Participant"],["other","Other, explained in the note"],["unclear","Unclear"]]},
+        {id:"S5", type:"cat", label:"How clearly is the split reported?",
+         rule:"Stated explicitly: the paper says in words which unit was held out, whether windows, trials, sessions or participants. Inferred: you worked the unit out from other details, for example that the number of folds equals the number of participants, or that a 10-fold split of all samples never mentions trials or participants. Not reported: it cannot be worked out, in which case S2 or S3 is normally Unclear.",
+         options:[["explicit","Stated explicitly"],["inferred","Inferred from the description"],["not_reported","Not reported"]]}
+      ]},
+      {title:"Preprocessing and model selection", when:{X1:"yes"}, fields:[
+        {id:"N1", type:"cat", primary:true, label:"Scope of normalization or standardization for the headline result",
+         rule:"When several steps are described, for example baseline subtraction and then z-scoring, code the widest scope among them, in this order: over the whole dataset, per participant or recording, unclear, fit on training data, per window or trial. Per participant, session or recording means statistics computed over all of that data, including trials that end up in the test set. Statistics taken from a calibration slice of a test participant that is kept apart from the scored trials count as fit on training data. None described only when no normalization step is mentioned at all.",
+         options:NORM_OPTS},
+        {id:"T1", type:"cat", primary:true, label:"Was data from test participants used during training or adaptation?",
+         rule:"Not applicable when S1 is Subject-dependent, Pooled or Cross-session. For every other design, code what the model saw of the test participants during training or adaptation. If both unlabeled and labeled test-participant data were used, choose Labeled.",
+         options:TARGET_OPTS},
+        {id:"M1", type:"cat", label:"How were hyperparameters, features or the stopping epoch chosen?",
+         rule:"Consider hyperparameters, feature selection or ranking, and the stopping epoch together, and code the least safe answer that applies, in this order: using test data, not reported, inside the training set, fixed. Values listed without saying how they were chosen count as Not reported, not as Fixed.",
+         options:[["fixed","Fixed in advance or taken from prior work"],["inner","On data inside the training set (validation split or nested cross-validation)"],["test","Using test data (for example the best epoch on the test folds, or features ranked on the whole dataset before the split)"],["not_reported","Not reported"]]}
+      ]},
+      {title:"Participant-independent evidence and claims", when:{X1:"yes"}, fields:[
+        {id:"R1", type:"cat", primary:true, label:"Does the paper's own EEG-only work on DEAP, DREAMER or a SEED-family dataset include a participant-disjoint result?",
+         rule:"Consider every EEG-only emotion result from the paper's own experiments on those datasets, including tables and supplements. Baselines the authors re-ran count; numbers quoted from other papers, multimodal results and results on other datasets do not. Yes if any of them meets the S2 definition. Otherwise Unclear if any of them might meet it but its split cannot be determined. Otherwise No. When the headline result is itself such a result, R1 is Yes whenever S2 is Yes, and is never No when S2 is Unclear.",
+         options:YNU},
+        {id:"R2", type:"num", when:{R1:"yes"}, label:"Best participant-disjoint value",
+         rule:"The best participant-disjoint value counted under R1, for the proposed method or, when the paper proposes none, for any method the authors ran, on the headline dataset and task and in the headline metric. If no such value exists, leave it blank and explain in the note; do not substitute another dataset, task or metric."},
+        {id:"R3", type:"cat", when:{R1:"yes"}, label:"Normalization scope for that participant-disjoint result",
+         rule:"The N1 options applied to the result in R2, or to the best participant-disjoint result when R2 is blank. If that result is the headline result, repeat your N1 answer.",
+         options:NORM_OPTS},
+        {id:"R4", type:"cat", when:{R1:"yes"}, label:"Test-participant data used for that participant-disjoint result",
+         rule:"The T1 options applied to the same result. Not applicable does not arise here, because the result is participant-disjoint.",
+         options:TARGET_OPTS},
+        {id:"C1", type:"cat", primary:true, label:"Does the paper make a population-level claim?",
+         rule:"Code from the title, abstract and conclusion only, regardless of how the evaluation was done. Explicit: says the method works for new, unseen or other people, or calls it subject-independent, cross-subject, user-independent or generalizable across individuals. Generic: a performance or capability statement about the method, for example that it achieves 95% accuracy for EEG-based emotion recognition, that is not limited to the participants it was trained on. No: every such statement is explicitly limited to within-subject, subject-dependent, personalized or calibrated use, or the paper makes no such statement. A title that only names the topic is not a performance statement. A qualifier such as subject-dependent limits only the statement it belongs to. If statements differ, code the strongest: Explicit over Generic over No.",
+         options:[["explicit","Explicit population claim"],["generic","Generic population wording"],["no","No population claim"]]}
+      ]},
+      {title:"Evidence", intro:"Quotes let the adjudicator settle disagreements without reopening the paper. Include the page or section.", fields:[
+        {id:"Q_split", type:"text", label:"Quote for the evaluation design (S1 to S5, U1)"},
+        {id:"Q_norm", type:"text", label:"Quote for normalization and test-participant data (N1, T1, R3, R4)"},
+        {id:"Q_claim", type:"text", label:"Quote for the population claim (C1)"},
+        {id:"note", type:"text", label:"Note"},
+        {id:"minutes", type:"minutes", label:"Minutes spent on this paper"}
+      ]}
+    ]
+  }
+};
+const QUOTE_FOR = {X1:["note"], H1:[], H2:[], H3:[], H4:[], S1:["Q_split"], S2:["Q_split"], S3:["Q_split"], S4:["Q_split"], U1:["Q_split"], S5:["Q_split"], N1:["Q_norm"], T1:["Q_norm"], M1:["note"], R1:["note"], R2:["note"], R3:["Q_norm"], R4:["Q_norm"], C1:["Q_claim"]};
+const ROLE = {
+  coord:{label:"Coordinator", desc:"Sets the names, the paper list and the screening rounds. Sees progress, never answers."},
+  A:{label:"Coder A", desc:"Codes every paper independently."},
+  B:{label:"Coder B", desc:"Codes every paper independently."},
+  adj:{label:"Adjudicator", desc:"Settles disagreements after both coders have locked."}
+};
+
+/* ------------------------------------------------------------------ small utilities */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const nowISO = () => new Date().toISOString();
+const msg = e => (e && (e.message || e.code)) || "unknown error";
+const fmtTime = iso => { if (!iso) return ""; try { return new Date(iso).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short"}); } catch { return iso; } };
+const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
+function lsGet(k){ try { return localStorage.getItem(k); } catch { return null; } }
+function lsSet(k, v){ try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} }
+function ssGet(k){ try { return sessionStorage.getItem(k); } catch { return null; } }
+function ssSet(k, v){ try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} }
+function toast(m, kind){ const t = document.createElement("div"); t.className = "toast" + (kind === "bad" ? " bad" : ""); t.textContent = m; $("#toasts").appendChild(t); setTimeout(() => t.remove(), kind === "bad" ? 9000 : 3200); }
+const guard = (p, what) => Promise.resolve(p).catch(e => toast(what + ": " + msg(e), "bad"));
+const fields = kind => CB[kind].groups.flatMap(g => g.fields.map(f => ({...f, groupWhen: g.when || null})));
+const compFields = kind => fields(kind).filter(f => f.type === "cat" || f.type === "num");
+const condOf = f => ({...(f.groupWhen || {}), ...(f.when || {})});
+const condOK = (cond, v) => Object.entries(cond).every(([k, val]) => (v || {})[k] === val);
+const blank = x => x === undefined || x === null || String(x).trim() === "";
+function numNorm(x){ const n = parseFloat(String(x).replace(",", ".")); if (!isFinite(n)) return NaN; return n > 1 && n <= 100 ? n / 100 : n; }
+function sameVal(f, a, b){
+  if (f.type === "num") { if (blank(a) && blank(b)) return true; if (blank(a) || blank(b)) return false; const x = numNorm(a), y = numNorm(b); return isFinite(x) && isFinite(y) ? Math.abs(x - y) <= 0.005 : String(a).trim() === String(b).trim(); }
+  if (blank(a) || blank(b)) return false;
+  return a === b;
+}
+function optLabel(f, v){ if (blank(v)) return "No answer"; if (f.type === "num") return String(v); const o = (f.options || []).find(o => o[0] === v); return o ? o[1] : v; }
+async function sha256(text){
+  if (window.crypto && crypto.subtle) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  let h1 = 0x811c9dc5, h2 = 0x01000193;
+  for (let i = 0; i < text.length; i++) { h1 = Math.imul(h1 ^ text.charCodeAt(i), 16777619); h2 = Math.imul(h2 + text.charCodeAt(i), 2246822519); }
+  return "fnv" + (h1 >>> 0).toString(16).padStart(8, "0") + (h2 >>> 0).toString(16).padStart(8, "0");
+}
+function randomHex(n){ const a = new Uint8Array(n); if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (let i = 0; i < n; i++) a[i] = Math.floor(Math.random() * 256); return [...a].map(b => b.toString(16).padStart(2, "0")).join(""); }
+function mulberry32(seed){ let t = seed >>> 0; return () => { t += 0x6D2B79F5; let r = Math.imul(t ^ t >>> 15, 1 | t); r ^= r + Math.imul(r ^ r >>> 7, 61 | r); return ((r ^ r >>> 14) >>> 0) / 4294967296; }; }
+function csvCell(v){ const s = v == null ? "" : String(v); return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+const toCSV = rows => rows.map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
+function parseDelimited(text){
+  text = text.replace(/^\uFEFF/, "");
+  const first = text.split(/\r?\n/, 1)[0] || "";
+  if ((first.match(/\t/g) || []).length > (first.match(/,/g) || []).length) {
+    return text.split(/\r?\n/).map(l => l.split("\t").map(c => c.replace(/^"(.*)"$/, "$1"))).filter(r => r.some(x => x.trim() !== ""));
+  }
+  const rows = []; let row = [], cell = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+    else if (c === '"' && cell === "") q = true;
+    else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n" || c === "\r") { if (c === "\r" && text[i + 1] === "\n") i++; row.push(cell); rows.push(row); row = []; cell = ""; }
+    else cell += c;
+  }
+  if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(x => x.trim() !== ""));
+}
+const normTitle = t => String(t || "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, " ").trim();
+const dedupKey = r => r.doi ? "doi:" + r.doi : "t:" + (normTitle(r.title) || String(r.title || "").toLowerCase().trim());
+const safeId = s => String(s).replace(/[^A-Za-z0-9_\-.~:@+]/g, "-").replace(/^\.+$/, "x").slice(0, 120) || "x";
+
+/* ------------------------------------------------------------------ storage: shared workspace or this browser */
+function makeDbStore(db){
+  const retry = async fn => { try { return await fn(); } catch (e) { if (e && e.code === "unavailable") { await sleep(300 + Math.random() * 700); return fn(); } throw e; } };
+  const onErr = e => { if (!e) return; if (e.code === "revoked") { st.revoked = true; render(); } else toast(e.code === "resource_exhausted" ? "The workspace is busy. Reload the page in a moment." : "Lost the live connection. Reload the page.", "bad"); };
+  const meta = s => ({definitive: !(s && s.metadata && s.metadata.fromCache)});
+  return {
+    online: true,
+    get: async p => { const s = await retry(() => db.doc(p).get()); return s.exists ? clone(s.data()) : null; },
+    set: (p, d) => retry(() => db.doc(p).set(d)),
+    del: p => retry(() => db.doc(p).delete()),
+    list: async c => { const q = await retry(() => db.collection(c).limit(1000).get()); return q.docs.map(d => ({id: d.id, data: clone(d.data())})); },
+    watchDoc: (p, fn) => db.doc(p).onSnapshot(s => fn(s.exists ? clone(s.data()) : null, meta(s)), onErr),
+    watchCol: (c, fn) => db.collection(c).limit(1000).onSnapshot(q => fn(q.docs.map(d => ({id: d.id, data: clone(d.data())})), meta(q)), onErr)
+  };
+}
+function makeLocalStore(){
+  const PFX = "acb:", subs = new Map(), META = {definitive: true};
+  const read = p => { try { const v = localStorage.getItem(PFX + p); return v ? JSON.parse(v) : null; } catch { return null; } };
+  const colOf = p => p.split("/").slice(0, -1).join("/");
+  const listCol = c => { const out = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(PFX + c + "/")) { const rest = k.slice(PFX.length + c.length + 1); if (!rest.includes("/")) out.push({id: rest, data: JSON.parse(localStorage.getItem(k))}); } } } catch {} return out.sort((a, b) => a.id < b.id ? -1 : 1); };
+  const notify = p => { (subs.get("d:" + p) || new Set()).forEach(fn => fn(read(p), META)); const c = colOf(p); (subs.get("c:" + c) || new Set()).forEach(fn => fn(listCol(c), META)); };
+  const sub = (key, fn, first) => { if (!subs.has(key)) subs.set(key, new Set()); subs.get(key).add(fn); setTimeout(() => fn(first(), META), 0); return () => { const s = subs.get(key); if (s) s.delete(fn); }; };
+  return {
+    online: false,
+    get: async p => clone(read(p)),
+    set: async (p, d) => { localStorage.setItem(PFX + p, JSON.stringify(d)); notify(p); },
+    del: async p => { localStorage.removeItem(PFX + p); notify(p); },
+    list: async c => clone(listCol(c)),
+    watchDoc: (p, fn) => sub("d:" + p, fn, () => clone(read(p))),
+    watchCol: (c, fn) => sub("c:" + c, fn, () => clone(listCol(c)))
+  };
+}
+
+/* ------------------------------------------------------------------ state */
+const st = {
+  S: null, dl: null, connecting: true, revoked: false,
+  loaded: {cfg:false, papers:false, locks:false, roles:false},
+  role: lsGet("acb.role"), gatePassedFor: null, tab: null,
+  cfg: {}, sample: null, frame: null, papers: [], locks: {}, progress: {}, roles: {}, events: [],
+  stageId: ssGet("acb.stage"), stagePicked: !!ssGet("acb.stage"), pid: null,
+  ans: {}, ansKey: null, ansLoaded: null, ansUnsub: null, dirty: new Set(), editSeq: 0,
+  formKey: null, formPid: null, formBuiltV: null, saveTimer: null,
+  cmp: null, cons: {}, consKey: null, consUnsub: null, resolvePid: null,
+  pendingRender: false, pointerDown: false, focusTarget: null
+};
+const roleName = r => (st.cfg.names || {})[r] || "";
+const roleTitle = r => ROLE[r].label + (roleName(r) ? " \u00b7 " + roleName(r) : "");
+const isCoder = r => r === "A" || r === "B";
+const other = r => r === "A" ? "B" : "A";
+
+function stages(){
+  const out = [];
+  if (st.cfg.mode === "B") (st.cfg.rounds || []).forEach((r, i) => out.push({id: "screen-" + (i + 1), kind: "screen", label: "Screening round " + (i + 1), from: r.from, to: r.to}));
+  if (st.cfg.mode === "A" || (st.cfg.mode === "B" && st.sample && (st.sample.pids || []).length)) out.push({id: "code", kind: "code", label: "Coding"});
+  return out;
+}
+const stageById = id => stages().find(s => s.id === id) || null;
+function stagePapers(stage){
+  if (!stage) return [];
+  const byRank = (a, b) => (a.rank || 0) - (b.rank || 0);
+  if (stage.kind === "screen") return st.papers.filter(p => p.source === "search" && p.rank >= stage.from && p.rank <= stage.to).sort(byRank);
+  if (st.cfg.mode === "A") return st.papers.filter(p => p.source !== "search").sort(byRank);
+  const order = new Map((st.sample?.pids || []).map((pid, i) => [pid, i]));
+  return st.papers.filter(p => order.has(p.pid)).sort((a, b) => order.get(a.pid) - order.get(b.pid));
+}
+const lockOf = (stageId, role) => st.locks[stageId + "-" + role] || null;
+const bothLocked = stageId => !!(lockOf(stageId, "A") && lockOf(stageId, "B"));
+
+/* ------------------------------------------------------------------ boot and subscriptions */
+async function boot(){
+  render();
+  measureTop();
+  let db = null, dl = null;
+  if (window.claude && typeof window.claude.use === "function") {
+    try { db = await window.claude.use("db"); } catch { db = null; }
+    try { dl = await window.claude.use("downloads"); } catch { dl = null; }
+  }
+  st.dl = dl; st.S = db ? makeDbStore(db) : makeLocalStore(); st.connecting = false;
+  const S = st.S;
+  S.watchDoc("config/main", (d, m) => { st.cfg = d || {}; if (m.definitive) st.loaded.cfg = true; requestRender(); });
+  S.watchDoc("config/sample", d => { st.sample = d; requestRender(); });
+  S.watchDoc("config/frame", d => { st.frame = d; requestRender(); });
+  S.watchCol("papers", (docs, m) => { st.papers = docs.map(x => ({...x.data, pid: x.id})); if (m.definitive) st.loaded.papers = true; requestRender(); });
+  S.watchCol("locks", (docs, m) => { st.locks = Object.fromEntries(docs.map(x => [x.id, x.data])); if (m.definitive) st.loaded.locks = true; requestRender(); });
+  S.watchCol("progress", docs => { st.progress = Object.fromEntries(docs.map(x => [x.id, x.data])); if (st.tab === "setup" || st.tab === "compare") requestRender(); });
+  S.watchCol("roles", (docs, m) => { st.roles = Object.fromEntries(docs.map(x => [x.id, x.data])); if (m.definitive) st.loaded.roles = true; requestRender(); });
+  S.watchCol("events", docs => { st.events = docs.map(x => x.data).sort((a, b) => (a.at || "") < (b.at || "") ? -1 : 1); if (st.tab === "setup") requestRender(); });
+  render();
+}
+async function logEvent(text){
+  try { await st.S.set("events/" + nowISO().replace(/[:.]/g, "-") + "-" + randomHex(3), {at: nowISO(), role: st.role, name: roleName(st.role), text}); } catch {}
+}
+function watchAnswers(stage){
+  const key = stage && isCoder(st.role) ? "ans-" + stage.id + "-" + st.role : null;
+  if (key === st.ansKey) return;
+  if (st.ansUnsub) st.ansUnsub();
+  st.ansUnsub = null; st.ans = {}; st.ansKey = key; st.ansLoaded = null; st.formKey = null;
+  if (!key) return;
+  st.ansUnsub = st.S.watchCol(key, (docs, m) => {
+    if (st.ansKey !== key) return;
+    const next = {};
+    for (const d of docs) next[d.id] = d.data;
+    for (const pid of Object.keys(st.ans)) if (st.dirty.has(key + "|" + pid)) next[pid] = st.ans[pid];
+    st.ans = next;
+    if (m.definitive) st.ansLoaded = key;
+    if (st.formKey && st.formPid && !st.dirty.has(key + "|" + st.formPid)) {
+      const nv = JSON.stringify(((st.ans[st.formPid] || {}).v) || {});
+      if (nv !== st.formBuiltV) { st.formKey = null; requestRender(); return; }
+    }
+    if (!st.formKey) requestRender(); else updateWorkChrome();
+  });
+}
+function watchCons(stageId){
+  const key = stageId ? "cons-" + stageId : null;
+  if (key === st.consKey) return;
+  if (st.consUnsub) st.consUnsub();
+  st.consUnsub = null; st.cons = {}; st.consKey = key;
+  if (key) st.consUnsub = st.S.watchCol(key, docs => { if (st.consKey !== key) return; st.cons = Object.fromEntries(docs.map(x => [x.id, x.data])); if (st.tab === "resolve" || st.tab === "compare") requestRender(); });
+}
+
+/* ------------------------------------------------------------------ render scheduling, drafts and focus */
+function typingOutsideForm(){ const a = document.activeElement; return !!(a && $("#view").contains(a) && a.matches("input[type=text],input[type=number],input[type=password],textarea") && !a.closest("#codeForm")); }
+function fileChosen(){ return [...$("#view").querySelectorAll("input[type=file]")].some(i => i.files && i.files.length); }
+function requestRender(){ if (st.pointerDown || typingOutsideForm() || fileChosen()) { st.pendingRender = true; return; } render(); }
+function flushPending(){ if (st.pendingRender && !st.pointerDown && !typingOutsideForm() && !fileChosen()) render(); }
+document.addEventListener("pointerdown", () => { st.pointerDown = true; }, true);
+["pointerup", "pointercancel"].forEach(e => document.addEventListener(e, () => { st.pointerDown = false; setTimeout(flushPending, 0); }, true));
+document.addEventListener("focusout", () => setTimeout(flushPending, 0));
+setInterval(flushPending, 1500);
+document.addEventListener("input", e => { if (e.target && e.target.dataset && e.target.dataset.draft) e.target.dataset.dirty = "1"; }, true);
+document.addEventListener("change", e => { if (e.target && e.target.dataset && e.target.dataset.draft) e.target.dataset.dirty = "1"; }, true);
+function captureDrafts(){
+  const view = $("#view"), d = {};
+  view.querySelectorAll("[data-draft][data-dirty]").forEach(el => { d[el.dataset.draft] = el.type === "checkbox" || el.type === "radio" ? el.checked : el.value; });
+  const a = document.activeElement;
+  let focus = null, sel = null;
+  if (a && (view.contains(a) || $("#tabs").contains(a))) {
+    focus = a.dataset && a.dataset.draft ? `[data-draft="${cssq(a.dataset.draft)}"]` : a.dataset && a.dataset.tab ? `[data-tab="${cssq(a.dataset.tab)}"]` : a.id ? "#" + a.id : null;
+    try { if ("selectionStart" in a && a.selectionStart != null) sel = [a.selectionStart, a.selectionEnd]; } catch {}
+  }
+  return {d, focus, sel};
+}
+const cssq = s => String(s).replace(/["\\]/g, "\\$&");
+function restoreDrafts(snap){
+  const root = document;
+  for (const [k, v] of Object.entries(snap.d)) {
+    const el = root.querySelector(`[data-draft="${cssq(k)}"]`);
+    if (!el) continue;
+    if (el.type === "checkbox" || el.type === "radio") el.checked = v; else el.value = v;
+    el.dataset.dirty = "1";
+  }
+  const target = st.focusTarget ? root.querySelector(st.focusTarget) : snap.focus ? root.querySelector(snap.focus) : null;
+  st.focusTarget = null;
+  if (target) { try { target.focus({preventScroll: true}); } catch { target.focus(); } if (snap.sel && !st.focusTarget && "setSelectionRange" in target) { try { target.setSelectionRange(snap.sel[0], snap.sel[1]); } catch {} } }
+}
+function measureTop(){ const t = $("#top"); if (t) document.documentElement.style.setProperty("--topH", t.getBoundingClientRect().height + "px"); }
+window.addEventListener("resize", measureTop);
+
+/* ------------------------------------------------------------------ rendering */
+function tabsFor(role){
+  if (role === "coord") return [["setup","Setup"],["compare","Agreement"],["export","Export"],["guide","Guide"]];
+  if (role === "adj") return [["resolve","Resolve"],["compare","Agreement"],["export","Export"],["guide","Guide"]];
+  if (isCoder(role)) return [["work","My coding"],["compare","Agreement"],["export","Export"],["guide","Guide"]];
+  return [];
+}
+function render(){
+  const snap = captureDrafts();
+  st.pendingRender = false;
+  const view = $("#view");
+  document.body.dataset.role = st.role || "coord";
+  const conn = $("#conn");
+  conn.className = "conn " + (st.connecting ? "" : st.S && st.S.online ? "live" : "off");
+  conn.lastElementChild.textContent = st.connecting ? "Connecting" : st.S && st.S.online ? "Shared workspace, live" : "Offline, this browser only";
+  if (st.role && st.gatePassedFor === st.role && st.S && st.S.online && st.loaded.roles) {
+    const r = st.roles[st.role];
+    if (!r || !r.hash || ssGet("acb.ok." + st.role) !== r.hash) { st.gatePassedFor = null; ssSet("acb.ok." + st.role, null); }
+  }
+  const ok = st.role && st.gatePassedFor === st.role;
+  $("#rolepill").innerHTML = ok ? `<span class="rolepill"><strong>${esc(ROLE[st.role].label)}</strong>${roleName(st.role) ? esc(roleName(st.role)) : ""}<button type="button" id="switchRole">Switch role</button></span>` : "";
+  const tabs = $("#tabs");
+  tabs.hidden = !ok;
+  if (ok) {
+    const list = tabsFor(st.role);
+    if (!list.some(t => t[0] === st.tab)) st.tab = list[0][0];
+    tabs.innerHTML = list.map(([k, l]) => `<button type="button" role="tab" data-tab="${k}" aria-selected="${st.tab === k}">${esc(l)}</button>`).join("");
+  }
+  if (st.revoked) { view.innerHTML = `<div class="note bad">Access to this workspace changed while the page was open. Reload to continue.</div>`; return; }
+  if (!ok) renderGate(view);
+  else ({work: renderWork, compare: renderCompare, resolve: renderResolve, setup: renderSetup, export: renderExport, guide: renderGuide})[st.tab](view);
+  restoreDrafts(snap);
+  measureTop();
+}
+
+/* gate: pick a role, then a passphrase for that role */
+function renderGate(view){
+  if (st.role && !st.connecting) {
+    if (!st.S.online) { st.gatePassedFor = st.role; return render(); }
+    if (!st.loaded.roles) { view.innerHTML = `<p class="muted">Loading the workspace.</p>`; return; }
+    const r = st.roles[st.role];
+    if (r && r.hash && ssGet("acb.ok." + st.role) === r.hash) { st.gatePassedFor = st.role; return render(); }
+    return renderPass(view, !!(r && r.hash), r);
+  }
+  const names = st.cfg.names || {};
+  const loading = st.connecting || !st.loaded.cfg;
+  const mode = st.cfg.mode === "A" ? "Re-coding the 33 studies in the submitted audit" : st.cfg.mode === "B" ? "Structured search with a random sample of " + (st.cfg.target || "N") + " studies" : loading ? "Loading" : "Scope not chosen yet";
+  view.innerHTML = `
+  <section class="intro">
+    <div>
+      <p class="eyebrow">Frontiers in Neuroscience 1953177 \u00b7 Reviewer 1, comment 3</p>
+      <h1>Two coders, one codebook, no peeking</h1>
+      <p class="lead">Each coder answers ${compFields("code").length} questions per study on their own. Neither sees the other's answers until both sheets are locked. The page then computes agreement, and the adjudicator settles every disagreement.</p>
+      <div class="steps">
+        <div><span>The coordinator sets the names and the paper list.</span></div>
+        <div><span>Coder A and Coder B each code every paper and lock their sheet.</span></div>
+        <div><span>Agreement (percent, Cohen's kappa, Gwet's AC1) appears for everyone.</span></div>
+        <div><span>The adjudicator resolves disagreements; the consensus sheet is exported for the paper.</span></div>
+      </div>
+      <p class="small muted" style="margin-top:18px">Scope: ${esc(mode)} \u00b7 codebook v${CODEBOOK_VERSION} \u00b7 ${st.loaded.papers ? st.papers.length + " papers in the workspace" : "loading papers"}</p>
+    </div>
+    <div class="stack">
+      <p class="eyebrow">Choose your role</p>
+      <div class="roles">
+        ${["A","B","adj","coord"].map(r => `<button type="button" class="rolecard ${r}" data-pick="${r}"><span class="rk"><i></i>${esc(ROLE[r].label)}</span><span class="nm">${esc(loading ? "Loading" : names[r] || "Not assigned")}</span><span class="ds">${esc(ROLE[r].desc)}</span></button>`).join("")}
+      </div>
+      <p class="small muted">Each role is protected by its own passphrase, set the first time somebody opens it.</p>
+      ${!st.connecting && !st.S.online ? `<div class="note warn">The shared workspace is not available here, so answers stay in this browser. A coder working offline imports a work package from the coordinator, then exports a sheet to send back.</div>` : ""}
+    </div>
+  </section>`;
+}
+function renderPass(view, exists, r){
+  const resets = (r && r.resets) || [];
+  view.innerHTML = `
+  <section class="panel" style="max-width:560px;margin:32px auto;padding:22px">
+    <div class="stack">
+      <p class="eyebrow">${esc(ROLE[st.role].label)}${roleName(st.role) ? " \u00b7 " + esc(roleName(st.role)) : ""}</p>
+      <h2>${exists ? "Enter your passphrase" : "Set the passphrase for this role"}</h2>
+      <p class="muted small">${exists ? "Every role has its own passphrase, so nobody opens another person's workspace by switching roles." : st.role === "coord" ? "The first person to open the coordinator role sets this passphrase. Set it before you share the link." : "Only you should open this role. Keep the passphrase safe: the coordinator can reset it, and every reset is logged and shown here."}</p>
+      ${resets.length ? `<div class="note warn small">This passphrase was reset ${resets.length} time(s), most recently on ${esc(fmtTime(resets[resets.length - 1]))}. If you did not ask for that, tell the adjudicator before coding further.</div>` : ""}
+      <form id="passForm" class="stack">
+        <label class="fld">Passphrase<input type="password" id="pass1" data-draft="pass1" autocomplete="${exists ? "current-password" : "new-password"}" required minlength="6"></label>
+        ${exists ? "" : `<label class="fld">Repeat passphrase<input type="password" id="pass2" data-draft="pass2" autocomplete="new-password" required minlength="6"></label>`}
+        <div class="row"><button class="btn" type="submit">${exists ? "Open my workspace" : "Set passphrase and open"}</button><button class="btn ghost" type="button" id="backRoles">Choose another role</button></div>
+      </form>
+    </div>
+  </section>`;
+  if (!document.activeElement || !$("#view").contains(document.activeElement)) $("#pass1").focus();
+}
+async function submitPass(){
+  const role = st.role, p1 = $("#pass1").value, p2El = $("#pass2");
+  if (p1.length < 6) return toast("Use at least 6 characters.", "bad");
+  const fresh = st.S.online ? await st.S.get("roles/" + role) : st.roles[role];
+  if (fresh && fresh.hash) {
+    const h = await sha256(fresh.salt + p1);
+    if (h !== fresh.hash) return toast("That passphrase does not match. Ask the coordinator to reset it if it is lost.", "bad");
+    ssSet("acb.ok." + role, h);
+  } else {
+    if (!p2El || p2El.value !== p1) return toast("The two passphrases differ.", "bad");
+    const salt = randomHex(16), h = await sha256(salt + p1);
+    await st.S.set("roles/" + role, {hash: h, salt, setAt: nowISO(), resets: (fresh && fresh.resets) || []});
+    ssSet("acb.ok." + role, h);
+    logEvent(ROLE[role].label + " set a passphrase");
+  }
+  st.gatePassedFor = role;
+  st.roles[role] = st.roles[role] || {};
+  render();
+}
+
+/* ------------------------------------------------------------------ coder workspace */
+function currentStageForCoder(){
+  const list = stages();
+  if (!list.length) return null;
+  let s = st.stagePicked ? stageById(st.stageId) : null;
+  if (!s) s = list.find(x => !lockOf(x.id, st.role)) || list[list.length - 1];
+  if (s.id !== st.stageId) { st.stageId = s.id; ssSet("acb.stage", s.id); }
+  return s;
+}
+function paperStatus(pid){ const a = st.ans[pid]; if (!a) return ""; return a.done ? "done" : "prog"; }
+function renderWork(view){
+  if (!st.loaded.cfg || !st.loaded.papers || !st.loaded.locks) { view.innerHTML = `<p class="muted">Loading the workspace.</p>`; return; }
+  const stage = currentStageForCoder();
+  if (!stage) {
+    view.innerHTML = `<div class="note">Nothing to code yet. ${!st.S.online ? "Working offline: import the work package from the coordinator under Export." : st.cfg.mode ? "The coordinator has not opened a screening round or frozen the coding sample." : "The coordinator has not chosen the audit scope."}</div>`;
+    return;
+  }
+  watchAnswers(stage);
+  const papers = stagePapers(stage);
+  if (!st.pid || !papers.some(p => p.pid === st.pid)) st.pid = (papers.find(p => !(st.ans[p.pid] || {}).done) || papers[0] || {}).pid || null;
+  const locked = lockOf(stage.id, st.role);
+  const ready = st.ansLoaded === st.ansKey;
+  const key = [stage.id, st.pid, locked ? "L" : "U", ready ? 1 : 0, papers.length, papers.map(p => p.pid).join(",").length].join("|");
+  if (st.formKey === key && $("#workRoot")) { updateWorkChrome(); return; }
+  st.formKey = ready ? key : null;
+  const list = stages();
+  const cur = papers.find(p => p.pid === st.pid);
+  view.innerHTML = `
+  <div class="stack">
+    <div class="row" style="justify-content:space-between">
+      <div class="row">${list.length > 1 ? `<label class="fld" style="flex-direction:row;align-items:center;gap:8px">Stage <select id="stageSel">${list.map(s => `<option value="${s.id}" ${s.id === stage.id ? "selected" : ""}>${esc(s.label)}${lockOf(s.id, st.role) ? " (locked)" : ""}</option>`).join("")}</select></label>` : `<h2>${esc(stage.label)}</h2>`}</div>
+      <div class="row" id="lockArea"></div>
+    </div>
+    <div class="work" id="workRoot">
+      <aside class="panel queue">
+        <div class="queue-head">
+          <div class="row" style="justify-content:space-between"><span class="eyebrow">Papers</span><span class="small mono" id="qcount"></span></div>
+          <div class="bar"><b id="qbar" style="width:0"></b></div>
+          <select class="qselect" id="qselect" aria-label="Paper">${papers.map((p, i) => `<option value="${esc(p.pid)}" ${p.pid === st.pid ? "selected" : ""}>${({done:"\u2713 ", prog:"\u00b7 ", "":""})[paperStatus(p.pid)]}${i + 1}. ${esc(p.title).slice(0, 90)}</option>`).join("")}</select>
+        </div>
+        <div class="qlist" id="qlist">${papers.map((p, i) => `<button type="button" class="qitem" data-pid="${esc(p.pid)}" aria-current="${p.pid === st.pid}"><span class="dot" data-dot="${esc(p.pid)}"></span><span><span class="t">${esc(p.title)}</span><span class="m">${i + 1} \u00b7 ${esc(p.authors || "")} ${esc(p.year || "")}</span></span></button>`).join("")}</div>
+      </aside>
+      <section class="panel" id="formPanel">${!ready ? `<p class="muted" style="padding:20px">Loading your saved answers.</p>` : cur ? renderForm(stage, cur, !!locked) : `<p class="muted" style="padding:20px">No papers in this stage.</p>`}</section>
+    </div>
+  </div>`;
+  updateWorkChrome();
+}
+function renderForm(stage, p, locked){
+  const a = st.ans[p.pid] || {v: {}};
+  const v = a.v || {};
+  st.formPid = p.pid; st.formBuiltV = JSON.stringify(v);
+  const kind = stage.kind;
+  const link = p.url || (p.doi ? "https://doi.org/" + p.doi : "");
+  let html = `<div class="paperhead">
+    <p class="eyebrow">${esc(p.pid)}${p.rank ? " \u00b7 rank " + p.rank : ""}</p>
+    <h2 class="ptitle" id="paperTitle" tabindex="-1">${esc(p.title)}</h2>
+    <p class="pmeta">${esc(p.authors || "")}${p.year ? " (" + esc(p.year) + ")" : ""}${p.venue ? " \u00b7 " + esc(p.venue) : ""}</p>
+    <div class="row small">${link ? `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer">Open the paper</a>` : ""}${p.doi ? `<span class="mono muted">${esc(p.doi)}</span>` : ""}</div>
+    ${kind === "screen" && p.abstract ? `<details class="abstract" open><summary>Abstract</summary><p style="margin-top:6px">${esc(p.abstract)}</p></details>` : ""}
+  </div><form class="form" id="codeForm" autocomplete="off"><fieldset style="border:0;margin:0;padding:0;min-width:0" ${locked ? "disabled" : ""}>`;
+  for (const g of CB[kind].groups) {
+    const gHidden = g.when && !condOK(g.when, v);
+    html += `<div class="grp" data-when='${esc(JSON.stringify(g.when || {}))}' ${gHidden ? "hidden" : ""}><h3>${esc(g.title)}</h3>${g.intro ? `<p class="gi">${esc(g.intro)}</p>` : ""}`;
+    for (const f of g.fields) {
+      const fHidden = f.when && !condOK(f.when, v);
+      const id = "f_" + f.id;
+      html += `<div class="q" data-field="${f.id}" data-when='${esc(JSON.stringify(f.when || {}))}' ${fHidden ? "hidden" : ""}>
+        <span class="code">${f.type === "text" || f.type === "minutes" ? "" : esc(f.id)}</span>
+        <span class="lbl" id="${id}_l">${esc(f.label)}${f.primary ? `<span class="pri">primary</span>` : ""}</span>
+        ${f.rule ? `<p class="rule">${esc(f.rule)}</p>` : ""}
+        <div class="ctl">`;
+      if (f.type === "cat") {
+        html += `<div class="opts" role="radiogroup" aria-labelledby="${id}_l">${f.options.map(([val, lab]) => `<label class="opt"><input type="radio" name="${f.id}" id="${id}_${esc(val)}" value="${esc(val)}" ${v[f.id] === val ? "checked" : ""}><span>${esc(lab)}</span></label>`).join("")}</div>`;
+      } else if (f.type === "num") {
+        html += `<input type="text" inputmode="decimal" id="${id}" name="${f.id}" value="${esc(v[f.id] ?? "")}" style="max-width:180px" aria-labelledby="${id}_l">`;
+      } else if (f.type === "minutes") {
+        html += `<input type="number" min="0" step="1" id="${id}" name="${f.id}" value="${esc(v[f.id] ?? "")}" style="max-width:140px" aria-labelledby="${id}_l">`;
+      } else {
+        html += `<textarea id="${id}" name="${f.id}" rows="2" aria-labelledby="${id}_l">${esc(v[f.id] ?? "")}</textarea>`;
+      }
+      html += `</div></div>`;
+    }
+    html += `</div>`;
+  }
+  html += `</fieldset></form>
+  <div class="formfoot">
+    <span class="save" id="saveState">${locked ? "Locked on " + esc(fmtTime(lockOf(stage.id, st.role).at)) : a.updatedAt ? "Saved " + esc(fmtTime(a.updatedAt)) : "Answers save as you go"}</span>
+    <span class="missing" id="missing"></span>
+    ${locked ? "" : `<button type="button" class="btn ghost sm" id="saveNow">Save now</button>`}
+    <button type="button" class="btn ghost sm" id="prevPaper">Previous</button>
+    ${locked ? "" : `<button type="button" class="btn sm" id="donePaper">${a.done ? "Done, next paper" : "Mark done and next"}</button>`}
+    <button type="button" class="btn ghost sm" id="nextPaper">Next</button>
+  </div>`;
+  return html;
+}
+function readForm(stage){
+  const form = $("#codeForm"); if (!form) return null;
+  const v = {};
+  for (const f of fields(stage.kind)) {
+    if (f.type === "cat") { const c = form.querySelector(`input[name="${f.id}"]:checked`); if (c) v[f.id] = c.value; }
+    else { const el = form.querySelector(`[name="${f.id}"]`); if (el && el.value.trim() !== "") v[f.id] = el.value.trim(); }
+  }
+  for (const f of fields(stage.kind)) if (!condOK(condOf(f), v)) delete v[f.id];
+  return v;
+}
+function missingFor(stage, v){
+  return fields(stage.kind).filter(f => (f.type === "cat" || (f.type === "num" && f.id === "H4")) && condOK(condOf(f), v) && blank(v[f.id])).map(f => f.id);
+}
+function applyVisibility(stage, v){
+  document.querySelectorAll("#codeForm [data-when]").forEach(el => { const w = JSON.parse(el.dataset.when || "{}"); el.hidden = !condOK(w, v); });
+}
+const setSaveState = t => { const s = $("#saveState"); if (s) s.textContent = t; };
+function scheduleSave(stage, markDone, immediate){
+  const pid = st.pid, key = st.ansKey;
+  const v = readForm(stage);
+  if (!v || !pid || !key || st.ansLoaded !== key) return Promise.resolve();
+  applyVisibility(stage, v);
+  const miss = missingFor(stage, v);
+  const prev = st.ans[pid] || {};
+  const done = markDone ? miss.length === 0 : !!(prev.done && miss.length === 0);
+  const doc = {v, done, updatedAt: nowISO(), codebook: CODEBOOK_VERSION, name: roleName(st.role)};
+  st.ans[pid] = doc;
+  st.dirty.add(key + "|" + pid);
+  const seq = ++st.editSeq;
+  setSaveState("Saving");
+  const m = $("#missing"); if (m) m.textContent = miss.length ? miss.length + " unanswered: " + miss.join(", ") : "";
+  clearTimeout(st.saveTimer);
+  return new Promise(resolve => {
+    st.saveTimer = setTimeout(async () => {
+      st.saveTimer = null;
+      if (lockOf(stage.id, st.role)) { toast("This sheet is locked, so the change was not saved.", "bad"); return resolve(); }
+      try {
+        await st.S.set(key + "/" + pid, doc);
+        if (seq === st.editSeq) st.dirty.delete(key + "|" + pid);
+        setSaveState("Saved " + fmtTime(doc.updatedAt));
+        const papers = stagePapers(stage), n = papers.filter(p => (st.ans[p.pid] || {}).done).length;
+        st.S.set("progress/" + stage.id + "-" + st.role, {done: n, total: papers.length, at: nowISO(), name: roleName(st.role)}).catch(() => {});
+      } catch (e) {
+        setSaveState("Not saved");
+        toast("Could not save: " + msg(e) + ". Your answer is still on the page; press Save now to try again.", "bad");
+      }
+      updateWorkChrome(); resolve();
+    }, markDone || immediate ? 0 : 700);
+  });
+}
+function updateWorkChrome(){
+  const stage = stageById(st.stageId); if (!stage || !$("#workRoot")) return;
+  const papers = stagePapers(stage);
+  const done = papers.filter(p => (st.ans[p.pid] || {}).done).length;
+  const q = $("#qcount"); if (q) q.textContent = done + " / " + papers.length + " done";
+  const b = $("#qbar"); if (b) b.style.width = (papers.length ? 100 * done / papers.length : 0) + "%";
+  document.querySelectorAll("[data-dot]").forEach(d => { d.className = "dot " + paperStatus(d.dataset.dot); });
+  const la = $("#lockArea"); if (!la) return;
+  const lock = lockOf(stage.id, st.role);
+  const unsaved = [...st.dirty].some(k => k.startsWith(st.ansKey + "|"));
+  la.innerHTML = lock
+    ? `<span class="chip ok">Locked ${esc(fmtTime(lock.at))}</span><span class="chip mono">${esc(lock.fp)}</span>`
+    : `<span class="small muted">${done === papers.length && papers.length ? (unsaved ? "Waiting for the last answers to save." : "All papers done.") : "Lock becomes available when every paper is done."}</span><button type="button" class="btn sm" id="lockBtn" ${done === papers.length && papers.length && !unsaved ? "" : "disabled"}>Lock my sheet</button>`;
+}
+async function fingerprint(ans, pids){
+  const canon = o => Object.keys(o || {}).sort().reduce((acc, k) => { if (!blank(o[k])) acc[k] = o[k]; return acc; }, {});
+  return (await sha256(JSON.stringify(pids.map(pid => [pid, canon((ans[pid] || {}).v)])))).slice(0, 16);
+}
+async function lockSheet(){
+  const stage = stageById(st.stageId); if (!stage || !isCoder(st.role)) return;
+  await flushSave();
+  const pids = stagePapers(stage).map(p => p.pid);
+  if (pids.some(pid => !(st.ans[pid] || {}).done)) return toast("Every paper must be marked done before locking.", "bad");
+  if ([...st.dirty].some(k => k.startsWith(st.ansKey + "|"))) return toast("Some answers have not reached the workspace yet. Press Save now, wait for Saved, then lock.", "bad");
+  const ok = await confirmTyped("Lock your sheet?", `After locking you cannot change any answer in ${stage.label}. When both coders have locked, everyone sees the agreement and the adjudicator sees both sheets.`, "LOCK");
+  if (!ok) return;
+  await flushSave();
+  const server = Object.fromEntries((await st.S.list(st.ansKey)).map(x => [x.id, x.data]));
+  if (pids.some(pid => !(server[pid] || {}).done)) return toast("The saved sheet does not have every paper marked done. Check the queue and try again.", "bad");
+  const fpServer = await fingerprint(server, pids), fpPage = await fingerprint(st.ans, pids);
+  if (fpServer !== fpPage) return toast("Some answers on this page differ from the saved sheet. Press Save now, wait for Saved, then lock again.", "bad");
+  await st.S.set("locks/" + stage.id + "-" + st.role, {at: nowISO(), name: roleName(st.role), n: pids.length, fp: fpServer, codebook: CODEBOOK_VERSION});
+  logEvent(`${ROLE[st.role].label} locked ${stage.label}: ${pids.length} papers, fingerprint ${fpServer}`);
+  toast("Sheet locked.");
+}
+async function flushSave(){
+  if (st.tab !== "work" || !$("#codeForm")) return;
+  const stage = stageById(st.stageId);
+  if (!stage || lockOf(stage.id, st.role)) return;
+  if (st.saveTimer) { clearTimeout(st.saveTimer); st.saveTimer = null; }
+  await scheduleSave(stage, false, true);
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flushSave(); });
+window.addEventListener("pagehide", () => { flushSave(); });
+
+/* ------------------------------------------------------------------ agreement */
+function kappaStats(a, b, cats){
+  const n = a.length; if (!n) return {n: 0};
+  const po = a.filter((x, i) => x === b[i]).length / n;
+  if (cats.length < 2) return {n, po, kappa: NaN, ac1: NaN};
+  const pa = c => a.filter(x => x === c).length / n, pb = c => b.filter(x => x === c).length / n;
+  const pe = cats.reduce((s, c) => s + pa(c) * pb(c), 0);
+  const kappa = pe >= 1 ? NaN : (po - pe) / (1 - pe);
+  const K = cats.length, pi = cats.map(c => (pa(c) + pb(c)) / 2);
+  const peG = pi.reduce((s, p) => s + p * (1 - p), 0) / (K - 1);
+  const ac1 = peG >= 1 ? NaN : (po - peG) / (1 - peG);
+  return {n, po, kappa, ac1};
+}
+async function loadCompare(stage, force){
+  if (!stage || !bothLocked(stage.id) || !st.loaded.papers) { if (force) st.cmp = null; return; }
+  const pidsSig = stagePapers(stage).map(p => p.pid).join(",");
+  const la = lockOf(stage.id, "A"), lb = lockOf(stage.id, "B");
+  if (!force && st.cmp && st.cmp.stageId === stage.id && st.cmp.lockA === la.at && st.cmp.lockB === lb.at && st.cmp.pidsSig === pidsSig) return;
+  const [da, db] = await Promise.all([st.S.list("ans-" + stage.id + "-A"), st.S.list("ans-" + stage.id + "-B")]);
+  const A = Object.fromEntries(da.map(x => [x.id, x.data])), B = Object.fromEntries(db.map(x => [x.id, x.data]));
+  const pids = stagePapers(stage).map(p => p.pid);
+  const [fa, fb] = await Promise.all([fingerprint(A, pids), fingerprint(B, pids)]);
+  st.cmp = {stageId: stage.id, A, B, pidsSig, lockA: la.at, lockB: lb.at, fpOkA: fa === la.fp, fpOkB: fb === lb.fp};
+}
+const cmpFresh = stage => !!(st.cmp && stage && st.cmp.stageId === stage.id && st.cmp.pidsSig === stagePapers(stage).map(p => p.pid).join(",") && st.cmp.lockA === (lockOf(stage.id, "A") || {}).at && st.cmp.lockB === (lockOf(stage.id, "B") || {}).at);
+function agreementRows(stage){
+  const pids = stagePapers(stage).map(p => p.pid), A = st.cmp.A, B = st.cmp.B;
+  return compFields(stage.kind).map(f => {
+    const cond = condOf(f), xa = [], xb = []; let numN = 0, numMatch = 0, oneSided = 0;
+    for (const pid of pids) {
+      const va = (A[pid] || {}).v || {}, vb = (B[pid] || {}).v || {};
+      const ma = condOK(cond, va), mb = condOK(cond, vb);
+      if (ma !== mb) { oneSided++; continue; }
+      if (!ma) continue;
+      if (f.type === "num") { numN++; if (sameVal(f, va[f.id], vb[f.id])) numMatch++; continue; }
+      if (blank(va[f.id]) || blank(vb[f.id])) { oneSided++; continue; }
+      xa.push(va[f.id]); xb.push(vb[f.id]);
+    }
+    if (f.type === "num") return {f, n: numN, po: numN ? numMatch / numN : NaN, kappa: NaN, ac1: NaN, oneSided, dis: numN - numMatch};
+    const cats = [...new Set([...xa, ...xb])].sort();
+    const s = kappaStats(xa, xb, cats);
+    return {f, ...s, cats: cats.length, oneSided, dis: s.n ? Math.round(s.n * (1 - s.po)) : 0};
+  });
+}
+function finalValue(stage, pid, fid){
+  const f = compFields(stage.kind).find(x => x.id === fid); if (!f) return undefined;
+  const va = (st.cmp.A[pid] || {}).v || {}, vb = (st.cmp.B[pid] || {}).v || {};
+  const cond = condOf(f);
+  const parents = Object.keys(cond).map(k => [k, finalValue(stage, pid, k)]);
+  if (parents.some(([, x]) => x === undefined)) return undefined;
+  if (parents.some(([k, x]) => x !== cond[k])) return null;
+  const c = ((st.cons[safeId(pid)] || {}).v || {})[fid];
+  if (c && !blank(c.value)) return c.value;
+  const unsure = stage.kind === "screen" && fid === "E1" && (va[fid] === "unsure" || vb[fid] === "unsure");
+  if (sameVal(f, va[fid], vb[fid]) && !unsure) return blank(va[fid]) ? "" : va[fid];
+  return undefined;
+}
+function disagreements(stage, pid){
+  const va = (st.cmp.A[pid] || {}).v || {}, vb = (st.cmp.B[pid] || {}).v || {}, out = [];
+  for (const f of compFields(stage.kind)) {
+    const cond = condOf(f);
+    const parents = Object.keys(cond).map(k => finalValue(stage, pid, k));
+    if (parents.some(p => p === undefined)) { if (condOK(cond, va) || condOK(cond, vb)) out.push({f, blocked: true}); continue; }
+    if (!Object.keys(cond).every(k => finalValue(stage, pid, k) === cond[k])) continue;
+    const unsure = stage.kind === "screen" && f.id === "E1" && (va.E1 === "unsure" || vb.E1 === "unsure");
+    if (sameVal(f, va[f.id], vb[f.id]) && !unsure) continue;
+    const c = ((st.cons[safeId(pid)] || {}).v || {})[f.id];
+    out.push({f, a: va[f.id], b: vb[f.id], resolved: c && !blank(c.value) ? c : null});
+  }
+  return out;
+}
+const fmt2 = x => isFinite(x) ? x.toFixed(2) : "\u2013";
+const median = xs => { if (!xs.length) return NaN; const s = [...xs].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+function kColor(k){ return !isFinite(k) ? "var(--faint)" : k >= 0.8 ? "var(--ok)" : k >= 0.6 ? "var(--warn)" : "var(--bad)"; }
+function stagePicker(id, current, filter){
+  const list = stages().filter(filter || (() => true));
+  if (list.length < 2) return "";
+  return `<label class="fld" style="flex-direction:row;align-items:center;gap:8px">Stage <select id="${id}">${list.map(s => `<option value="${s.id}" ${current && s.id === current.id ? "selected" : ""}>${esc(s.label)}</option>`).join("")}</select></label>`;
+}
+function resetNote(){
+  const bits = ["A", "B", "adj"].map(r => { const n = ((st.roles[r] || {}).resets || []).length; return n ? `${ROLE[r].label} ${n}` : null; }).filter(Boolean);
+  return bits.length ? `<div class="note warn small">Passphrase resets on this workspace: ${esc(bits.join(", "))}. A reset lets whoever holds the coordinator passphrase open that role, so record it when reporting the agreement.</div>` : "";
+}
+function renderCompare(view){
+  const list = stages();
+  if (!list.length) { view.innerHTML = `<div class="note">No stages yet.</div>`; return; }
+  const stage = stageById(st.cmpStageId) || list.find(s => bothLocked(s.id)) || list[0];
+  st.cmpStageId = stage.id;
+  const la = lockOf(stage.id, "A"), lb = lockOf(stage.id, "B");
+  const head = `<div class="row" style="justify-content:space-between"><div class="row"><h2>Agreement</h2>${stagePicker("cmpStage", stage)}</div>
+    <div class="row">${[["A", la], ["B", lb]].map(([r, l]) => `<span class="chip ${l ? "ok" : ""}">${esc(ROLE[r].label)}: ${l ? "locked " + esc(fmtTime(l.at)) : "not locked"}</span>`).join("")}</div></div>`;
+  if (!bothLocked(stage.id)) {
+    const pa = st.progress[stage.id + "-A"], pb = st.progress[stage.id + "-B"];
+    view.innerHTML = `<div class="stack">${head}<div class="note">Agreement stays hidden until both coders lock their sheets for ${esc(stage.label)}. Progress so far: Coder A ${pa ? pa.done + " of " + pa.total : "not started"}, Coder B ${pb ? pb.done + " of " + pb.total : "not started"}.</div>${resetNote()}</div>`;
+    return;
+  }
+  watchCons(stage.id);
+  if (!st.loaded.papers) { view.innerHTML = `<div class="stack">${head}<p class="muted">Loading the paper list.</p></div>`; return; }
+  if (!cmpFresh(stage)) {
+    view.innerHTML = `<div class="stack">${head}<p class="muted">Loading both sheets.</p></div>`;
+    guard(loadCompare(stage).then(render), "Could not load the sheets");
+    return;
+  }
+  const rows = agreementRows(stage);
+  const prim = rows.filter(r => r.f.primary && r.f.type === "cat");
+  const papers = stagePapers(stage);
+  const disCounts = papers.map(p => ({p, d: disagreements(stage, p.pid)}));
+  const open = disCounts.reduce((s, x) => s + x.d.filter(d => !d.resolved && !d.blocked).length, 0);
+  const total = disCounts.reduce((s, x) => s + x.d.length, 0);
+  view.innerHTML = `<div class="stack">${head}
+    ${!st.cmp.fpOkA || !st.cmp.fpOkB ? `<div class="note bad">A sheet does not match the fingerprint recorded when it was locked (${!st.cmp.fpOkA ? "Coder A" : ""}${!st.cmp.fpOkA && !st.cmp.fpOkB ? " and " : ""}${!st.cmp.fpOkB ? "Coder B" : ""}). That happens if answers changed after the lock, if an offline sheet was edited before import, or if the paper list changed since. Tell the coordinator before using these numbers.</div>` : `<div class="note">Both sheets match the fingerprints recorded when they were locked. These are preview statistics without confidence intervals; the numbers reported in the manuscript are recomputed offline from the exported sheets.</div>`}
+    ${resetNote()}
+    <div class="grid2">
+      <div class="panel" style="padding:14px 16px"><p class="eyebrow">Primary fields, median kappa</p><p class="mono" style="font-size:28px">${fmt2(median(prim.map(r => r.kappa).filter(isFinite)))}</p><p class="small muted">${prim.length} primary fields, ${papers.length} papers</p></div>
+      <div class="panel" style="padding:14px 16px"><p class="eyebrow">Disagreements to resolve</p><p class="mono" style="font-size:28px">${open}<span class="muted" style="font-size:16px"> / ${total}</span></p><p class="small muted">${total - open} resolved by the adjudicator</p></div>
+    </div>
+    <div class="tblwrap"><table>
+      <thead><tr><th>Field</th><th>Question</th><th class="num">Papers</th><th class="num">Agreement</th><th class="num">Kappa</th><th class="num">AC1</th><th class="num">Differ</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td class="mono">${esc(r.f.id)}${r.f.primary ? " *" : ""}</td><td>${esc(r.f.label)}</td><td class="num">${r.n}</td><td class="num">${isFinite(r.po) ? Math.round(100 * r.po) + "%" : "\u2013"}</td><td class="num">${fmt2(r.kappa)}<span class="kbar"><b style="width:${isFinite(r.kappa) ? Math.max(0, r.kappa) * 100 : 0}%;background:${kColor(r.kappa)}"></b></span></td><td class="num">${fmt2(r.ac1)}</td><td class="num">${r.dis + r.oneSided}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <p class="small muted">* primary field. Kappa and AC1 use the papers where both coders reached and answered the question, over the categories they actually used, which is what the offline script does. Numeric fields report exact agreement within 0.005 after percentages are converted. "Differ" also counts papers where only one coder reached or answered the question. A dash means the statistic is undefined, usually because both coders used a single category.</p>
+  </div>`;
+}
+
+/* ------------------------------------------------------------------ adjudication */
+function renderResolve(view){
+  const list = stages().filter(s => bothLocked(s.id));
+  if (!list.length) { view.innerHTML = `<div class="stack"><h2>Resolve</h2><div class="note">Nothing to resolve yet. Disagreements appear here once both coders lock a stage.</div></div>`; return; }
+  const stage = list.find(s => s.id === st.resStageId) || list[0]; st.resStageId = stage.id;
+  watchCons(stage.id);
+  if (!st.loaded.papers) { view.innerHTML = `<p class="muted">Loading the paper list.</p>`; return; }
+  if (!cmpFresh(stage)) { view.innerHTML = `<p class="muted">Loading both sheets.</p>`; guard(loadCompare(stage).then(render), "Could not load the sheets"); return; }
+  const papers = stagePapers(stage).map(p => ({p, d: disagreements(stage, p.pid)})).filter(x => x.d.length);
+  if (!papers.some(x => x.p.pid === st.resolvePid)) st.resolvePid = (papers.find(x => x.d.some(d => !d.resolved)) || papers[0] || {p: {}}).p.pid;
+  const cur = papers.find(x => x.p.pid === st.resolvePid);
+  const open = papers.reduce((s, x) => s + x.d.filter(d => !d.resolved && !d.blocked).length, 0);
+  view.innerHTML = `<div class="stack">
+    <div class="row" style="justify-content:space-between"><div class="row"><h2>Resolve</h2>${list.length > 1 ? `<label class="fld" style="flex-direction:row;align-items:center;gap:8px">Stage <select id="resStage">${list.map(s => `<option value="${s.id}" ${s.id === stage.id ? "selected" : ""}>${esc(s.label)}</option>`).join("")}</select></label>` : ""}</div><span class="chip ${open ? "warn" : "ok"}">${open ? open + " open" : "All resolved"}</span></div>
+    ${!papers.length ? `<div class="note">The coders agree on every question in ${esc(stage.label)}.</div>` : `
+    <div class="work">
+      <aside class="panel queue"><div class="queue-head"><span class="eyebrow">Papers with disagreements</span>
+        <select class="qselect" id="resSelect" aria-label="Paper">${papers.map(x => `<option value="${esc(x.p.pid)}" ${x.p.pid === st.resolvePid ? "selected" : ""}>${esc(x.p.title).slice(0, 80)} (${x.d.filter(d => !d.resolved).length})</option>`).join("")}</select></div>
+        <div class="qlist">${papers.map(x => { const o = x.d.filter(d => !d.resolved).length; return `<button type="button" class="qitem" data-rpid="${esc(x.p.pid)}" aria-current="${x.p.pid === st.resolvePid}"><span class="dot ${o ? "prog" : "done"}"></span><span><span class="t">${esc(x.p.title)}</span><span class="m">${o} open of ${x.d.length}</span></span></button>`; }).join("")}</div>
+      </aside>
+      <section class="panel">
+        <div class="paperhead"><p class="eyebrow">${esc(cur.p.pid)}</p><h2 class="ptitle" id="paperTitle" tabindex="-1">${esc(cur.p.title)}</h2><p class="pmeta">${esc(cur.p.authors || "")} ${cur.p.year ? "(" + esc(cur.p.year) + ")" : ""}${cur.p.url ? ` \u00b7 <a href="${esc(cur.p.url)}" target="_blank" rel="noopener noreferrer">Open the paper</a>` : ""}</p></div>
+        ${cur.d.map(d => {
+          const f = d.f;
+          if (d.blocked) return `<div class="ditem"><div class="row"><span class="mono" style="color:var(--role)">${esc(f.id)}</span><strong>${esc(f.label)}</strong></div><p class="small muted">Resolve the question this one depends on first.</p></div>`;
+          const qa = (QUOTE_FOR[f.id] || ["note"]).map(q => ((st.cmp.A[cur.p.pid] || {}).v || {})[q]).filter(Boolean).join("\n");
+          const qb = (QUOTE_FOR[f.id] || ["note"]).map(q => ((st.cmp.B[cur.p.pid] || {}).v || {})[q]).filter(Boolean).join("\n");
+          const opts = f.type === "cat" ? f.options.filter(o => !(stage.kind === "screen" && f.id === "E1" && o[0] === "unsure")) : null;
+          const cv = d.resolved ? d.resolved.value : "";
+          const k = `res:${cur.p.pid}:${f.id}`;
+          return `<div class="ditem" data-res="${esc(f.id)}">
+            <div class="row"><span class="mono" style="color:var(--role)">${esc(f.id)}</span><strong>${esc(f.label)}</strong>${d.resolved ? `<span class="chip ok">Resolved</span>` : ""}</div>
+            <div class="side">
+              <div class="sv A"><p class="who">Coder A</p><p>${esc(optLabel(f, d.a))}</p>${qa ? `<p class="quote">${esc(qa)}</p>` : ""}</div>
+              <div class="sv B"><p class="who">Coder B</p><p>${esc(optLabel(f, d.b))}</p>${qb ? `<p class="quote">${esc(qb)}</p>` : ""}</div>
+            </div>
+            <div class="row" style="align-items:flex-end">
+              ${opts ? `<label class="fld" style="min-width:240px;flex:1">Final answer<select data-final data-draft="${esc(k)}:v">${[["", "Choose"], ...opts].map(o => `<option value="${esc(o[0])}" ${cv === o[0] ? "selected" : ""}>${esc(o[1])}</option>`).join("")}</select></label>`
+                     : `<label class="fld" style="max-width:180px">Final value<input type="text" inputmode="decimal" data-final data-draft="${esc(k)}:v" value="${esc(cv)}"></label>`}
+              <label class="fld" style="flex:2;min-width:220px">Reason<input type="text" data-reason data-draft="${esc(k)}:n" value="${esc(d.resolved ? d.resolved.note || "" : "")}" placeholder="What settled it"></label>
+              <button type="button" class="btn sm" data-save-res="${esc(f.id)}">Save decision</button>
+            </div>
+          </div>`;
+        }).join("")}
+      </section>
+    </div>`}
+  </div>`;
+}
+async function saveResolution(fid, box){
+  const stage = stageById(st.resStageId); if (!stage || st.role !== "adj") return;
+  const value = box.querySelector("[data-final]").value.trim(), note = box.querySelector("[data-reason]").value.trim();
+  if (!value) return toast("Choose a final answer first.", "bad");
+  const pid = st.resolvePid, path = "cons-" + stage.id + "/" + safeId(pid);
+  const doc = (await st.S.get(path)) || {pid, v: {}};
+  doc.v = doc.v || {};
+  doc.v[fid] = {value, note, at: nowISO(), by: roleName("adj") || "Adjudicator"};
+  await st.S.set(path, doc);
+  st.cons[safeId(pid)] = doc;
+  box.querySelectorAll("[data-dirty]").forEach(el => delete el.dataset.dirty);
+  toast(fid + " resolved.");
+  render();
+}
+
+/* ------------------------------------------------------------------ coordinator setup */
+function renderSetup(view){
+  if (!st.loaded.cfg || !st.loaded.papers) { view.innerHTML = `<p class="muted">Loading the workspace.</p>`; return; }
+  const c = st.cfg, names = c.names || {};
+  const list = stages(), rounds = c.rounds || [], frame = st.frame;
+  const anyLock = Object.keys(st.locks).length > 0;
+  const progRows = list.flatMap(s => ["A", "B"].map(r => { const p = st.progress[s.id + "-" + r], l = lockOf(s.id, r); return `<tr><td>${esc(s.label)}</td><td>${esc(roleTitle(r))}</td><td class="num">${p ? p.done + " / " + p.total : "\u2013"}</td><td>${l ? `<span class="chip ok">Locked ${esc(fmtTime(l.at))}</span>` : `<span class="chip">Open</span>`}</td><td>${l && !lockOf(s.id, other(r)) ? `<button type="button" class="btn danger sm" data-reopen="${s.id}-${r}">Reopen</button>` : ""}</td></tr>`; })).join("");
+  view.innerHTML = `<div class="stack">
+    <h2>Setup</h2>
+    ${!st.S.online ? `<div class="note warn">This browser is not connected to the shared workspace, so anything set here stays local.</div>` : ""}
+    <div class="grid2">
+      <section class="panel" style="padding:16px"><form id="namesForm" class="stack">
+        <h3>People</h3>
+        ${["A", "B", "adj", "coord"].map(r => `<label class="fld">${esc(ROLE[r].label)}<input type="text" id="name_${r}" data-draft="name:${r}" value="${esc(names[r] || "")}" placeholder="Full name"></label>`).join("")}
+        <p class="small muted">Coder A, Coder B and the adjudicator must be three different people. An AI system, or a coder re-coding their own sheet, does not count as a second coder. If the coordinator is also one of the coders, give the coordinator passphrase to the adjudicator, because a coordinator can reset a coder's passphrase.</p>
+        <div><button class="btn sm" type="submit">Save names</button></div>
+      </form></section>
+      <section class="panel" style="padding:16px"><form id="scopeForm" class="stack">
+        <h3>Audit scope</h3>
+        <label class="opt"><input type="radio" name="mode" value="A" data-draft="mode:A" ${c.mode === "A" ? "checked" : ""} ${anyLock ? "disabled" : ""}><span><strong>Option A.</strong> Re-code the 33 studies from the submitted audit.</span></label>
+        <label class="opt"><input type="radio" name="mode" value="B" data-draft="mode:B" ${c.mode === "B" ? "checked" : ""} ${anyLock ? "disabled" : ""}><span><strong>Option B.</strong> Import a Scopus or Web of Science export, screen in a seeded random order, and code a random sample.</span></label>
+        <div class="row"><label class="fld" style="max-width:160px">Sample size<input type="number" id="target" data-draft="target" min="10" max="200" value="${esc(c.target || 45)}" ${st.sample ? "disabled" : ""}></label>
+        <label class="fld" style="max-width:180px">Random seed<input type="number" id="seed" data-draft="seed" value="${esc(c.seed || 20260914)}" ${frame ? "disabled" : ""}></label></div>
+        ${anyLock ? `<p class="small muted">The scope is fixed because a sheet has been locked.</p>` : ""}
+        <div><button class="btn sm" type="submit">Save scope</button></div>
+      </form></section>
+    </div>
+    ${c.mode === "B" ? renderSearchSetup(frame, rounds) : ""}
+    ${c.mode === "A" || !c.mode ? `<section class="panel" style="padding:16px"><div class="stack">
+      <div class="row" style="justify-content:space-between"><h3>Papers for Option A</h3><span class="chip">${st.papers.filter(p => p.source !== "search").length} papers</span></div>
+      <p class="small muted">Shown to both coders in the same seeded random order, with none of the earlier coding.</p>
+      <details><summary>Add a paper</summary><form id="addPaper" class="grid2" style="margin-top:10px">
+        <label class="fld">Title<input type="text" id="ap_title" data-draft="ap:title" required></label><label class="fld">First author, et al.<input type="text" id="ap_authors" data-draft="ap:authors"></label>
+        <label class="fld">Year<input type="number" id="ap_year" data-draft="ap:year"></label><label class="fld">Venue<input type="text" id="ap_venue" data-draft="ap:venue"></label>
+        <label class="fld">DOI<input type="text" id="ap_doi" data-draft="ap:doi" placeholder="10.xxxx/..."></label><div class="row" style="align-items:flex-end"><button class="btn sm" type="submit" ${anyLock ? "disabled" : ""}>Add paper</button></div>
+      </form></details>
+    </div></section>` : ""}
+    <section class="stack"><h3>Progress and locks</h3>
+      ${progRows ? `<div class="tblwrap"><table><thead><tr><th>Stage</th><th>Coder</th><th class="num">Done</th><th>Sheet</th><th></th></tr></thead><tbody>${progRows}</tbody></table></div>` : `<p class="muted small">No stages yet.</p>`}
+      <p class="small muted">A sheet can be reopened only while the other coder has not locked the same stage, and every reopen is logged.</p>
+    </section>
+    <section class="panel" style="padding:16px"><div class="stack"><h3>Passphrases</h3>
+      ${["A", "B", "adj"].map(r => { const x = st.roles[r]; return `<div class="row" style="justify-content:space-between"><span>${esc(roleTitle(r))}: ${x && x.hash ? "set " + esc(fmtTime(x.setAt)) : "not set"}${x && x.resets && x.resets.length ? " \u00b7 reset " + x.resets.length + " time(s)" : ""}</span>${x && x.hash ? `<button type="button" class="btn danger sm" data-resetpass="${r}">Reset</button>` : ""}</div>`; }).join("")}
+      <p class="small muted">A reset is shown to that person the next time they open the page, counted on the Agreement page, and written to the log.</p>
+    </div></section>
+    <section class="stack"><h3>Log</h3>
+      <div class="tblwrap" style="max-height:320px;overflow:auto"><table><thead><tr><th>When</th><th>Who</th><th>What</th></tr></thead><tbody>${[...st.events].reverse().slice(0, 200).map(e => `<tr><td class="mono small">${esc(fmtTime(e.at))}</td><td class="small">${esc(e.role && ROLE[e.role] ? ROLE[e.role].label : e.role || "")}${e.name ? " \u00b7 " + esc(e.name) : ""}</td><td class="small">${esc(e.text)}</td></tr>`).join("") || `<tr><td colspan="3" class="muted small">Nothing logged yet.</td></tr>`}</tbody></table></div>
+    </section>
+  </div>`;
+}
+function renderSearchSetup(frame, rounds){
+  const screenStages = stages().filter(s => s.kind === "screen");
+  const nextFrom = rounds.length ? rounds[rounds.length - 1].to + 1 : 1;
+  const allLocked = screenStages.length && screenStages.every(s => bothLocked(s.id));
+  return `<section class="panel" style="padding:16px"><div class="stack">
+    <h3>Search frame and screening</h3>
+    ${frame ? `<p>${frame.n} unique records from ${esc((frame.sources || []).map(s => s.name + " (" + s.rows + ")").join(", "))}; ${frame.duplicates} duplicates removed; shuffled with seed <span class="mono">${esc(frame.seed)}</span> on ${esc(fmtTime(frame.importedAt))}.</p>`
+      : `<p class="small muted">Export the logged search from Scopus (CSV with abstracts) and Web of Science (tab-delimited). Import both at once; the page removes duplicates by DOI and then by title, and shuffles the frame with the seed above.</p>
+         <div class="row"><input type="file" id="frameFiles" accept=".csv,.txt,.tsv" multiple><button type="button" class="btn sm" id="importFrame">Import and shuffle</button></div>`}
+    ${frame ? `<div class="tblwrap"><table><thead><tr><th>Round</th><th>Ranks</th><th>Coder A</th><th>Coder B</th></tr></thead><tbody>${screenStages.map(s => `<tr><td>${esc(s.label)}</td><td class="mono">${s.from}\u2013${s.to}</td><td>${lockOf(s.id, "A") ? "locked" : "open"}</td><td>${lockOf(s.id, "B") ? "locked" : "open"}</td></tr>`).join("") || `<tr><td colspan="4" class="muted small">No rounds yet.</td></tr>`}</tbody></table></div>
+      <div class="row">${nextFrom <= frame.n && !st.sample ? `<label class="fld" style="flex-direction:row;align-items:center;gap:8px">Next round size<input type="number" id="roundSize" data-draft="roundSize" min="10" max="300" value="60" style="max-width:100px"></label><button type="button" class="btn sm" id="startRound" ${rounds.length && !bothLocked("screen-" + rounds.length) ? "disabled" : ""}>Open ranks ${nextFrom} onward</button>` : ""}
+      ${screenStages.length && !st.sample ? `<button type="button" class="btn sm" id="freezeSample" ${allLocked ? "" : "disabled"}>Freeze the coding sample</button>` : ""}</div>
+      ${st.sample ? `<p class="small">Coding sample frozen ${esc(fmtTime(st.sample.frozenAt))}: ${st.sample.pids.length} studies, the first eligible ones by rank.</p>` : `<p class="small muted">Open a new round only after both screeners have locked the previous one. Freeze the sample once every round is locked and every screening disagreement is resolved.</p>`}` : ""}
+  </div></section>`;
+}
+async function cfgWrite(patch, what){
+  const cur = (await st.S.get("config/main")) || {};
+  await st.S.set("config/main", {...cur, ...patch, codebook: CODEBOOK_VERSION});
+  if (what) logEvent(what);
+}
+async function importFrame(){
+  const files = [...($("#frameFiles").files || [])];
+  if (!files.length) return toast("Choose one or more export files first.", "bad");
+  if (st.frame) return toast("A search frame is already imported.", "bad");
+  const seed = parseInt(st.cfg.seed || 20260914, 10);
+  const recs = [], sources = [];
+  for (const file of files) {
+    const rows = parseDelimited(await file.text());
+    if (rows.length < 2) continue;
+    const h = rows[0].map(x => x.trim().toLowerCase());
+    const col = (...names) => names.map(n => h.indexOf(n)).find(i => i >= 0);
+    const ix = {title: col("title", "ti", "article title", "document title"), authors: col("authors", "au", "author full names", "author(s)"), year: col("year", "py", "publication year"), venue: col("source title", "so", "journal", "publication title"), doi: col("doi", "di"), abstract: col("abstract", "ab")};
+    if (ix.title === undefined) { toast(file.name + ": no title column found.", "bad"); continue; }
+    let n = 0;
+    for (const r of rows.slice(1)) {
+      const g = k => ix[k] === undefined ? "" : (r[ix[k]] || "").trim();
+      if (!g("title")) continue;
+      const aus = g("authors"), au = aus.split(/;|\s{2,}/)[0].split(",")[0].trim();
+      recs.push({title: g("title"), authors: au ? au + (aus.includes(";") ? " et al." : "") : "", year: parseInt(g("year"), 10) || "", venue: g("venue"), doi: g("doi").replace(/^https?:\/\/(dx\.)?doi\.org\//i, "").toLowerCase(), abstract: g("abstract").slice(0, 4000), from: file.name});
+      n++;
+    }
+    sources.push({name: file.name, rows: n});
+  }
+  if (!recs.length) return toast("No records were read from the files.", "bad");
+  const byKey = new Map();
+  for (const r of recs) { const k = dedupKey(r); if (!byKey.has(k)) byKey.set(k, r); }
+  const byTitle = new Map();
+  for (const [k, r] of [...byKey.entries()]) {
+    const t = normTitle(r.title) || String(r.title).toLowerCase().trim();
+    const prev = byTitle.get(t);
+    if (!prev) { byTitle.set(t, {k, r}); continue; }
+    if (!prev.r.doi && r.doi) { byKey.delete(prev.k); byTitle.set(t, {k, r}); }
+    else if (prev.r.doi && !r.doi) byKey.delete(k);
+  }
+  const uniq = [...byKey.entries()].sort((a, b) => a[0] < b[0] ? -1 : 1).map(x => x[1]);
+  const rnd = mulberry32(seed);
+  for (let i = uniq.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [uniq[i], uniq[j]] = [uniq[j], uniq[i]]; }
+  const ok = await confirmTyped("Import the search frame?", `${uniq.length} unique records (${recs.length - uniq.length} duplicates removed), shuffled with seed ${seed}. The frame cannot be replaced afterwards.`, "IMPORT");
+  if (!ok) return;
+  const CH = 40, chunks = Math.ceil(uniq.length / CH);
+  for (let c = 0; c < chunks; c++) await st.S.set("frame/c" + String(c).padStart(4, "0"), {papers: uniq.slice(c * CH, (c + 1) * CH)});
+  await st.S.set("config/frame", {n: uniq.length, duplicates: recs.length - uniq.length, seed, chunk: CH, chunks, sources, importedAt: nowISO()});
+  logEvent(`Imported search frame: ${uniq.length} unique of ${recs.length} records, seed ${seed}, from ${sources.map(s => s.name).join(", ")}`);
+  toast("Frame imported.");
+}
+async function startRound(){
+  const frame = st.frame; if (!frame) return;
+  const rounds = st.cfg.rounds || [];
+  if (st.sample) return toast("The coding sample is already frozen.", "bad");
+  if (rounds.length && !bothLocked("screen-" + rounds.length)) return toast("Both coders must lock the current round first.", "bad");
+  const size = Math.max(10, Math.min(300, parseInt(($("#roundSize") || {}).value, 10) || 60));
+  const from = rounds.length ? rounds[rounds.length - 1].to + 1 : 1, to = Math.min(frame.n, from + size - 1);
+  if (from > frame.n) return toast("Every record in the frame has been screened.", "bad");
+  const btn = $("#startRound"); if (btn) btn.disabled = true;
+  const need = new Set(); for (let r = from; r <= to; r++) need.add(Math.floor((r - 1) / frame.chunk));
+  const byChunk = {};
+  for (const c of need) byChunk[c] = ((await st.S.get("frame/c" + String(c).padStart(4, "0"))) || {}).papers || [];
+  const work = [];
+  for (let r = from; r <= to; r++) { const p = (byChunk[Math.floor((r - 1) / frame.chunk)] || [])[(r - 1) % frame.chunk]; if (p) work.push(["papers/R" + String(r).padStart(4, "0"), {...p, rank: r, source: "search"}]); }
+  for (let i = 0; i < work.length; i += 5) await Promise.all(work.slice(i, i + 5).map(([path, d]) => st.S.set(path, d)));
+  await cfgWrite({rounds: [...rounds, {from, to, openedAt: nowISO()}]}, `Opened screening round ${rounds.length + 1}: ranks ${from} to ${to}`);
+  toast(`Round ${rounds.length + 1} open: ranks ${from} to ${to}.`);
+}
+async function freezeSample(){
+  const screenStages = stages().filter(s => s.kind === "screen");
+  if (!screenStages.length || !screenStages.every(s => bothLocked(s.id))) return toast("Every screening round must be locked by both coders first.", "bad");
+  if (st.sample) return toast("The coding sample is already frozen.", "bad");
+  const eligible = [];
+  for (const s of screenStages) {
+    const [la, lb, lc] = await Promise.all([st.S.list("ans-" + s.id + "-A"), st.S.list("ans-" + s.id + "-B"), st.S.list("cons-" + s.id)]);
+    const A = Object.fromEntries(la.map(x => [x.id, x.data])), B = Object.fromEntries(lb.map(x => [x.id, x.data])), C = Object.fromEntries(lc.map(x => [x.id, x.data]));
+    for (const p of stagePapers(s)) {
+      const a = ((A[safeId(p.pid)] || {}).v || {}).E1, b = ((B[safeId(p.pid)] || {}).v || {}).E1;
+      const c = (((C[safeId(p.pid)] || {}).v || {}).E1 || {}).value;
+      const fin = c || (a === b && a !== "unsure" ? a : null);
+      if (!fin) return toast(`${s.label}: the screening decision for ${p.pid} is still unresolved.`, "bad");
+      if (fin === "eligible") eligible.push(p.pid);
+    }
+  }
+  const target = parseInt(st.cfg.target || 45, 10);
+  const lastTo = (st.cfg.rounds || []).slice(-1)[0]?.to || 0;
+  if (eligible.length < target && lastTo < (st.frame || {}).n) return toast(`Only ${eligible.length} eligible so far; open another round to reach ${target}.`, "bad");
+  const pids = eligible.slice(0, target);
+  const ok = await confirmTyped("Freeze the coding sample?", `${pids.length} studies: the first ${pids.length} eligible by rank, out of ${eligible.length} eligible among ranks 1 to ${lastTo}. Coding then opens for both coders.`, "FREEZE");
+  if (!ok) return;
+  await st.S.set("config/sample", {pids, target, eligibleSeen: eligible.length, screenedTo: lastTo, frozenAt: nowISO()});
+  logEvent(`Froze the coding sample: ${pids.length} studies (eligible seen ${eligible.length}, screened ranks 1 to ${lastTo})`);
+}
+
+/* ------------------------------------------------------------------ export and import */
+async function offerFile(filename, text){
+  if (st.dl) {
+    try { await st.dl.save({filename, data: text}); return; }
+    catch (e) { if (e && e.code === "declined") return; if (e && e.code === "rate_limited") return toast("A save prompt is already open.", "bad"); }
+  }
+  if (!window.claude) { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], {type: "text/plain"})); a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); return; }
+  showModal(`<h2>${esc(filename)}</h2><p class="small muted">Saving files is not available in this view. Copy the contents below into a file with this name.</p><textarea class="dump" readonly id="dump">${esc(text)}</textarea><div class="row"><button class="btn sm" type="button" data-copy>Select all</button><button class="btn ghost sm" type="button" data-close>Close</button></div>`);
+}
+function sheetCSV(stage, ans, who){
+  const fs = fields(stage.kind);
+  const rows = [["stage", "coder", "coder_name", "pid", "title", "year", "doi", "done", "updated_at", ...fs.map(f => f.id)]];
+  for (const p of stagePapers(stage)) {
+    const a = ans[safeId(p.pid)] || ans[p.pid] || {v: {}};
+    rows.push([stage.id, who, a.name || roleName(who), p.pid, p.title, p.year || "", p.doi || "", a.done ? "yes" : "no", a.updatedAt || "", ...fs.map(f => (a.v || {})[f.id] ?? "")]);
+  }
+  return toCSV(rows);
+}
+function consensusCSV(stage){
+  const cf = compFields(stage.kind);
+  const rows = [["stage", "pid", "title", "year", "doi", ...cf.flatMap(f => [f.id, f.id + "_source"])]];
+  for (const p of stagePapers(stage)) {
+    const r = [stage.id, p.pid, p.title, p.year || "", p.doi || ""];
+    for (const f of cf) {
+      const val = finalValue(stage, p.pid, f.id);
+      const c = ((st.cons[safeId(p.pid)] || {}).v || {})[f.id];
+      if (val === null) r.push("", "not_applicable");
+      else if (val === undefined) r.push("", "UNRESOLVED");
+      else if (val === "") r.push("", "not_reported_by_either");
+      else {
+        const out = f.type === "num" && isFinite(numNorm(val)) ? numNorm(val).toFixed(4) : val;
+        r.push(out, c && !blank(c.value) ? "adjudicated" : "agreed");
+      }
+    }
+    rows.push(r);
+  }
+  return toCSV(rows);
+}
+function agreementCSV(stage){
+  return toCSV([["stage", "field", "primary", "question", "n_papers", "categories_used", "percent_agreement", "cohen_kappa", "gwet_ac1", "differ"],
+    ...agreementRows(stage).map(r => [stage.id, r.f.id, r.f.primary ? "yes" : "no", r.f.label, r.n, r.cats ?? "", isFinite(r.po) ? r.po.toFixed(4) : "", isFinite(r.kappa) ? r.kappa.toFixed(4) : "", isFinite(r.ac1) ? r.ac1.toFixed(4) : "", r.dis + r.oneSided])]);
+}
+function codebookCSV(){
+  const rows = [["codebook_version", "stage", "group", "group_instructions", "field", "type", "primary", "shown_when", "question", "decision_rule", "options"]];
+  for (const kind of ["screen", "code"]) for (const g of CB[kind].groups) for (const f of g.fields)
+    rows.push([CODEBOOK_VERSION, kind, g.title, g.intro || "", f.id, f.type, f.primary ? "yes" : "no", Object.entries({...(g.when || {}), ...(f.when || {})}).map(([k, v]) => k + "=" + v).join(" & "), f.label, f.rule || "", (f.options || []).map(o => o[0] + "=" + o[1]).join(" | ")]);
+  return toCSV(rows);
+}
+const packPaper = p => ({pid: p.pid, title: p.title, authors: p.authors || "", year: p.year || "", venue: p.venue || "", doi: p.doi || "", url: p.url || "", abstract: p.abstract || "", rank: p.rank || 0, source: p.source || ""});
+function renderExport(view){
+  const list = stages();
+  const stage = stageById(st.expStageId) || list[0]; if (stage) st.expStageId = stage.id;
+  const both = stage && bothLocked(stage.id);
+  view.innerHTML = `<div class="stack">
+    <div class="row"><h2>Export</h2>${stage ? stagePicker("expStage", stage) : ""}</div>
+    <div class="grid2">
+      <section class="panel" style="padding:16px"><div class="stack"><h3>Codebook</h3><p class="small muted">Version ${CODEBOOK_VERSION}: every question with its instructions and decision rule, for the supplementary material.</p><div><button class="btn sm" type="button" data-exp="codebook">Codebook (CSV)</button></div></div></section>
+      ${stage && isCoder(st.role) ? `<section class="panel" style="padding:16px"><div class="stack"><h3>My sheet</h3><p class="small muted">Your own answers for ${esc(stage.label)}. The JSON file is what the coordinator imports if you coded offline.</p><div class="row"><button class="btn sm" type="button" data-exp="mine-csv">My sheet (CSV)</button><button class="btn ghost sm" type="button" data-exp="mine-json">My sheet for import (JSON)</button></div></div></section>` : ""}
+      ${stage ? `<section class="panel" style="padding:16px"><div class="stack"><h3>Both sheets, agreement, consensus</h3><p class="small muted">${both ? "Available because both coders have locked " + esc(stage.label) + "." : "Available once both coders lock " + esc(stage.label) + "."}</p>
+        <div class="row"><button class="btn sm" type="button" data-exp="A" ${both ? "" : "disabled"}>Coder A (CSV)</button><button class="btn sm" type="button" data-exp="B" ${both ? "" : "disabled"}>Coder B (CSV)</button><button class="btn sm" type="button" data-exp="agree" ${both ? "" : "disabled"}>Agreement (CSV)</button><button class="btn sm" type="button" data-exp="cons" ${both ? "" : "disabled"}>Consensus (CSV)</button></div></div></section>` : ""}
+      ${st.role === "coord" && st.S.online ? `<section class="panel" style="padding:16px"><div class="stack"><h3>Offline coder</h3><p class="small muted">For a coder who cannot open this shared page: send them the work package and this page as a file, then import the JSON sheet they send back.</p>
+        <div class="row"><button class="btn ghost sm" type="button" data-exp="package" ${stage ? "" : "disabled"}>Work package (JSON)</button></div>
+        <div class="row"><input type="file" id="sheetFile" accept=".json"><button class="btn sm" type="button" id="importSheet">Import a coder's sheet</button></div></div></section>` : ""}
+      ${!st.S.online ? `<section class="panel" style="padding:16px"><div class="stack"><h3>Work package</h3><p class="small muted">Import the JSON file the coordinator sent you. It loads the names and the papers into this browser.</p><div class="row"><input type="file" id="pkgFile" accept=".json"><button class="btn sm" type="button" id="importPkg">Import work package</button></div></div></section>` : ""}
+    </div>
+  </div>`;
+}
+async function doExport(kind){
+  const stage = stageById(st.expStageId), date = nowISO().slice(0, 10);
+  if (kind === "codebook") return offerFile(`audit-codebook-v${CODEBOOK_VERSION}.csv`, codebookCSV());
+  if (!stage) return;
+  if (kind === "mine-csv" || kind === "mine-json") {
+    if (!isCoder(st.role)) return;
+    const ans = Object.fromEntries((await st.S.list("ans-" + stage.id + "-" + st.role)).map(x => [x.id, x.data]));
+    if (kind === "mine-csv") return offerFile(`audit-${stage.id}-coder${st.role}-${date}.csv`, sheetCSV(stage, ans, st.role));
+    return offerFile(`audit-${stage.id}-coder${st.role}-${date}.json`, JSON.stringify({kind: "coder-sheet", codebook: CODEBOOK_VERSION, stage: stage.id, role: st.role, name: roleName(st.role), exportedAt: nowISO(), answers: ans, lock: lockOf(stage.id, st.role)}, null, 1));
+  }
+  if (kind === "package") return offerFile(`audit-work-package-${date}.json`, JSON.stringify({kind: "work-package", codebook: CODEBOOK_VERSION, exportedAt: nowISO(), cfg: st.cfg, sample: st.sample, papers: st.papers.map(packPaper)}, null, 1));
+  if (!bothLocked(stage.id)) return toast("Both coders must lock first.", "bad");
+  await loadCompare(stage, true);
+  watchCons(stage.id);
+  st.cons = Object.fromEntries((await st.S.list("cons-" + stage.id)).map(x => [x.id, x.data]));
+  if (kind === "A" || kind === "B") return offerFile(`audit-${stage.id}-coder${kind}-${date}.csv`, sheetCSV(stage, st.cmp[kind], kind));
+  if (kind === "agree") return offerFile(`audit-${stage.id}-agreement-${date}.csv`, agreementCSV(stage));
+  if (kind === "cons") return offerFile(`audit-${stage.id}-consensus-${date}.csv`, consensusCSV(stage));
+}
+async function importSheet(){
+  const file = ($("#sheetFile").files || [])[0]; if (!file) return toast("Choose the JSON sheet first.", "bad");
+  let d; try { d = JSON.parse(await file.text()); } catch { return toast("That file is not valid JSON.", "bad"); }
+  if (d.kind !== "coder-sheet" || !isCoder(d.role) || !stageById(d.stage)) return toast("That file is not a coder sheet for a stage in this workspace.", "bad");
+  if (lockOf(d.stage, d.role)) return toast(`${ROLE[d.role].label} has already locked ${d.stage} here.`, "bad");
+  const stage = stageById(d.stage), pids = new Set(stagePapers(stage).map(p => safeId(p.pid)));
+  const entries = Object.entries(d.answers || {}).filter(([k]) => pids.has(k));
+  const ok = await confirmTyped(`Import ${ROLE[d.role].label}'s sheet?`, `${entries.length} answers for ${stage.label}, exported ${fmtTime(d.exportedAt)} by ${d.name || "unnamed"}.${d.lock ? " The sheet was locked offline, and the offline fingerprint is kept, so the Agreement page shows a warning if the file was changed after that lock." : ""}`, "IMPORT");
+  if (!ok) return;
+  for (const [k, v] of entries) await st.S.set("ans-" + d.stage + "-" + d.role + "/" + k, v);
+  if (d.lock) {
+    const ans = Object.fromEntries(entries);
+    const fp = await fingerprint(ans, stagePapers(stage).map(p => p.pid));
+    await st.S.set("locks/" + d.stage + "-" + d.role, {...d.lock, importedAt: nowISO(), fpImported: fp});
+    if (fp !== d.lock.fp) { toast("The imported answers do not match the offline lock fingerprint. The Agreement page will flag this.", "bad"); logEvent(`Fingerprint mismatch importing ${ROLE[d.role].label}'s sheet: offline ${d.lock.fp}, imported ${fp}`); }
+  }
+  logEvent(`Imported ${ROLE[d.role].label}'s offline sheet for ${stage.label}: ${entries.length} answers${d.lock ? ", locked" : ""}`);
+  toast("Sheet imported.");
+}
+async function importPkg(){
+  const file = ($("#pkgFile").files || [])[0]; if (!file) return toast("Choose the work package first.", "bad");
+  let d; try { d = JSON.parse(await file.text()); } catch { return toast("That file is not valid JSON.", "bad"); }
+  if (d.kind !== "work-package") return toast("That file is not a work package.", "bad");
+  await st.S.set("config/main", d.cfg || {});
+  if (d.sample) await st.S.set("config/sample", d.sample);
+  for (const p of d.papers || []) await st.S.set("papers/" + safeId(p.pid), p);
+  toast(`Loaded ${(d.papers || []).length} papers.`);
+}
+
+/* ------------------------------------------------------------------ guide */
+function renderGuide(view){
+  view.innerHTML = `<div class="stack" style="max-width:78ch">
+    <h2>How the double coding works</h2>
+    <p>Reviewer 1 asked for a systematic search coded by at least two independent reviewers with an inter-rater agreement statistic. This page enforces the parts of that which software can enforce and records the rest.</p>
+    <h3>Rules that keep the coding independent</h3>
+    <p>Coder A, Coder B and the adjudicator are three different people. Neither coder discusses a paper with the other until both sheets are locked. Neither coder consults the earlier single-rater coding while coding, which means the submitted manuscript's literature section with its Table 1 and Figure 3, Supplementary Table S1, and the released audit coding sheet. An AI system may not fill in or suggest answers; a coder may use one only to find or open papers.</p>
+    <p>What the page enforces: every role has its own passphrase; your answers load only in your own workspace; the agreement table, both sheets and the adjudication view stay closed until both coders lock; each lock stores a fingerprint of the saved sheet, and a sheet that no longer matches its fingerprint is flagged. What it does not enforce: a passphrase is a working safeguard, not encryption, and a coordinator can reset one, which is logged and counted on the Agreement page. The rules above still matter.</p>
+    <h3>Coders</h3>
+    <p>Open My coding, work down the list, and answer every question for each paper. Answers save as you type, and the footer says when they were saved. Read the decision rule under each question; when the paper does not report something, choose Unclear or Not reported rather than guessing. Paste short quotes with page numbers into the evidence boxes, because they are what the adjudicator reads. Mark each paper done. When every paper is done and saved, lock your sheet. In Option B you first screen a round of papers for eligibility, lock that round, and code the frozen sample afterwards.</p>
+    <h3>Adjudicator</h3>
+    <p>After both coders lock a stage, Resolve lists every question where they differ, with both answers and both quotes side by side. Choose the final answer and give a one-line reason. Settle the full-text check first, because the later questions depend on it.</p>
+    <h3>Coordinator</h3>
+    <p>Set the three names and the scope in Setup. For Option B, import the Scopus and Web of Science exports, open screening rounds one at a time, and freeze the coding sample once every screening disagreement is resolved. Export the codebook, both sheets, the agreement table and the consensus sheet when coding is finished; the statistics with bootstrap confidence intervals for the manuscript are computed from those files.</p>
+    <h3>Reporting</h3>
+    <p>The manuscript reports the search strings, dates and hit counts, the number screened, the sample, the agreement per primary field (percent agreement, Cohen's kappa and Gwet's AC1 with confidence intervals), how disagreements were resolved, and what each coder had read about the earlier audit before coding.</p>
+  </div>`;
+}
+
+/* ------------------------------------------------------------------ modal helpers */
+function showModal(html){
+  const s = document.createElement("div"); s.className = "scrim"; s.innerHTML = `<div class="modal" role="dialog" aria-modal="true">${html}</div>`;
+  document.body.appendChild(s);
+  s.addEventListener("click", e => { if (e.target === s || e.target.closest("[data-close]")) s.remove(); if (e.target.closest("[data-copy]")) { const t = s.querySelector("textarea"); t.focus(); t.select(); } });
+  const f = s.querySelector("input,textarea,button"); if (f) f.focus();
+  return s;
+}
+function confirmTyped(title, body, word){
+  return new Promise(resolve => {
+    const s = showModal(`<h2>${esc(title)}</h2><p>${esc(body)}</p><label class="fld">Type ${esc(word)} to confirm<input type="text" id="confirmWord" autocomplete="off"></label><div class="row"><button class="btn" type="button" id="confirmGo">Confirm</button><button class="btn ghost" type="button" id="confirmNo">Cancel</button></div>`);
+    let done = false;
+    const finish = v => { if (done) return; done = true; document.removeEventListener("keydown", onKey, true); s.remove(); resolve(v); };
+    const tryGo = () => { if ($("#confirmWord", s).value.trim().toUpperCase() === word) finish(true); else toast("Type " + word + " to confirm.", "bad"); };
+    const onKey = e => { if (!document.body.contains(s)) return; if (e.key === "Escape") { e.preventDefault(); finish(false); } else if (e.key === "Enter" && s.contains(document.activeElement)) { e.preventDefault(); tryGo(); } };
+    document.addEventListener("keydown", onKey, true);
+    $("#confirmGo", s).onclick = tryGo;
+    $("#confirmNo", s).onclick = () => finish(false);
+    s.addEventListener("click", e => { if (e.target === s) finish(false); });
+    $("#confirmWord", s).focus();
+  });
+}
+
+/* ------------------------------------------------------------------ events */
+function movePaper(step){
+  const stage = stageById(st.stageId), papers = stagePapers(stage);
+  const i = papers.findIndex(p => p.pid === st.pid);
+  const j = Math.min(papers.length - 1, Math.max(0, i + step));
+  if (j === i) { if (step > 0) toast("That was the last paper in this stage."); return; }
+  st.pid = papers[j].pid; st.formKey = null; st.focusTarget = "#paperTitle";
+  render();
+  window.scrollTo({top: 0});
+}
+document.addEventListener("click", async e => {
+  const t = e.target;
+  const pick = t.closest("[data-pick]");
+  if (pick) {
+    if (st.connecting) return toast("Still connecting to the workspace.");
+    st.role = pick.dataset.pick; lsSet("acb.role", st.role); st.gatePassedFor = null; st.formKey = null; st.cmp = null;
+    watchAnswers(null); watchCons(null); render(); return;
+  }
+  if (t.closest("#switchRole")) {
+    await flushSave();
+    ssSet("acb.ok." + st.role, null);
+    st.role = null; lsSet("acb.role", null); st.gatePassedFor = null; st.formKey = null; st.cmp = null; st.tab = null;
+    watchAnswers(null); watchCons(null); render(); return;
+  }
+  if (t.closest("#backRoles")) { st.role = null; lsSet("acb.role", null); render(); return; }
+  const tab = t.closest("[data-tab]");
+  if (tab) { if (st.tab === "work") await flushSave(); st.tab = tab.dataset.tab; st.formKey = null; st.focusTarget = `[data-tab="${cssq(tab.dataset.tab)}"]`; render(); return; }
+  const q = t.closest("[data-pid]");
+  if (q) { await flushSave(); st.pid = q.dataset.pid; st.formKey = null; st.focusTarget = "#paperTitle"; render(); return; }
+  if (t.closest("#saveNow")) { await flushSave(); return; }
+  const done = t.closest("#donePaper");
+  if (done) {
+    done.disabled = true;
+    const stage = stageById(st.stageId);
+    await scheduleSave(stage, true, true);
+    const a = st.ans[st.pid];
+    done.disabled = false;
+    if (!a || !a.done) return toast("Answer every question first: " + missingFor(stage, a ? a.v : {}).join(", "), "bad");
+    movePaper(1); return;
+  }
+  if (t.closest("#nextPaper")) { await flushSave(); movePaper(1); return; }
+  if (t.closest("#prevPaper")) { await flushSave(); movePaper(-1); return; }
+  if (t.closest("#lockBtn")) { guard(lockSheet(), "Could not lock"); return; }
+  const rp = t.closest("[data-rpid]"); if (rp) { st.resolvePid = rp.dataset.rpid; st.focusTarget = "#paperTitle"; render(); return; }
+  const sr = t.closest("[data-save-res]"); if (sr) { guard(saveResolution(sr.dataset.saveRes, sr.closest("[data-res]")), "Could not save the decision"); return; }
+  const ex = t.closest("[data-exp]"); if (ex) { guard(doExport(ex.dataset.exp), "Export failed"); return; }
+  if (t.closest("#importFrame")) { guard(importFrame(), "Import failed"); return; }
+  if (t.closest("#startRound")) { guard(startRound(), "Could not open the round"); return; }
+  if (t.closest("#freezeSample")) { guard(freezeSample(), "Could not freeze the sample"); return; }
+  if (t.closest("#importSheet")) { guard(importSheet(), "Import failed"); return; }
+  if (t.closest("#importPkg")) { guard(importPkg(), "Import failed"); return; }
+  const ro = t.closest("[data-reopen]");
+  if (ro) {
+    const id = ro.dataset.reopen, sid = id.replace(/-(A|B)$/, ""), r = id.slice(-1);
+    if (lockOf(sid, other(r))) return toast("The other coder has locked, so reopening now would break independence.", "bad");
+    const ok = await confirmTyped("Reopen this sheet?", `${ROLE[r].label} will be able to change answers in ${(stageById(sid) || {}).label || sid}. The reopen is logged.`, "REOPEN");
+    if (!ok) return;
+    const fresh = await st.S.get("locks/" + sid + "-" + other(r));
+    if (fresh) return toast("The other coder locked while you were confirming, so the sheet was not reopened.", "bad");
+    const old = lockOf(sid, r);
+    await st.S.del("locks/" + id);
+    logEvent(`Reopened ${ROLE[r].label}'s sheet for ${sid} (locked ${old ? old.at : "?"}, fingerprint ${old ? old.fp : "?"})`);
+    return;
+  }
+  const rs = t.closest("[data-resetpass]");
+  if (rs) {
+    const r = rs.dataset.resetpass;
+    const ok = await confirmTyped(`Reset ${ROLE[r].label}'s passphrase?`, "They set a new one the next time they open the page. The reset is logged, counted on the Agreement page and shown to them.", "RESET");
+    if (!ok) return;
+    const cur = (await st.S.get("roles/" + r)) || {};
+    await st.S.set("roles/" + r, {resets: [...(cur.resets || []), nowISO()]});
+    logEvent(`Reset ${ROLE[r].label}'s passphrase`);
+    return;
+  }
+});
+document.addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target, id = form.id;
+  const clean = () => form.querySelectorAll("[data-dirty]").forEach(el => delete el.dataset.dirty);
+  if (id === "passForm") return guard(submitPass(), "Could not open the workspace");
+  if (id === "namesForm") {
+    const names = {}; for (const r of ["A", "B", "adj", "coord"]) names[r] = $("#name_" + r).value.trim();
+    const people = [names.A, names.B, names.adj].filter(Boolean).map(x => x.toLowerCase());
+    if (new Set(people).size !== people.length) return toast("Coder A, Coder B and the adjudicator must be different people.", "bad");
+    clean();
+    return guard(cfgWrite({names}, "Saved names: " + ["A", "B", "adj", "coord"].map(r => ROLE[r].label + " " + (names[r] || "unassigned")).join(", ")).then(() => toast("Names saved.")), "Could not save");
+  }
+  if (id === "scopeForm") {
+    const m = form.querySelector("input[name=mode]:checked");
+    const target = parseInt($("#target").value, 10) || 45, seed = parseInt($("#seed").value, 10) || 20260914;
+    clean();
+    return guard(cfgWrite({mode: m ? m.value : st.cfg.mode || null, target, seed}, `Saved scope: option ${m ? m.value : "unset"}, sample ${target}, seed ${seed}`).then(() => toast("Scope saved.")), "Could not save");
+  }
+  if (id === "addPaper") {
+    const title = $("#ap_title").value.trim(); if (!title) return;
+    const au = $("#ap_authors").value.trim(), yr = parseInt($("#ap_year").value, 10) || "";
+    const doi = $("#ap_doi").value.trim().replace(/^https?:\/\/(dx\.)?doi\.org\//i, "");
+    const base = safeId((au.split(/[ ,]/)[0] || "Paper") + yr);
+    let pid = base, k = 2; while (st.papers.some(p => p.pid === pid)) pid = base + "-" + k++;
+    const rank = Math.max(0, ...st.papers.map(p => p.rank || 0)) + 1;
+    clean();
+    form.reset();
+    return guard(st.S.set("papers/" + pid, {title, authors: au, year: yr, venue: $("#ap_venue").value.trim(), doi, url: doi ? "https://doi.org/" + doi : "https://scholar.google.com/scholar?q=" + encodeURIComponent(title), rank, source: "manual"}).then(() => { logEvent(`Added paper ${pid}: ${title}`); toast("Paper added."); }), "Could not add the paper");
+  }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.id === "stageSel") { st.stagePicked = true; flushSave().then(() => { st.stageId = t.value; ssSet("acb.stage", t.value); st.pid = null; st.formKey = null; render(); }); return; }
+  if (t.id === "qselect") { flushSave().then(() => { st.pid = t.value; st.formKey = null; st.focusTarget = "#paperTitle"; render(); }); return; }
+  if (t.id === "cmpStage") { st.cmpStageId = t.value; render(); return; }
+  if (t.id === "resStage") { st.resStageId = t.value; st.resolvePid = null; render(); return; }
+  if (t.id === "resSelect") { st.resolvePid = t.value; render(); return; }
+  if (t.id === "expStage") { st.expStageId = t.value; render(); return; }
+  if (t.closest("#codeForm")) scheduleSave(stageById(st.stageId), false);
+});
+document.addEventListener("input", e => { if (e.target.closest("#codeForm") && e.target.matches("input[type=text],input[type=number],textarea")) scheduleSave(stageById(st.stageId), false); });
+
+boot();
+</script>

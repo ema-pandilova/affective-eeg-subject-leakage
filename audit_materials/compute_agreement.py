@@ -1,12 +1,12 @@
 """Inter-rater agreement for the double-coded audit, from the Audit Coding Bench exports.
 
-The page (frontiers_revision/audit_bench/audit-coding-bench.html) shows point estimates only.
+The page (bench/audit-coding-bench.html in this folder) shows point estimates only.
 This script produces the numbers the manuscript reports: percent agreement, Cohen's kappa,
 Gwet's AC1 and PABAK, each with a 95% percentile bootstrap CI that resamples PAPERS, plus a
 sensitivity analysis that drops papers where either coder answered "unclear".
 
 Usage:
-  python irr_from_bench.py audit-codebook-v1.1.csv audit-code-coderA-<date>.csv audit-code-coderB-<date>.csv
+  python compute_agreement.py coding_rubric_v1.1.csv audit-code-coderA-<date>.csv audit-code-coderB-<date>.csv
         [--boot 2000] [--seed 20260914] [--out agreement.csv]
 
 Inputs are the three CSVs exported from the page's Export tab, after both coders have locked.

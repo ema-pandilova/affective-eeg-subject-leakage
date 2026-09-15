@@ -1,0 +1,10 @@
+{
+ "title": "SST-EmotionNet: Spatial-Spectral-Temporal Based Attention 3D Dense Network for EEG Emotion Recognition",
+ "authors": "Jia et al.",
+ "year": 2020,
+ "venue": "Proc. ACM International Conference on Multimedia",
+ "doi": "10.1145/3394171.3413724",
+ "url": "https://doi.org/10.1145/3394171.3413724",
+ "rank": 12,
+ "source": "audit33"
+}
