@@ -7,5 +7,7 @@ antropy
 matplotlib
 nbformat
 statsmodels
+xlrd          # pandas.read_excel on the DEAP participant_ratings.xls (deap_labels.py)
+pyarrow       # out-of-fold predictions are written and read as parquet (rev1_e*.py)
 # EEGNet control only (optional):
 # torch
