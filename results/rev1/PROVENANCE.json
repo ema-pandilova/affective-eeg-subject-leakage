@@ -1,0 +1,44 @@
+{
+  "written": "2026-09-15T16:49:23+02:00",
+  "git": {
+    "commit": "975e51b88b0c6299e740c281b5814e971f8772ad",
+    "branch": "frontiers-rev1",
+    "pipeline_files": [
+      "notebook/run_protocols.py",
+      "notebook/deap_labels.py",
+      "notebook/rev1_protocols.py",
+      "notebook/rev1_label_diff.py",
+      "notebook/rev1_provenance.py",
+      "notebook/rev1_labelfix.sh"
+    ],
+    "pipeline_files_clean": true,
+    "dirty_pipeline_files": []
+  },
+  "commit_recorded_by_each_output": {
+    "deap_label_verification.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
+    "gate_dat/protocols.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
+    "corrected/protocols.json": "975e51b88b0c6299e740c281b5814e971f8772ad",
+    "label_correction_diff.json": "975e51b88b0c6299e740c281b5814e971f8772ad"
+  },
+  "definitive": true,
+  "reproduction_gate": {
+    "passed": true,
+    "n_values_compared": 1164,
+    "n_differences": 0
+  },
+  "inputs_sha256": {
+    "notebook/cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+    "notebook/cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+    "data/deap/deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06",
+    "data/deap/metadata/participant_ratings.xls": "e3269144e3018848760b0f1a7b2301912cee402012911f427728e3a04bbdfb94"
+  },
+  "outputs_sha256": {
+    "deap_label_verification.json": "6bbf5d8109af2fa7b17ea5fdd1eaefce73e95b3659af63c6631ae58b50a49f87",
+    "gate_dat/protocols.json": "4551fa4f22882e509133d17f7d6fcf982e0ea3983d0a470644ac33e129a8fac7",
+    "gate_dat/gate_report.json": "bbf04212ddf86926694052758c8b0e5db646053c1bb333ca091ef813ba17dd6a",
+    "corrected/protocols.json": "3f59d653aa4fbcffd2107f4819244d022c4b435cdc4d19c9b7b96556c7620ecc",
+    "label_correction_diff.json": "3279b7ed62c540a3002bd094bde4a18754c4359d63fe1a0d201c2890830cc0c0",
+    "LABEL_CORRECTION.md": "3c61e13f5f66dc1eb21b13dc02139f417eef0fe3d31163cbd7e8be4cc0170376"
+  },
+  "not_versioned": "OOF .npz files, bootstrap draw .npy files and logs stay local (ignored by git)."
+}

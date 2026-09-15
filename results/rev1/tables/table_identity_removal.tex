@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Identity removal. Within each training fold the $k$ directions that best separate the training participants (after within-participant whitening) are projected out and the fixed projection is applied to the test trials. Identity: decoding accuracy for the same participants on held-out trials (P2, first fold) before and after removal; chance is 0.03 on DEAP and 0.04 on DREAMER, and identity values are shown once per dataset because they do not depend on the target. AUCs are trial-level with 95\% participant-bootstrap intervals before removal (whitened features), followed by the paired change after removal and the difference between the P2 and P3 changes, which the identity account predicts to be negative. Random-direction controls and intermediate $k$ are in Supplementary Table S3.}
+\label{tab:identity_removal}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lllccccccc@{}}
+\toprule
+Dataset & Target & Model & $k$ & Identity (P2) & P2 before & P2 change & P3 before & P3 change & P2 $-$ P3 change \\
+\midrule
+DEAP & valence & XGBoost & 24 & 0.97 $\to$ 0.76 & \begin{tabular}[t]{@{}c@{}}0.621\\ {[0.587, 0.652]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.018\\ {[$-$0.048, +0.009]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.519\\ {[0.481, 0.558]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.010\\ {[$-$0.015, +0.033]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.028\\ {[$-$0.057, +0.004]}\end{tabular} \\
+ &  & Logistic & 24 & 0.96 $\to$ 0.10 & \begin{tabular}[t]{@{}c@{}}0.586\\ {[0.554, 0.617]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.008\\ {[$-$0.030, +0.049]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.527\\ {[0.481, 0.575]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.002\\ {[$-$0.032, +0.030]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.010\\ {[$-$0.030, +0.052]}\end{tabular} \\
+DEAP & arousal & XGBoost & 24 & 0.97 $\to$ 0.76 & \begin{tabular}[t]{@{}c@{}}0.669\\ {[0.623, 0.699]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.016\\ {[$-$0.037, +0.007]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.476\\ {[0.416, 0.539]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.070\\ {[+0.013, +0.124]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.086\\ {[$-$0.135, $-$0.028]}\end{tabular} \\
+ &  & Logistic & 24 & 0.96 $\to$ 0.10 & \begin{tabular}[t]{@{}c@{}}0.613\\ {[0.558, 0.656]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.030\\ {[$-$0.091, +0.038]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.485\\ {[0.419, 0.547]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.029\\ {[$-$0.055, +0.102]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.059\\ {[$-$0.149, +0.037]}\end{tabular} \\
+\addlinespace
+DREAMER & valence & XGBoost & 16 & 0.75 $\to$ 0.60 & \begin{tabular}[t]{@{}c@{}}0.500\\ {[0.426, 0.567]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.029\\ {[$-$0.066, +0.012]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.510\\ {[0.446, 0.572]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.040\\ {[$-$0.093, +0.012]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.011\\ {[$-$0.045, +0.069]}\end{tabular} \\
+ &  & Logistic & 16 & 0.73 $\to$ 0.17 & \begin{tabular}[t]{@{}c@{}}0.495\\ {[0.420, 0.561]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.103\\ {[$-$0.169, $-$0.035]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.490\\ {[0.420, 0.556]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.070\\ {[$-$0.100, $-$0.042]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.033\\ {[$-$0.093, +0.033]}\end{tabular} \\
+DREAMER & arousal & XGBoost & 16 & 0.75 $\to$ 0.60 & \begin{tabular}[t]{@{}c@{}}0.591\\ {[0.507, 0.671]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.007\\ {[$-$0.022, +0.039]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.412\\ {[0.347, 0.481]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.007\\ {[$-$0.047, +0.034]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.015\\ {[$-$0.038, +0.067]}\end{tabular} \\
+ &  & Logistic & 16 & 0.73 $\to$ 0.17 & \begin{tabular}[t]{@{}c@{}}0.567\\ {[0.493, 0.638]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.020\\ {[$-$0.073, +0.027]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.391\\ {[0.334, 0.455]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.035\\ {[$-$0.025, +0.090]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.055\\ {[$-$0.140, +0.028]}\end{tabular} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

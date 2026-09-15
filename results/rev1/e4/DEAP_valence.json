@@ -1,0 +1,301 @@
+{
+  "dataset": "DEAP",
+  "target": "valence",
+  "protocol": "P4 (leave-one-participant-out)",
+  "calibration_trials_per_participant": 8,
+  "scored_trials": 1024,
+  "leakage": {
+    "none": "none",
+    "A": "none (training data only)",
+    "D": "transductive: uses the held-out participant's scored feature data (no labels)",
+    "B": "uses the held-out participant's unlabelled calibration trials, not the scored trials",
+    "C": "transductive: uses the held-out participant's scored feature data (no labels)"
+  },
+  "arms": {
+    "logreg": {
+      "A": {
+        "auc": 0.5303860869830589,
+        "ci": [
+          0.48339280029228154,
+          0.5793782360342469
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5435085497150095
+      },
+      "B": {
+        "auc": 0.5958618006202722,
+        "ci": [
+          0.5387952615117302,
+          0.6507055082333274
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5902469917669411
+      },
+      "C": {
+        "auc": 0.5907500867846939,
+        "ci": [
+          0.5344172683570922,
+          0.6491606261094126
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.580367321089297
+      },
+      "D": {
+        "auc": 0.5305501195912155,
+        "ci": [
+          0.48387073564158484,
+          0.5791774140587189
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5443951868271057
+      },
+      "none": {
+        "auc": 0.5297795478040611,
+        "ci": [
+          0.4866990218160983,
+          0.5721874587726197
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5086763774540849
+      }
+    },
+    "xgb": {
+      "A": {
+        "auc": 0.5588095047359647,
+        "ci": [
+          0.5180452081315381,
+          0.6013443266472012
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.6164661177960734
+      },
+      "B": {
+        "auc": 0.601648718447565,
+        "ci": [
+          0.5429683159555541,
+          0.655240837467714
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5734008866371121
+      },
+      "C": {
+        "auc": 0.609339177471838,
+        "ci": [
+          0.5531885709303971,
+          0.6615039550506506
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.5893603546548448
+      },
+      "D": {
+        "auc": 0.5634253060352556,
+        "ci": [
+          0.5197120792147049,
+          0.6052719358093096
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.6167194426852438
+      },
+      "none": {
+        "auc": 0.5610678141319814,
+        "ci": [
+          0.5165810206990795,
+          0.6065766264363833
+        ],
+        "n": 1024,
+        "n_pos": 513,
+        "within_participant_auc": 0.6195060164661178
+      }
+    }
+  },
+  "contrasts": {
+    "xgb": {
+      "none-A": {
+        "diff": 0.002258309396016678,
+        "ci": [
+          -0.0072792505214137465,
+          0.010989437993218784
+        ]
+      },
+      "D-A": {
+        "diff": 0.004615801299290956,
+        "ci": [
+          -0.0008871378751972941,
+          0.010060308327563236
+        ]
+      },
+      "B-A": {
+        "diff": 0.042839213711600266,
+        "ci": [
+          -0.018996144174767176,
+          0.09698138873555058
+        ]
+      },
+      "C-A": {
+        "diff": 0.05052967273587328,
+        "ci": [
+          -0.005566136752644851,
+          0.0993365951776047
+        ]
+      },
+      "C-B": {
+        "diff": 0.007690459024273011,
+        "ci": [
+          -0.014438854175701784,
+          0.034228014907858054
+        ]
+      }
+    },
+    "logreg": {
+      "none-A": {
+        "diff": -0.0006065391789977781,
+        "ci": [
+          -0.028438535283721905,
+          0.026247489946888754
+        ]
+      },
+      "D-A": {
+        "diff": 0.0001640326081565613,
+        "ci": [
+          -0.0007619507068273273,
+          0.0008831315921034337
+        ]
+      },
+      "B-A": {
+        "diff": 0.06547571363721327,
+        "ci": [
+          -0.004753859433601359,
+          0.1299957067840376
+        ]
+      },
+      "C-A": {
+        "diff": 0.06036399980163498,
+        "ci": [
+          -0.008139381794273287,
+          0.12199404306825458
+        ]
+      },
+      "C-B": {
+        "diff": -0.005111713835578291,
+        "ci": [
+          -0.024262578261890308,
+          0.013272207923012825
+        ]
+      }
+    }
+  },
+  "affine_invariance_check": {
+    "features_changed_by_affine_rescaling": [
+      "AF3_hjorth_act",
+      "AF4_hjorth_act",
+      "F3_hjorth_act",
+      "F4_hjorth_act",
+      "F7_hjorth_act",
+      "F8_hjorth_act"
+    ],
+    "n_changed": 6,
+    "n_features": 66
+  },
+  "identity_probe": {
+    "none": {
+      "xgb": {
+        "accuracy": 0.9848612279226241,
+        "folds": 1
+      },
+      "logreg": {
+        "accuracy": 0.9895263774138756,
+        "folds": 5
+      }
+    },
+    "A": {
+      "xgb": {
+        "accuracy": 0.9857022708158116,
+        "folds": 1
+      },
+      "logreg": {
+        "accuracy": 0.9336262141526079,
+        "folds": 5
+      }
+    },
+    "B": {
+      "xgb": {
+        "accuracy": 0.9226240538267452,
+        "folds": 1
+      },
+      "logreg": {
+        "accuracy": 0.3028991243259288,
+        "folds": 5
+      }
+    },
+    "C": {
+      "xgb": {
+        "accuracy": 0.8920100925147183,
+        "folds": 1
+      },
+      "logreg": {
+        "accuracy": 0.09566516598228862,
+        "folds": 5
+      }
+    }
+  },
+  "identity_probe_note": "scored rows of all participants; trial-grouped GroupKFold(5); logistic regression on all 5 folds, XGBoost on the first fold; A and D coincide here (one global z-score)",
+  "_manifest": {
+    "command": "rev1_e4_normalization.py --dataset DEAP --target valence --identity-check",
+    "written": "2026-09-14 16:56:25 +0200",
+    "python": "3.10.12",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "seed": 17,
+    "n_boot": 1000,
+    "xgb_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "eval_metric": "logloss",
+      "random_state": 17,
+      "n_jobs": 4,
+      "verbosity": 0
+    },
+    "git": {
+      "commit": "824c342e6a5571fcdb27a973c4243da029236e5f",
+      "branch": "frontiers-rev1",
+      "pipeline_files": [
+        "notebook/run_protocols.py",
+        "notebook/deap_labels.py",
+        "notebook/rev1_protocols.py",
+        "notebook/rev1_label_diff.py",
+        "notebook/rev1_provenance.py",
+        "notebook/rev1_labelfix.sh"
+      ],
+      "pipeline_files_clean": true,
+      "dirty_pipeline_files": []
+    },
+    "script_sha256": {
+      "run_protocols.py": "0f58cc422c743bd8ae8a0980c982bd96a35fa82a875e99c4e401db1f3462d907",
+      "deap_labels.py": "bd0972267675a6666fbcd0389506b3422d5c2880529d29acd6926570bc9f782a",
+      "rev1_provenance.py": "a1988a016a9ae2b214494f35a4371ebbf14591d8fb34483c849342e76cd23e4c",
+      "rev1_common.py": "346a8a119e96704696e16c1ea9091f5b003d477c15c000a5cffeda03174a10b8",
+      "rev1_e4_normalization.py": "9acf7bd17f1df1939dadd37aaeaf21b1d525a89f3f38bc31dd6b1f7753ff1e99"
+    },
+    "inputs_sha256": {
+      "cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+      "cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+      "deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06"
+    },
+    "runtime_s": 2561.6
+  }
+}

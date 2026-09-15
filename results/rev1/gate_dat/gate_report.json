@@ -1,0 +1,8 @@
+{
+  "submitted": "results/protocols.json",
+  "tolerance": 0.0005,
+  "n_values_compared": 1164,
+  "n_differences": 0,
+  "differences": [],
+  "passed": true
+}

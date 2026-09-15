@@ -1,0 +1,18 @@
+analysis,valence,arousal
+"P1, window-pooled","0.714 [0.689, 0.739]","0.719 [0.692, 0.744]"
+"P2, trial-grouped","0.629 [0.601, 0.659]","0.639 [0.607, 0.670]"
+"P2B, presentation-block-grouped","0.581 [0.552, 0.608]","0.596 [0.560, 0.630]"
+"P3, participant-grouped","0.559 [0.535, 0.583]","0.504 [0.465, 0.540]"
+"P4, leave-one-participant-out","0.556 [0.533, 0.579]","0.510 [0.479, 0.540]"
+"P4, within-participant AUC","0.571 [0.538, 0.602]","0.514 [0.469, 0.553]"
+"Participant prior, no EEG (P2)","0.610 [0.564, 0.656]","0.723 [0.682, 0.758]"
+"Stimulus prior, no EEG (P2)","0.810 [0.778, 0.843]","0.687 [0.664, 0.710]"
+EEG $-$ participant prior (P2),"+0.019 [-0.013, +0.057]","-0.084 [-0.110, -0.055]"
+"Correlated-window step, P1 $-$ P2","+0.085 [+0.076, +0.095]","+0.080 [+0.069, +0.092]"
+"Participant-overlap step, P2 $-$ P3","+0.070 [+0.039, +0.102]","+0.135 [+0.095, +0.178]"
+"Participant-overlap step, P2B $-$ P3","+0.022 [-0.011, +0.054]","+0.092 [+0.050, +0.138]"
+Overlap gap within participants,"-0.016 [-0.047, +0.016]","-0.008 [-0.047, +0.032]"
+Overlap gap between participants,"+0.071 [+0.040, +0.104]","+0.136 [+0.096, +0.180]"
+"Reweighting, change in overlap gap","-0.023 [-0.052, +0.005]","-0.081 [-0.118, -0.042]"
+Seen $-$ unseen stimulus (5 assignments),"+0.043 [+0.033, +0.053]","+0.009 [+0.002, +0.015]"
+identity decoding accuracy,0.7272274763563962,0.7272274763563962

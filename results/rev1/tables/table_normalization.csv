@@ -1,0 +1,21 @@
+dataset,target,arm,leakage,xgb,xgb_delta,xgb_within,logreg,logreg_delta
+DEAP,valence,A,none (training data only),"0.559 [0.518, 0.601]",reference,0.616,"0.530 [0.483, 0.579]",reference
+DEAP,valence,B,"uses the held-out participant's unlabelled calibration trials, not the scored trials","0.602 [0.543, 0.655]","+0.043 [-0.019, +0.097]",0.573,"0.596 [0.539, 0.651]","+0.065 [-0.005, +0.130]"
+DEAP,valence,C,transductive: uses the held-out participant's scored feature data (no labels),"0.609 [0.553, 0.662]","+0.051 [-0.006, +0.099]",0.589,"0.591 [0.534, 0.649]","+0.060 [-0.008, +0.122]"
+DEAP,valence,D,transductive: uses the held-out participant's scored feature data (no labels),"0.563 [0.520, 0.605]","+0.005 [-0.001, +0.010]",0.617,"0.531 [0.484, 0.579]","+0.000 [-0.001, +0.001]"
+DEAP,valence,none,none,"0.561 [0.517, 0.607]","+0.002 [-0.007, +0.011]",0.620,"0.530 [0.487, 0.572]","-0.001 [-0.028, +0.026]"
+DEAP,arousal,A,none (training data only),"0.477 [0.416, 0.536]",reference,0.523,"0.473 [0.422, 0.522]",reference
+DEAP,arousal,B,"uses the held-out participant's unlabelled calibration trials, not the scored trials","0.524 [0.477, 0.567]","+0.047 [-0.021, +0.116]",0.548,"0.513 [0.470, 0.562]","+0.040 [-0.032, +0.112]"
+DEAP,arousal,C,transductive: uses the held-out participant's scored feature data (no labels),"0.484 [0.441, 0.528]","+0.007 [-0.059, +0.071]",0.530,"0.513 [0.472, 0.555]","+0.040 [-0.030, +0.107]"
+DEAP,arousal,D,transductive: uses the held-out participant's scored feature data (no labels),"0.475 [0.413, 0.537]","-0.002 [-0.011, +0.005]",0.521,"0.473 [0.422, 0.522]","+0.000 [-0.000, +0.001]"
+DEAP,arousal,none,none,"0.477 [0.414, 0.539]","-0.000 [-0.011, +0.007]",0.517,"0.452 [0.398, 0.503]","-0.021 [-0.061, +0.018]"
+DREAMER,valence,A,none (training data only),"0.498 [0.428, 0.567]",reference,0.483,"0.497 [0.425, 0.570]",reference
+DREAMER,valence,B,"uses the held-out participant's unlabelled calibration trials, not the scored trials","0.551 [0.497, 0.611]","+0.054 [-0.033, +0.141]",0.572,"0.539 [0.480, 0.599]","+0.042 [-0.024, +0.120]"
+DREAMER,valence,C,transductive: uses the held-out participant's scored feature data (no labels),"0.508 [0.456, 0.570]","+0.010 [-0.067, +0.096]",0.501,"0.571 [0.521, 0.619]","+0.074 [+0.008, +0.140]"
+DREAMER,valence,D,transductive: uses the held-out participant's scored feature data (no labels),"0.502 [0.430, 0.573]","+0.004 [-0.006, +0.017]",0.494,"0.497 [0.425, 0.570]","+0.001 [-0.000, +0.001]"
+DREAMER,valence,none,none,"0.494 [0.417, 0.566]","-0.004 [-0.018, +0.011]",0.471,"0.460 [0.389, 0.537]","-0.037 [-0.092, +0.028]"
+DREAMER,arousal,A,none (training data only),"0.460 [0.398, 0.531]",reference,0.508,"0.394 [0.345, 0.456]",reference
+DREAMER,arousal,B,"uses the held-out participant's unlabelled calibration trials, not the scored trials","0.524 [0.459, 0.597]","+0.064 [-0.029, +0.155]",0.496,"0.512 [0.446, 0.599]","+0.119 [+0.047, +0.195]"
+DREAMER,arousal,C,transductive: uses the held-out participant's scored feature data (no labels),"0.467 [0.385, 0.562]","+0.007 [-0.085, +0.106]",0.556,"0.543 [0.477, 0.608]","+0.149 [+0.066, +0.219]"
+DREAMER,arousal,D,transductive: uses the held-out participant's scored feature data (no labels),"0.461 [0.400, 0.525]","+0.001 [-0.018, +0.019]",0.487,"0.394 [0.345, 0.456]","-0.000 [-0.002, +0.001]"
+DREAMER,arousal,none,none,"0.469 [0.414, 0.531]","+0.009 [-0.012, +0.027]",0.511,"0.452 [0.393, 0.521]","+0.058 [+0.001, +0.119]"

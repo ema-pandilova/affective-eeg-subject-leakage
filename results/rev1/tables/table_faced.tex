@@ -1,0 +1,30 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{External test on FACED (123 participants, 28 clips, ratings on continuous 0 to 7 scales; Fp1 and Fp2 in place of AF3 and AF4; 30 s trials). Training-median labels. Trial-level AUC or paired difference with 95\% participant-bootstrap intervals. P2B holds out whole presentation blocks of four same-valence clips while keeping participants on both sides. The analyses follow Tables~\ref{tab:protocols} to~\ref{tab:stimulus}.}
+\label{tab:faced}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Analysis & Valence & Arousal \\
+\midrule
+P1, window-pooled & \begin{tabular}[t]{@{}c@{}}0.714\\ {[0.689, 0.739]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.719\\ {[0.692, 0.744]}\end{tabular} \\
+P2, trial-grouped & \begin{tabular}[t]{@{}c@{}}0.629\\ {[0.601, 0.659]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.639\\ {[0.607, 0.670]}\end{tabular} \\
+P2B, presentation-block-grouped & \begin{tabular}[t]{@{}c@{}}0.581\\ {[0.552, 0.608]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.596\\ {[0.560, 0.630]}\end{tabular} \\
+P3, participant-grouped & \begin{tabular}[t]{@{}c@{}}0.559\\ {[0.535, 0.583]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.504\\ {[0.465, 0.540]}\end{tabular} \\
+P4, leave-one-participant-out & \begin{tabular}[t]{@{}c@{}}0.556\\ {[0.533, 0.579]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.510\\ {[0.479, 0.540]}\end{tabular} \\
+P4, within-participant AUC & \begin{tabular}[t]{@{}c@{}}0.571\\ {[0.538, 0.602]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.514\\ {[0.469, 0.553]}\end{tabular} \\
+Participant prior, no EEG (P2) & \begin{tabular}[t]{@{}c@{}}0.610\\ {[0.564, 0.656]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.723\\ {[0.682, 0.758]}\end{tabular} \\
+Stimulus prior, no EEG (P2) & \begin{tabular}[t]{@{}c@{}}0.810\\ {[0.778, 0.843]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.687\\ {[0.664, 0.710]}\end{tabular} \\
+EEG $-$ participant prior (P2) & \begin{tabular}[t]{@{}c@{}}+0.019\\ {[$-$0.013, +0.057]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.084\\ {[$-$0.110, $-$0.055]}\end{tabular} \\
+Correlated-window step, P1 $-$ P2 & \begin{tabular}[t]{@{}c@{}}+0.085\\ {[+0.076, +0.095]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.080\\ {[+0.069, +0.092]}\end{tabular} \\
+Participant-overlap step, P2 $-$ P3 & \begin{tabular}[t]{@{}c@{}}+0.070\\ {[+0.039, +0.102]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.135\\ {[+0.095, +0.178]}\end{tabular} \\
+Participant-overlap step, P2B $-$ P3 & \begin{tabular}[t]{@{}c@{}}+0.022\\ {[$-$0.011, +0.054]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.092\\ {[+0.050, +0.138]}\end{tabular} \\
+Overlap gap within participants & \begin{tabular}[t]{@{}c@{}}$-$0.016\\ {[$-$0.047, +0.016]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.008\\ {[$-$0.047, +0.032]}\end{tabular} \\
+Overlap gap between participants & \begin{tabular}[t]{@{}c@{}}+0.071\\ {[+0.040, +0.104]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.136\\ {[+0.096, +0.180]}\end{tabular} \\
+Reweighting, change in overlap gap & \begin{tabular}[t]{@{}c@{}}$-$0.023\\ {[$-$0.052, +0.005]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.081\\ {[$-$0.118, $-$0.042]}\end{tabular} \\
+Seen $-$ unseen stimulus (5 assignments) & \begin{tabular}[t]{@{}c@{}}+0.043\\ {[+0.033, +0.053]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.009\\ {[+0.002, +0.015]}\end{tabular} \\
+Identity decoding, window accuracy (chance 0.008) & \multicolumn{2}{c}{0.727} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

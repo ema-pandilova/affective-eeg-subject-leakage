@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Unseen participants with seen versus unseen stimuli in the size-matched participant-block $\times$ stimulus-block design (DEAP 8 $\times$ 5, DREAMER 6 $\times$ 6). Both arms train on the same participants and on the same number of trials and clips, and differ only in whether the test clips were seen through other participants. Trial scores are averaged over five random block assignments; trial-level AUC with 95\% participant-bootstrap intervals. The difference (seen $-$ unseen) is paired, with a crossed participant $\times$ clip bootstrap interval and the range of the difference over the individual assignments. Stimulus prior: the no-EEG clip positive rate in the seen-stimulus arm.}
+\label{tab:stimulus}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Dataset & Target & \begin{tabular}[b]{@{}c@{}}Seen\\ stimulus\end{tabular} & \begin{tabular}[b]{@{}c@{}}Unseen\\ stimulus\end{tabular} & \begin{tabular}[b]{@{}c@{}}Difference\\ (seen $-$ unseen)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Crossed\\ interval\end{tabular} & \begin{tabular}[b]{@{}c@{}}Range over\\ assignments\end{tabular} & \begin{tabular}[b]{@{}c@{}}Stimulus prior\\ (seen)\end{tabular} \\
+\midrule
+DEAP & valence & \begin{tabular}[t]{@{}c@{}}0.560\\ {[0.515, 0.605]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.572\\ {[0.531, 0.615]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.013\\ {[$-$0.032, +0.008]}\end{tabular} & [$-$0.047, +0.020] & $-$0.039 to +0.010 & \begin{tabular}[t]{@{}c@{}}0.843\\ {[0.804, 0.880]}\end{tabular} \\
+DEAP & arousal & \begin{tabular}[t]{@{}c@{}}0.458\\ {[0.395, 0.523]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.474\\ {[0.413, 0.534]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.016\\ {[$-$0.032, $-$0.001]}\end{tabular} & [$-$0.042, +0.007] & $-$0.026 to +0.006 & \begin{tabular}[t]{@{}c@{}}0.682\\ {[0.635, 0.731]}\end{tabular} \\
+DREAMER & valence & \begin{tabular}[t]{@{}c@{}}0.535\\ {[0.467, 0.596]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.456\\ {[0.372, 0.528]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.079\\ {[+0.051, +0.118]}\end{tabular} & [+0.023, +0.151] & +0.009 to +0.127 & \begin{tabular}[t]{@{}c@{}}0.870\\ {[0.837, 0.900]}\end{tabular} \\
+DREAMER & arousal & \begin{tabular}[t]{@{}c@{}}0.489\\ {[0.401, 0.581]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.489\\ {[0.416, 0.573]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.000\\ {[$-$0.040, +0.042]}\end{tabular} & [$-$0.066, +0.062] & $-$0.005 to +0.053 & \begin{tabular}[t]{@{}c@{}}0.781\\ {[0.742, 0.820]}\end{tabular} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

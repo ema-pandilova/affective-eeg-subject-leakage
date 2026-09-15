@@ -1,0 +1,42 @@
+{
+  "git": {
+    "commit": "975e51b88b0c6299e740c281b5814e971f8772ad",
+    "branch": "frontiers-rev1",
+    "pipeline_files": [
+      "notebook/run_protocols.py",
+      "notebook/deap_labels.py",
+      "notebook/rev1_protocols.py",
+      "notebook/rev1_label_diff.py",
+      "notebook/rev1_provenance.py",
+      "notebook/rev1_labelfix.sh"
+    ],
+    "pipeline_files_clean": true,
+    "dirty_pipeline_files": []
+  },
+  "csv": "data/deap/deap_labels_corrected.csv",
+  "csv_sha256": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06",
+  "xls": "data/deap/metadata/participant_ratings.xls",
+  "xls_sha256": "e3269144e3018848760b0f1a7b2301912cee402012911f427728e3a04bbdfb94",
+  "max_abs_diff_vs_official": {
+    "valence": 4.440892098500626e-16,
+    "arousal": 4.440892098500626e-16,
+    "dominance": 0.0,
+    "liking": 0.0
+  },
+  "reflected_trials_in_dat": {
+    "valence": 439,
+    "arousal": 439
+  },
+  "clean_mirror": {
+    "label_mismatches": 0,
+    "participants_with_identical_eeg": 32
+  },
+  "trials_with_any_reflection": 439,
+  "cache": {
+    "sha256": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+    "windows": 37120,
+    "trials": 1280,
+    "windows_with_changed_valence": 12731,
+    "windows_with_changed_arousal": 12731
+  }
+}

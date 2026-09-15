@@ -1,0 +1,246 @@
+{
+  "dataset": "DEAP",
+  "target": "arousal",
+  "protocol": "P4 (leave-one-participant-out)",
+  "calibration_trials_per_participant": 8,
+  "scored_trials": 1024,
+  "leakage": {
+    "none": "none",
+    "A": "none (training data only)",
+    "D": "transductive: uses the held-out participant's scored feature data (no labels)",
+    "B": "uses the held-out participant's unlabelled calibration trials, not the scored trials",
+    "C": "transductive: uses the held-out participant's scored feature data (no labels)"
+  },
+  "arms": {
+    "logreg": {
+      "A": {
+        "auc": 0.4725487278678768,
+        "ci": [
+          0.4219941082994143,
+          0.5217868841679227
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5402047781569966
+      },
+      "B": {
+        "auc": 0.5127442115985488,
+        "ci": [
+          0.47037724717547025,
+          0.5615585302931176
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5216382252559727
+      },
+      "C": {
+        "auc": 0.512786177270629,
+        "ci": [
+          0.4718733438780906,
+          0.5546865888699024
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5149488054607508
+      },
+      "D": {
+        "auc": 0.47273185080059055,
+        "ci": [
+          0.42200154834977766,
+          0.5219560803411097
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5397952218430034
+      },
+      "none": {
+        "auc": 0.4515239261556774,
+        "ci": [
+          0.39835095676905785,
+          0.5029477279353561
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.49215017064846417
+      }
+    },
+    "xgb": {
+      "A": {
+        "auc": 0.47721073252988155,
+        "ci": [
+          0.41632261017230265,
+          0.5355718527073191
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5231399317406144
+      },
+      "B": {
+        "auc": 0.5244793395366227,
+        "ci": [
+          0.47717483435971464,
+          0.5671098220977292
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5478498293515358
+      },
+      "C": {
+        "auc": 0.4842113696450849,
+        "ci": [
+          0.44142428846176907,
+          0.5279106871776047
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5302389078498293
+      },
+      "D": {
+        "auc": 0.4754863249134935,
+        "ci": [
+          0.4125183019653811,
+          0.5367866771523782
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5205460750853242
+      },
+      "none": {
+        "auc": 0.47672621977040963,
+        "ci": [
+          0.4141158298310661,
+          0.538783265532045
+        ],
+        "n": 1024,
+        "n_pos": 517,
+        "within_participant_auc": 0.5167235494880547
+      }
+    }
+  },
+  "contrasts": {
+    "xgb": {
+      "none-A": {
+        "diff": -0.0004845127594719223,
+        "ci": [
+          -0.011434316958131675,
+          0.007306392353795311
+        ]
+      },
+      "D-A": {
+        "diff": -0.001724407616388035,
+        "ci": [
+          -0.010904070875887819,
+          0.00492848003360241
+        ]
+      },
+      "B-A": {
+        "diff": 0.04726860700674118,
+        "ci": [
+          -0.020680166686609266,
+          0.11615560299799758
+        ]
+      },
+      "C-A": {
+        "diff": 0.007000637115203323,
+        "ci": [
+          -0.05888522879758167,
+          0.07123476879396376
+        ]
+      },
+      "C-B": {
+        "diff": -0.04026796989153786,
+        "ci": [
+          -0.07314157843894414,
+          -0.00680718555933724
+        ]
+      }
+    },
+    "logreg": {
+      "none-A": {
+        "diff": -0.021024801712199448,
+        "ci": [
+          -0.06134335821216532,
+          0.017888297409922576
+        ]
+      },
+      "D-A": {
+        "diff": 0.0001831229327137196,
+        "ci": [
+          -0.0002984107463756963,
+          0.0006116502990059293
+        ]
+      },
+      "B-A": {
+        "diff": 0.040195483730671944,
+        "ci": [
+          -0.03227049998275605,
+          0.11218189393461302
+        ]
+      },
+      "C-A": {
+        "diff": 0.0402374494027522,
+        "ci": [
+          -0.03015727113455671,
+          0.10657580352857428
+        ]
+      },
+      "C-B": {
+        "diff": 4.196567208025748e-05,
+        "ci": [
+          -0.02623226280389249,
+          0.02602286476344526
+        ]
+      }
+    }
+  },
+  "_manifest": {
+    "command": "rev1_e4_normalization.py --dataset DEAP --target arousal",
+    "written": "2026-09-14 16:41:12 +0200",
+    "python": "3.10.12",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "seed": 17,
+    "n_boot": 1000,
+    "xgb_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "eval_metric": "logloss",
+      "random_state": 17,
+      "n_jobs": 4,
+      "verbosity": 0
+    },
+    "git": {
+      "commit": "824c342e6a5571fcdb27a973c4243da029236e5f",
+      "branch": "frontiers-rev1",
+      "pipeline_files": [
+        "notebook/run_protocols.py",
+        "notebook/deap_labels.py",
+        "notebook/rev1_protocols.py",
+        "notebook/rev1_label_diff.py",
+        "notebook/rev1_provenance.py",
+        "notebook/rev1_labelfix.sh"
+      ],
+      "pipeline_files_clean": true,
+      "dirty_pipeline_files": []
+    },
+    "script_sha256": {
+      "run_protocols.py": "0f58cc422c743bd8ae8a0980c982bd96a35fa82a875e99c4e401db1f3462d907",
+      "deap_labels.py": "bd0972267675a6666fbcd0389506b3422d5c2880529d29acd6926570bc9f782a",
+      "rev1_provenance.py": "a1988a016a9ae2b214494f35a4371ebbf14591d8fb34483c849342e76cd23e4c",
+      "rev1_common.py": "346a8a119e96704696e16c1ea9091f5b003d477c15c000a5cffeda03174a10b8",
+      "rev1_e4_normalization.py": "9acf7bd17f1df1939dadd37aaeaf21b1d525a89f3f38bc31dd6b1f7753ff1e99"
+    },
+    "inputs_sha256": {
+      "cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+      "cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+      "deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06"
+    },
+    "runtime_s": 1653.1
+  }
+}

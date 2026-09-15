@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Is participant identity used? All entries are paired differences in trial-level AUC with 95\% participant-bootstrap intervals, training-median labels. Overlap gap: P2 $-$ P3. EEG $-$ prior: the EEG model minus the no-EEG participant prior under P2. Within and between: the P2 $-$ P3 gap computed only over pairs of trials from the same participant, or only over pairs from different participants. Reweighting: change in the overlap gap when training weights balance the classes within each participant. Removal: change in the overlap gap when the $k$ most identity-discriminative directions are projected out (XGBoost; $k$ = 24 on DEAP, 16 on DREAMER). If the advantage runs through participant label tendencies, the between-participant gap carries it and reweighting and removal are negative.}
+\label{tab:identity_use}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Dataset & Target & \begin{tabular}[b]{@{}c@{}}Overlap gap\\ (P2 $-$ P3)\end{tabular} & \begin{tabular}[b]{@{}c@{}}EEG $-$ prior\\ (P2)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Gap within\\ participants\end{tabular} & \begin{tabular}[b]{@{}c@{}}Gap between\\ participants\end{tabular} & \begin{tabular}[b]{@{}c@{}}Reweighting\\ change in gap\end{tabular} & \begin{tabular}[b]{@{}c@{}}Removal\\ change in gap\end{tabular} \\
+\midrule
+DEAP & valence & \begin{tabular}[t]{@{}c@{}}+0.099\\ {[+0.050, +0.145]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.123\\ {[+0.079, +0.180]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.027\\ {[$-$0.056, +0.112]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.102\\ {[+0.055, +0.151]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.029\\ {[+0.001, +0.056]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.028\\ {[$-$0.057, +0.004]}\end{tabular} \\
+DEAP & arousal & \begin{tabular}[t]{@{}c@{}}+0.220\\ {[+0.140, +0.291]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.036\\ {[+0.021, +0.064]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.028\\ {[$-$0.034, +0.104]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.226\\ {[+0.149, +0.304]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.064\\ {[$-$0.117, $-$0.007]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.086\\ {[$-$0.135, $-$0.028]}\end{tabular} \\
+DREAMER & valence & \begin{tabular}[t]{@{}c@{}}$-$0.020\\ {[$-$0.110, +0.057]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.004\\ {[$-$0.064, +0.090]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.099\\ {[$-$0.259, +0.079]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.017\\ {[$-$0.098, +0.059]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.007\\ {[$-$0.033, +0.051]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.011\\ {[$-$0.045, +0.069]}\end{tabular} \\
+DREAMER & arousal & \begin{tabular}[t]{@{}c@{}}+0.153\\ {[+0.030, +0.265]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.008\\ {[$-$0.082, +0.095]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.061\\ {[$-$0.192, +0.112]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.162\\ {[+0.045, +0.283]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.039\\ {[$-$0.089, +0.015]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.015\\ {[$-$0.038, +0.067]}\end{tabular} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

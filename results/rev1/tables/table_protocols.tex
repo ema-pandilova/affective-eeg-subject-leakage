@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Exact four-protocol results on corrected DEAP labels. Trial-level AUC with 95\% participant-bootstrap intervals (1,000 draws). P1, window-pooled 5-fold; P2, trial-grouped 5-fold with participants on both sides; P3, participant-grouped 5-fold; P4, leave-one-participant-out. The last two columns are paired differences. Window-level AUCs are given in Supplementary Table S2.}
+\label{tab:protocols}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Dataset & Target & P1 & P2 & P3 & P4 & P1 $-$ P2 & P2 $-$ P3 \\
+\midrule
+\multicolumn{8}{@{}l}{\textit{Training-median labels (primary)}} \\
+DEAP & valence & \begin{tabular}[t]{@{}c@{}}0.769\\ {[0.746, 0.793]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.657\\ {[0.622, 0.685]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.558\\ {[0.519, 0.595]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.565\\ {[0.517, 0.613]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.112\\ {[+0.091, +0.138]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.099\\ {[+0.050, +0.145]}\end{tabular} \\
+DEAP & arousal & \begin{tabular}[t]{@{}c@{}}0.754\\ {[0.727, 0.778]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.682\\ {[0.637, 0.715]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.462\\ {[0.401, 0.525]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.464\\ {[0.401, 0.528]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.072\\ {[+0.058, +0.098]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.220\\ {[+0.140, +0.291]}\end{tabular} \\
+DREAMER & valence & \begin{tabular}[t]{@{}c@{}}0.852\\ {[0.814, 0.888]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.511\\ {[0.431, 0.582]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.531\\ {[0.466, 0.594]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.523\\ {[0.451, 0.590]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.341\\ {[+0.265, +0.431]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.020\\ {[$-$0.110, +0.057]}\end{tabular} \\
+DREAMER & arousal & \begin{tabular}[t]{@{}c@{}}0.912\\ {[0.872, 0.944]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.609\\ {[0.521, 0.686]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.455\\ {[0.398, 0.517]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.467\\ {[0.401, 0.541]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.303\\ {[+0.240, +0.377]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.153\\ {[+0.030, +0.265]}\end{tabular} \\
+\addlinespace
+\multicolumn{8}{@{}l}{\textit{Per-participant-median labels (target-derived sensitivity analysis)}} \\
+DEAP & valence & \begin{tabular}[t]{@{}c@{}}0.774\\ {[0.744, 0.803]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.589\\ {[0.541, 0.635]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.546\\ {[0.526, 0.571]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.561\\ {[0.537, 0.589]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.184\\ {[+0.150, +0.222]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.044\\ {[+0.001, +0.080]}\end{tabular} \\
+DEAP & arousal & \begin{tabular}[t]{@{}c@{}}0.730\\ {[0.702, 0.762]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.530\\ {[0.490, 0.569]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.507\\ {[0.479, 0.534]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.503\\ {[0.472, 0.532]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.201\\ {[+0.172, +0.234]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.022\\ {[$-$0.020, +0.068]}\end{tabular} \\
+DREAMER & valence & \begin{tabular}[t]{@{}c@{}}0.863\\ {[0.823, 0.897]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.495\\ {[0.442, 0.541]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.517\\ {[0.464, 0.568]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.502\\ {[0.450, 0.559]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.368\\ {[+0.299, +0.436]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.021\\ {[$-$0.097, +0.052]}\end{tabular} \\
+DREAMER & arousal & \begin{tabular}[t]{@{}c@{}}0.898\\ {[0.858, 0.932]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.592\\ {[0.525, 0.655]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.470\\ {[0.413, 0.528]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.506\\ {[0.439, 0.575]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.306\\ {[+0.252, +0.363]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.122\\ {[+0.031, +0.217]}\end{tabular} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

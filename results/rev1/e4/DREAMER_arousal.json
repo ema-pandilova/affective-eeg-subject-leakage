@@ -1,0 +1,246 @@
+{
+  "dataset": "DREAMER",
+  "target": "arousal",
+  "protocol": "P4 (leave-one-participant-out)",
+  "calibration_trials_per_participant": 4,
+  "scored_trials": 322,
+  "leakage": {
+    "none": "none",
+    "A": "none (training data only)",
+    "D": "transductive: uses the held-out participant's scored feature data (no labels)",
+    "B": "uses the held-out participant's unlabelled calibration trials, not the scored trials",
+    "C": "transductive: uses the held-out participant's scored feature data (no labels)"
+  },
+  "arms": {
+    "logreg": {
+      "A": {
+        "auc": 0.39369243381395574,
+        "ci": [
+          0.3450977891156462,
+          0.4559168409754107
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.4780976220275344
+      },
+      "B": {
+        "auc": 0.5124656411245601,
+        "ci": [
+          0.4458806003966062,
+          0.5987897553434802
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.5531914893617021
+      },
+      "C": {
+        "auc": 0.5425085595794956,
+        "ci": [
+          0.4771332661433439,
+          0.6078538337602405
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.5882352941176471
+      },
+      "D": {
+        "auc": 0.39354776486473453,
+        "ci": [
+          0.34493527436737903,
+          0.45601842419049154
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.47684605757196497
+      },
+      "none": {
+        "auc": 0.45180112841780395,
+        "ci": [
+          0.3926754175696253,
+          0.5209597730292626
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.4918648310387985
+      }
+    },
+    "xgb": {
+      "A": {
+        "auc": 0.45990258957419106,
+        "ci": [
+          0.3984127311337988,
+          0.5308957088481085
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.5081351689612015
+      },
+      "B": {
+        "auc": 0.5241838260114771,
+        "ci": [
+          0.4594382413938866,
+          0.5971568889010951
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.4956195244055069
+      },
+      "C": {
+        "auc": 0.4667020301875874,
+        "ci": [
+          0.3854826080931264,
+          0.562481161850354
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.5556946182728411
+      },
+      "D": {
+        "auc": 0.4613975020494768,
+        "ci": [
+          0.4004372430790498,
+          0.5252645805741032
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.48685857321652065
+      },
+      "none": {
+        "auc": 0.46920962530742155,
+        "ci": [
+          0.413750253615884,
+          0.5306581653640478
+        ],
+        "n": 322,
+        "n_pos": 233,
+        "within_participant_auc": 0.5106382978723404
+      }
+    }
+  },
+  "contrasts": {
+    "xgb": {
+      "none-A": {
+        "diff": 0.009307035733230495,
+        "ci": [
+          -0.01170421415319387,
+          0.027341217456013346
+        ]
+      },
+      "D-A": {
+        "diff": 0.00149491247528577,
+        "ci": [
+          -0.01847863067569222,
+          0.019409778382030667
+        ]
+      },
+      "B-A": {
+        "diff": 0.064281236437286,
+        "ci": [
+          -0.029305516056900318,
+          0.15467556978500063
+        ]
+      },
+      "C-A": {
+        "diff": 0.006799440613396324,
+        "ci": [
+          -0.08496112964644208,
+          0.10639839485087156
+        ]
+      },
+      "C-B": {
+        "diff": -0.05748179582388968,
+        "ci": [
+          -0.15037134090075963,
+          0.04288960638935195
+        ]
+      }
+    },
+    "logreg": {
+      "none-A": {
+        "diff": 0.05810869460384821,
+        "ci": [
+          0.0007635880771296847,
+          0.11940971106613714
+        ]
+      },
+      "D-A": {
+        "diff": -0.0001446689492212161,
+        "ci": [
+          -0.001775952678682309,
+          0.0010149307381880797
+        ]
+      },
+      "B-A": {
+        "diff": 0.11877320731060431,
+        "ci": [
+          0.046854647849396004,
+          0.19485433044016162
+        ]
+      },
+      "C-A": {
+        "diff": 0.14881612576553988,
+        "ci": [
+          0.06642198819930398,
+          0.21915948275862068
+        ]
+      },
+      "C-B": {
+        "diff": 0.030042918454935563,
+        "ci": [
+          -0.04193998211862367,
+          0.10192407330946765
+        ]
+      }
+    }
+  },
+  "_manifest": {
+    "command": "rev1_e4_normalization.py --dataset DREAMER --target arousal",
+    "written": "2026-09-14 16:20:00 +0200",
+    "python": "3.10.12",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "seed": 17,
+    "n_boot": 1000,
+    "xgb_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "eval_metric": "logloss",
+      "random_state": 17,
+      "n_jobs": 4,
+      "verbosity": 0
+    },
+    "git": {
+      "commit": "824c342e6a5571fcdb27a973c4243da029236e5f",
+      "branch": "frontiers-rev1",
+      "pipeline_files": [
+        "notebook/run_protocols.py",
+        "notebook/deap_labels.py",
+        "notebook/rev1_protocols.py",
+        "notebook/rev1_label_diff.py",
+        "notebook/rev1_provenance.py",
+        "notebook/rev1_labelfix.sh"
+      ],
+      "pipeline_files_clean": true,
+      "dirty_pipeline_files": []
+    },
+    "script_sha256": {
+      "run_protocols.py": "0f58cc422c743bd8ae8a0980c982bd96a35fa82a875e99c4e401db1f3462d907",
+      "deap_labels.py": "bd0972267675a6666fbcd0389506b3422d5c2880529d29acd6926570bc9f782a",
+      "rev1_provenance.py": "a1988a016a9ae2b214494f35a4371ebbf14591d8fb34483c849342e76cd23e4c",
+      "rev1_common.py": "346a8a119e96704696e16c1ea9091f5b003d477c15c000a5cffeda03174a10b8",
+      "rev1_e4_normalization.py": "9acf7bd17f1df1939dadd37aaeaf21b1d525a89f3f38bc31dd6b1f7753ff1e99"
+    },
+    "inputs_sha256": {
+      "cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+      "cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+      "deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06"
+    },
+    "runtime_s": 524.7
+  }
+}

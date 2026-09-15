@@ -1,0 +1,101 @@
+{
+  "DEAP": {
+    "feature_eta2_participant": {
+      "median": 0.7901363436469078,
+      "q25": 0.7418627709531502,
+      "q75": 0.8208663697777531,
+      "n_features": 66,
+      "unit": "trial-level feature means"
+    },
+    "valence": {
+      "rating_eta2_participant": 0.047272057088273166,
+      "rating_eta2_stimulus": 0.49417113785332173,
+      "full_data_median": 5.04,
+      "positive_rate": 0.53125,
+      "participant_positive_rate_min": 0.35,
+      "participant_positive_rate_max": 0.75
+    },
+    "arousal": {
+      "rating_eta2_participant": 0.11693583283508907,
+      "rating_eta2_stimulus": 0.16609417064498297,
+      "full_data_median": 5.23,
+      "positive_rate": 0.5,
+      "participant_positive_rate_min": 0.175,
+      "participant_positive_rate_max": 0.8
+    }
+  },
+  "DREAMER": {
+    "feature_eta2_participant": {
+      "median": 0.5151458582295645,
+      "q25": 0.37783603475790417,
+      "q75": 0.6418423399714532,
+      "n_features": 66,
+      "unit": "trial-level feature means"
+    },
+    "valence": {
+      "rating_eta2_participant": 0.05227761354474601,
+      "rating_eta2_stimulus": 0.6079279763504432,
+      "full_data_median": 3.0,
+      "positive_rate": 0.6111111111111112,
+      "participant_positive_rate_min": 0.3888888888888889,
+      "participant_positive_rate_max": 0.7777777777777778
+    },
+    "arousal": {
+      "rating_eta2_participant": 0.0991776850208703,
+      "rating_eta2_stimulus": 0.3510660101477168,
+      "full_data_median": 3.0,
+      "positive_rate": 0.7246376811594203,
+      "participant_positive_rate_min": 0.5,
+      "participant_positive_rate_max": 0.9444444444444444
+    }
+  },
+  "_manifest": {
+    "command": "rev1_e0_descriptives.py",
+    "written": "2026-09-14 16:23:20 +0200",
+    "python": "3.10.12",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "seed": 17,
+    "n_boot": 1000,
+    "xgb_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "eval_metric": "logloss",
+      "random_state": 17,
+      "n_jobs": 4,
+      "verbosity": 0
+    },
+    "git": {
+      "commit": "824c342e6a5571fcdb27a973c4243da029236e5f",
+      "branch": "frontiers-rev1",
+      "pipeline_files": [
+        "notebook/run_protocols.py",
+        "notebook/deap_labels.py",
+        "notebook/rev1_protocols.py",
+        "notebook/rev1_label_diff.py",
+        "notebook/rev1_provenance.py",
+        "notebook/rev1_labelfix.sh"
+      ],
+      "pipeline_files_clean": true,
+      "dirty_pipeline_files": []
+    },
+    "script_sha256": {
+      "run_protocols.py": "0f58cc422c743bd8ae8a0980c982bd96a35fa82a875e99c4e401db1f3462d907",
+      "deap_labels.py": "bd0972267675a6666fbcd0389506b3422d5c2880529d29acd6926570bc9f782a",
+      "rev1_provenance.py": "a1988a016a9ae2b214494f35a4371ebbf14591d8fb34483c849342e76cd23e4c",
+      "rev1_common.py": "346a8a119e96704696e16c1ea9091f5b003d477c15c000a5cffeda03174a10b8",
+      "rev1_e0_descriptives.py": "a8f5348b2d49285da65f954130f02a51793326f96746a182596f67ff38a87199"
+    },
+    "inputs_sha256": {
+      "cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+      "cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+      "deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06"
+    }
+  }
+}

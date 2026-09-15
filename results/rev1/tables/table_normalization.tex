@@ -1,0 +1,36 @@
+\begin{table}[htbp]
+\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{Normalization scope under leave-one-participant-out evaluation. Feature-level z-scoring; the same scored trials in every arm (calibration trials excluded from training and scoring throughout). Trial-level AUC with 95\% participant-bootstrap intervals; $\Delta$ is the paired difference from training-rows global normalization. $^{\dagger}$Transductive: statistics include the held-out participant's scored feature data (no labels). $^{\ddagger}$Uses the held-out participant's unlabelled calibration trials but not the scored trials.}
+\label{tab:normalization}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lllcccc@{}}
+\toprule
+Dataset & Target & Normalization & XGBoost & \begin{tabular}[b]{@{}c@{}}$\Delta$ from\\ training-only\end{tabular} & \begin{tabular}[b]{@{}c@{}}Logistic\\ regression\end{tabular} & \begin{tabular}[b]{@{}c@{}}$\Delta$ from\\ training-only\end{tabular} \\
+\midrule
+DEAP & valence & Global, training rows & \begin{tabular}[t]{@{}c@{}}0.559\\ {[0.518, 0.601]}\end{tabular} & reference & \begin{tabular}[t]{@{}c@{}}0.530\\ {[0.483, 0.579]}\end{tabular} & reference \\
+ &  & Per participant, calibration trials$^{\ddagger}$ & \begin{tabular}[t]{@{}c@{}}0.602\\ {[0.543, 0.655]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.043\\ {[$-$0.019, +0.097]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.596\\ {[0.539, 0.651]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.065\\ {[$-$0.005, +0.130]}\end{tabular} \\
+ &  & Per participant, whole recording$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.609\\ {[0.553, 0.662]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.051\\ {[$-$0.006, +0.099]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.591\\ {[0.534, 0.649]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.060\\ {[$-$0.008, +0.122]}\end{tabular} \\
+ &  & Global, all rows incl. test$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.563\\ {[0.520, 0.605]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.005\\ {[$-$0.001, +0.010]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.531\\ {[0.484, 0.579]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.000\\ {[$-$0.001, +0.001]}\end{tabular} \\
+ &  & None (reference) & \begin{tabular}[t]{@{}c@{}}0.561\\ {[0.517, 0.607]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.002\\ {[$-$0.007, +0.011]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.530\\ {[0.487, 0.572]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.001\\ {[$-$0.028, +0.026]}\end{tabular} \\
+\addlinespace
+DEAP & arousal & Global, training rows & \begin{tabular}[t]{@{}c@{}}0.477\\ {[0.416, 0.536]}\end{tabular} & reference & \begin{tabular}[t]{@{}c@{}}0.473\\ {[0.422, 0.522]}\end{tabular} & reference \\
+ &  & Per participant, calibration trials$^{\ddagger}$ & \begin{tabular}[t]{@{}c@{}}0.524\\ {[0.477, 0.567]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.047\\ {[$-$0.021, +0.116]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.513\\ {[0.470, 0.562]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.040\\ {[$-$0.032, +0.112]}\end{tabular} \\
+ &  & Per participant, whole recording$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.484\\ {[0.441, 0.528]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.007\\ {[$-$0.059, +0.071]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.513\\ {[0.472, 0.555]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.040\\ {[$-$0.030, +0.107]}\end{tabular} \\
+ &  & Global, all rows incl. test$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.475\\ {[0.413, 0.537]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.002\\ {[$-$0.011, +0.005]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.473\\ {[0.422, 0.522]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.000\\ {[$-$0.000, +0.001]}\end{tabular} \\
+ &  & None (reference) & \begin{tabular}[t]{@{}c@{}}0.477\\ {[0.414, 0.539]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.000\\ {[$-$0.011, +0.007]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.452\\ {[0.398, 0.503]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.021\\ {[$-$0.061, +0.018]}\end{tabular} \\
+\addlinespace
+DREAMER & valence & Global, training rows & \begin{tabular}[t]{@{}c@{}}0.498\\ {[0.428, 0.567]}\end{tabular} & reference & \begin{tabular}[t]{@{}c@{}}0.497\\ {[0.425, 0.570]}\end{tabular} & reference \\
+ &  & Per participant, calibration trials$^{\ddagger}$ & \begin{tabular}[t]{@{}c@{}}0.551\\ {[0.497, 0.611]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.054\\ {[$-$0.033, +0.141]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.539\\ {[0.480, 0.599]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.042\\ {[$-$0.024, +0.120]}\end{tabular} \\
+ &  & Per participant, whole recording$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.508\\ {[0.456, 0.570]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.010\\ {[$-$0.067, +0.096]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.571\\ {[0.521, 0.619]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.074\\ {[+0.008, +0.140]}\end{tabular} \\
+ &  & Global, all rows incl. test$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.502\\ {[0.430, 0.573]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.004\\ {[$-$0.006, +0.017]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.497\\ {[0.425, 0.570]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.001\\ {[$-$0.000, +0.001]}\end{tabular} \\
+ &  & None (reference) & \begin{tabular}[t]{@{}c@{}}0.494\\ {[0.417, 0.566]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.004\\ {[$-$0.018, +0.011]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.460\\ {[0.389, 0.537]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.037\\ {[$-$0.092, +0.028]}\end{tabular} \\
+\addlinespace
+DREAMER & arousal & Global, training rows & \begin{tabular}[t]{@{}c@{}}0.460\\ {[0.398, 0.531]}\end{tabular} & reference & \begin{tabular}[t]{@{}c@{}}0.394\\ {[0.345, 0.456]}\end{tabular} & reference \\
+ &  & Per participant, calibration trials$^{\ddagger}$ & \begin{tabular}[t]{@{}c@{}}0.524\\ {[0.459, 0.597]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.064\\ {[$-$0.029, +0.155]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.512\\ {[0.446, 0.599]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.119\\ {[+0.047, +0.195]}\end{tabular} \\
+ &  & Per participant, whole recording$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.467\\ {[0.385, 0.562]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.007\\ {[$-$0.085, +0.106]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.543\\ {[0.477, 0.608]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.149\\ {[+0.066, +0.219]}\end{tabular} \\
+ &  & Global, all rows incl. test$^{\dagger}$ & \begin{tabular}[t]{@{}c@{}}0.461\\ {[0.400, 0.525]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.001\\ {[$-$0.018, +0.019]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.394\\ {[0.345, 0.456]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}$-$0.000\\ {[$-$0.002, +0.001]}\end{tabular} \\
+ &  & None (reference) & \begin{tabular}[t]{@{}c@{}}0.469\\ {[0.414, 0.531]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.009\\ {[$-$0.012, +0.027]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}0.452\\ {[0.393, 0.521]}\end{tabular} & \begin{tabular}[t]{@{}c@{}}+0.058\\ {[+0.001, +0.119]}\end{tabular} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
