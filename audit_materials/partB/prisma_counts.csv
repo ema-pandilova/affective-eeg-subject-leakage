@@ -1,0 +1,10 @@
+stage,n
+"Records identified (OpenAlex, 8 dataset terms x 2 search fields)",2844
+Duplicates removed by DOI,633
+Duplicates removed by title and first author,9
+Records after de-duplication (screening frame),2202
+Records screened (title and abstract),
+Records excluded at screening,
+Full texts assessed,
+"Full texts excluded, with reasons",
+Studies included and coded (protocol target 45),

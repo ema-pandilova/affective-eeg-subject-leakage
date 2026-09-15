@@ -1,7 +1,7 @@
 # Literature audit: systematic search and double-coding protocol
 
-Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.1, 15 September 2026
-(version 1.0, 14 September 2026; see the change log).
+Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.2, 16 September 2026
+(version 1.0, 14 September 2026; see the change log). **The design is frozen at this version.**
 This protocol is fixed before any search is run or any study is coded. Changes after that point are
 recorded in the change log at the end, with the date and the reason.
 
@@ -11,9 +11,9 @@ For peer-reviewed studies that report EEG-only emotion decoding on DEAP, DREAMER
 dataset, the audit records how the headline result was evaluated (participant, trial and stimulus
 separation, scoring unit, normalization scope, use of test-participant data, model selection) and
 whether the paper states a population-level claim. The unit of analysis is the study. The audit
-describes a sample; it does not estimate a field-wide prevalence unless the sample in Part B is
-drawn as specified here, and even then any rate is reported as an estimate for the searched
-databases, date range and eligibility rules only.
+describes a sample. It does not estimate a field-wide prevalence, in Part A or in Part B, and no
+percentage it yields is reported as a rate for affective-EEG research. Section 9 states the single
+conclusion the design supports.
 
 ## 2. Two parts
 
@@ -23,9 +23,10 @@ purposive set of dataset-origin papers, widely cited method papers, and papers a
 report subject-independent results. Part A yields agreement statistics and a corrected
 illustrative table. It supports no prevalence statement.
 
-**Part B, systematic search with a seeded random sample.** Run only if the authors choose audit
-option B. The searches below are run, logged and de-duplicated; records are screened in a seeded
-random order until the target number of eligible studies is reached; the sample is double-coded.
+**Part B, systematic search with a seeded random sample.** The authors chose option B on 16 September
+2026, so Part B is being run. The searches below are run, logged and de-duplicated; records are
+screened in a seeded random order until the target number of eligible studies is reached; the sample
+is double-coded.
 
 ## 3. Searches (Part B)
 
@@ -62,6 +63,29 @@ Date range: 1 January 2012 (the year DEAP was published) to 31 December 2025.
 De-duplication: by DOI, then by normalized title and first author for records without a DOI. When a
 conference paper and a later journal version report the same experiment, the journal version is
 kept and the conference paper is excluded as a duplicate at full text.
+
+### As executed, 15 September 2026
+
+The search was run against OpenAlex rather than Scopus and Web of Science, which need institutional
+credentials. OpenAlex is open and callable without an account, so the identification step is
+reproducible by anyone from `partB/run_search.py` alone. The same concept, dataset, year and
+document-type criteria apply; the exact strings, date and counts are in `partB/search_log.csv`.
+
+Each of the eight dataset terms is run twice, over title-and-abstract and over title alone, because
+several heavily cited studies have no abstract indexed and would otherwise be unreachable. Document
+types include conference papers, as section 4 admits proceedings papers. Preprints and records with
+no language field are retrieved and then excluded by the coders at screening, so every exclusion is
+counted in the PRISMA flow rather than hidden inside the query. The year floor is 2011 rather than
+2012 because OpenAlex dates the DEAP origin paper to its 2011 online publication; coders apply the
+2012 to 2025 rule to the publication year of record.
+
+Result: 2,844 records retrieved, 642 duplicates removed, a screening frame of 2,202 records, placed
+in the seeded random order of section 5 and saved as `partB/screening_order.csv` before any screening
+began.
+
+Scope of the frame. A dataset-name query reaches only studies that name the dataset in the title or
+abstract. Studies that use one of these datasets without naming it there fall outside the frame
+whatever filters are used. This bounds what the sample can describe, as section 9 states.
 
 ## 4. Eligibility
 
@@ -139,8 +163,22 @@ are always the pre-adjudication values.
 - Agreement for every field, primary fields in the main text or a main-text table, all fields in the
   Supplementary Material.
 - The adjudicated coding sheet as Supplementary Table S1, with quotes.
-- Counts described as properties of the coded sample. Part A supports no prevalence statement. Part B
-  counts are reported as estimates for eligible studies indexed in the two databases over 2012 to 2025.
+- Counts described as properties of the coded sample. Part A supports no prevalence statement.
+
+### The conclusion this design supports
+
+Part B supports one conclusion and the manuscript states no more than it:
+
+> Evaluation and reporting practices in the systematically identified sample show that leakage-prone
+> or insufficiently documented protocols remain present in the DEAP, DREAMER and SEED literature.
+
+No prevalence figure for the field is reported, and none is implied. Two limits make that the correct
+ceiling. The frame contains only studies that name a dataset in the title or abstract, so studies that
+use one without naming it there are outside it. And the search was run against one database. Counts
+are therefore described as properties of the coded sample, never as a rate for affective-EEG research.
+
+**The audit design is frozen as of 16 September 2026.** Sections 1 to 9 are not revised further unless
+a reviewer comment explicitly requires it.
 
 ## 10. Materials in this folder
 
@@ -149,7 +187,12 @@ are always the pre-adjudication values.
 | `SYSTEMATIC_SEARCH_PROTOCOL.md` | This protocol |
 | `CODING_RUBRIC.md`, `coding_rubric_v1.1.csv` | Rubric, readable and machine-readable |
 | `second_coder_sheet_blank.csv` | Blank sheet for the 33 Part A studies; columns match `compute_agreement.py` |
-| `search_log_template.csv` | Search log for Part B |
+| `search_log_template.csv` | Search log template for Part B |
+| `partB/run_search.py` | Runs the Part B identification and de-duplication and writes the seeded screening order |
+| `partB/search_log.csv` | The queries as actually run, with date and counts |
+| `partB/records_raw.csv`, `partB/records_deduped.csv` | Retrieved records, before and after de-duplication |
+| `partB/screening_order.csv` | The 2,202-record frame in seeded random order, screening columns blank |
+| `partB/prisma_counts.csv` | PRISMA stage counts; screening rows filled in by the coders |
 | `prisma_flow_counts_template.csv` | Stage counts for the PRISMA diagram |
 | `compute_agreement.py` | Agreement statistics with bootstrap intervals |
 | `study_links.csv` | Resolved DOI, venue, peer-review status and an open full text where one exists, for the 33 Part A studies |
@@ -164,3 +207,7 @@ are always the pre-adjudication values.
 | 15 September 2026 | Two Part A studies are arXiv preprints: `Kukhilava2025` and `Wang2024_ssl`. | Section 4 excludes preprints, but Part A re-codes the submitted 33 as they were assembled rather than a set filtered by this protocol. Both remain in Part A and are marked in `study_links.csv`; coders record them as not peer reviewed (`E2`) as the rubric directs. The exclusion rule applies without exception to the Part B sample. |
 | 15 September 2026 | `Zhang2025_mdjpt` repointed from arXiv 2510.22197 to the version of record, NeurIPS 38 (2025), doi 10.52202/085713-5515. | A peer-reviewed version appeared after the sheet was built. Section 7 requires coding from the version of record. |
 | 15 September 2026 | `Jiang2024_labram` DOI filled with arXiv 2405.18765. | The sheet carried no identifier. The version of record is the ICLR 2024 conference paper, which has no publisher DOI; the arXiv identifier is given for retrieval only and the paper is peer reviewed. |
+| 16 September 2026 | Version 1.2. Audit option B selected; Part B identification run and the screening order fixed. | The authors chose the systematic version because it is what Reviewer 1 asked for. |
+| 16 September 2026 | Part B searched OpenAlex instead of Scopus and Web of Science. | Those two need institutional credentials. OpenAlex is open, so the whole identification step is reproducible from the released script without an account. The concept, dataset, year and document-type criteria are unchanged. |
+| 16 September 2026 | Each dataset term is searched over title-and-abstract and over title alone; conference papers included; preprints and records without a language field retrieved and excluded at screening; year floor 2011. | A first run excluded conference papers, which section 4 admits, dropped records whose language field is empty, and used a 2012 floor that excluded the DEAP origin paper because OpenAlex dates it to its 2011 online publication. Retrieving wider and excluding at screening puts every exclusion in the PRISMA flow instead of hiding it in the query. |
+| 16 September 2026 | Section 9 states the single conclusion the design supports and rules out any prevalence claim. Design frozen. | Keeps the audit to what Reviewer 1 requested: a reproducible search, two coders, agreement, cautious conclusions. FACED is not audited; it is an external replication dataset in the experiments and needs no literature component. |

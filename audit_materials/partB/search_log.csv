@@ -1,0 +1,9 @@
+date_run,database,query,limits,n_returned,n_retrieved
+2026-09-16,OpenAlex,(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND deap,2011-2025; English; type article/review/preprint,1574,1576
+2026-09-16,OpenAlex,(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND dreamer,2011-2025; English; type article/review/preprint,269,269
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""seed dataset""",2011-2025; English; type article/review/preprint,335,335
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""seed database""",2011-2025; English; type article/review/preprint,33,33
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""sjtu emotion eeg dataset""",2011-2025; English; type article/review/preprint,81,81
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""seed-iv""",2011-2025; English; type article/review/preprint,441,441
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""seed-v""",2011-2025; English; type article/review/preprint,101,101
+2026-09-16,OpenAlex,"(eeg OR electroencephalography) AND (emotion OR valence OR arousal OR affective) AND ""seed-vii""",2011-2025; English; type article/review/preprint,8,8
