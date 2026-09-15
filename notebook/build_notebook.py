@@ -17,21 +17,22 @@ cells = []
 
 cells.append(new_markdown_cell(r"""# Subject-identity leakage in affective EEG: a minimal, self-contained demo
 
-**One model, one feature set, four evaluation protocols, two datasets. Only the data split changes.**
+**One model, one feature set, four evaluation protocols, two datasets.**
 
 This notebook reproduces the empirical demonstration of the accompanying Perspective on **two datasets
 recorded with different hardware**: DEAP (32-channel laboratory system) and DREAMER (14-channel consumer
 Emotiv headset).
 
-**The four protocols.** Consecutive protocols differ in exactly one respect, so the difference between
-adjacent rows isolates one leakage channel:
+**The four protocols.** Protocols 1 to 3 are identical except for the grouping variable, so the difference
+between adjacent rows isolates one leakage channel. Protocol 4 also switches to leave-one-subject-out and
+fits a train-fold scaler, so it is a robustness check rather than an isolated channel:
 
 | # | Protocol | Same trial across split? | Same participant? | Isolates |
 |---|----------|--------------------------|-------------------|----------|
 | 1 | Window-pooled *k*-fold | yes | yes | (fully leaky) |
 | 2 | Trial-grouped, participant-pooled | **no** | yes | 1→2 = correlated windows |
 | 3 | Subject-grouped windows | no | **no** | 2→3 = participant overlap |
-| 4 | Leave-one-subject-out (trial-level) | no | no | 3→4 = evaluation unit |
+| 4 | Leave-one-subject-out (trial-level) | no | no | robustness check (3 changes) |
 
 **Two things this notebook is careful about.**
 

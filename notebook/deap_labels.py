@@ -30,6 +30,11 @@ CSV = ROOT / "data/deap/deap_labels_corrected.csv"
 XLS = ROOT / "data/deap/metadata/participant_ratings.xls"
 DAT = ROOT / "data/deap/data_preprocessed_python"
 CLEAN = ROOT / "data/deap/data_preprocessed_python_clean"
+
+
+def rel(path):
+    """Path recorded in the provenance output, relative to ROOT so no local layout is published."""
+    return str(Path(path).resolve().relative_to(ROOT.resolve()))
 RATINGS = ["valence", "arousal", "dominance", "liking"]
 
 
@@ -116,7 +121,7 @@ def corrected_for_windows(trial, val_dat, aro_dat, C=None):
 if __name__ == "__main__":
     C = load_table()
     from rev1_provenance import git_state
-    out = dict(git=git_state(), csv=str(CSV), csv_sha256=sha256(CSV), xls=str(XLS), xls_sha256=sha256(XLS))
+    out = dict(git=git_state(), csv=rel(CSV), csv_sha256=sha256(CSV), xls=rel(XLS), xls_sha256=sha256(XLS))
     out["max_abs_diff_vs_official"] = check_against_official(C)
     out["reflected_trials_in_dat"] = check_against_dat(C)
     out["clean_mirror"] = check_against_clean_mirror(C)

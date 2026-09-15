@@ -31,3 +31,9 @@ fig1_leakage_concept.pdf
 # rev1 revision artefacts: out-of-fold predictions, bootstrap draws and logs stay local
 results/rev1/**/oof/
 results/rev1/*.npy
+
+# manuscript + submission bundles and editorial correspondence stay out of the code repo
+frontiers-hypothesis-theory/
+
+# rev1 figures are generated (rev1_tables_figures.py, rev1_fig_design.py) and live with the manuscript
+results/rev1/figures/

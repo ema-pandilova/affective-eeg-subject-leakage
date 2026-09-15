@@ -193,7 +193,8 @@ if __name__ == "__main__":
         sub = json.loads(SUBMITTED.read_text())
         sub = {k: v for k, v in sub.items() if k in a.datasets}
         diffs = compare(sub, RES)
-        report = dict(submitted=str(SUBMITTED.resolve()), tolerance=TOL, n_values_compared=count_numeric(sub),
+        report = dict(submitted=str(SUBMITTED.resolve().relative_to((R.HERE / "..").resolve())),
+                      tolerance=TOL, n_values_compared=count_numeric(sub),
                       n_differences=len(diffs),
                       differences=[dict(path=p, submitted=s, rerun=n) for p, s, n in diffs[:200]],
                       passed=len(diffs) == 0)
