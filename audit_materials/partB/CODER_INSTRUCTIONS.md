@@ -9,6 +9,11 @@ protect that.
 
 Read this page once before you start. It should take about ten minutes.
 
+> **You need institutional library access.** The coding stage asks you to quote a sentence from each
+> paper with its page or section number, so you need the full texts, and most of them sit behind
+> IEEE, Elsevier or Springer paywalls. If you cannot reach those through your library, say so now
+> rather than after screening.
+
 ---
 
 ## The five rules
@@ -53,7 +58,7 @@ This is the one and only stage where you compare notes.
 
 ---
 
-## Step 2. Screening, roughly one working day
+## Step 2. Screening, about half a day
 
 Work down your screening sheet in order. For each record, decide from the title and abstract whether
 the study belongs in the audit. Open the full text whenever the abstract does not settle it.
@@ -89,8 +94,34 @@ language recorded, so that every exclusion is counted here rather than hidden in
 query. Excluding those records is expected and is part of the job.
 
 **You will not screen all 2,199 records.** Screening stops once 45 eligible studies have been found.
-Where that lands depends on how many records turn out eligible, so screen a stretch at a time, tell
-the coordinator, and they will tell you when to stop. Expect to screen somewhere in the low hundreds.
+A trial pass over the top of the list suggests that lands early, so **screen the first 100 and stop
+there**. That should be an afternoon rather than a day. The coordinator will ask for more only if the
+two of you together fall short of 45 once disagreements are settled.
+
+### Four cases that come up repeatedly
+
+These are the situations the criteria above do not settle on their own. They are section 4.1 of the
+protocol, written down before anyone started so that the two of you resolve them the same way.
+
+**A book chapter** is eligible when the volume is conference proceedings published in book form,
+which several Springer series are, and the paper reports its own experiment. Judge the volume, not
+the publisher: a volume presenting the papers of a named conference qualifies, an edited collection
+or a handbook does not. A chapter that fails the test is `not_eligible` with reason `other`, noting
+the volume type. If you cannot tell what the volume is, `unsure`. There are a lot of these.
+
+**A preprint whose published version appears further down the list.** Judge the preprint on its own
+and exclude it as `not_peer_reviewed`. Do not look ahead in the list. `duplicate` is only for a study
+already included at an earlier position.
+
+**A multimodal study that reports no EEG-only result.** The criterion needs at least one EEG-alone
+result. An abstract that mentions only fused results is not enough to exclude, because these papers
+often report an EEG-only ablation without saying so in the abstract. Check the full text. If there is
+genuinely no EEG-only result on one of the named datasets, exclude as `frame`. If you cannot check
+the full text, `unsure`.
+
+**"The full text can be obtained"** means you can get it, through your library or interlibrary loan.
+A paywall your library passes is not a reason to exclude. Use `no_full_text` only for a paper you
+genuinely cannot read after trying, and say what you tried in the note.
 
 Save your sheet under your own name, for example `coderA_screening_2026-09-20.csv`.
 

@@ -1,7 +1,8 @@
 # Literature audit: systematic search and double-coding protocol
 
-Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.2, 16 September 2026
-(version 1.0, 14 September 2026; see the change log). **The design is frozen at this version.**
+Frontiers in Neuroscience manuscript 1953177, revision. Protocol version 1.3, 16 September 2026
+(version 1.0, 14 September 2026; see the change log). **The design is frozen.** Version 1.3 adds
+section 4.1, four clarifications of the existing eligibility rules, and changes nothing else.
 This protocol is fixed before any search is run or any study is coded. Changes after that point are
 recorded in the change log at the end, with the date and the reason.
 
@@ -102,6 +103,36 @@ emotion-decoding experiment; no EEG-only result on the named datasets; duplicate
 of an included study; not peer reviewed (preprint, thesis); full text not obtainable; other, with a
 note. The dataset-origin papers for DEAP, DREAMER and SEED are eligible because they report their
 own EEG-only classification.
+
+### 4.1 Clarifications
+
+Added 16 September 2026, after an AI-assisted workflow pilot and before any human screening or
+coding. Each resolves a case the criteria above did not settle. They restate the existing rules for
+recurring situations; they do not widen or narrow what is eligible.
+
+**Book chapters.** Criterion 1 admits a journal article or a peer-reviewed conference paper. A book
+chapter is eligible when the volume is conference proceedings published in book form, which several
+Springer series are, and the paper reports its own experiment. Decide from the volume, not the
+publisher: a volume presenting the papers of a named conference qualifies, and an edited collection,
+a monograph or a handbook does not. A chapter that fails this test is excluded as `other`, with the
+volume type in the note. Where the volume type cannot be determined, code `unsure`.
+
+**A preprint whose published version appears later in the order.** Screening is sequential and no
+coder looks ahead, so a preprint is judged on its own: exclude it as `not_peer_reviewed`, the first
+applicable reason, and record the other version's position in the note if you happen to know it.
+`duplicate` applies only against a study already included at an earlier position. Whether the
+published version is later included changes nothing about the preprint's exclusion.
+
+**Multimodal studies with no stated EEG-only result.** Criterion 2 requires at least one result from
+EEG alone. The absence of an EEG-only number in the abstract is not sufficient to exclude, because
+fusion papers routinely report an EEG-only ablation without mentioning it there. Check the full text.
+If the full text contains no EEG-only result on a named dataset, exclude as `frame`. If the full text
+cannot be checked, code `unsure` rather than guessing in either direction.
+
+**What "the full text can be obtained" means.** It means obtainable by you, through institutional
+access or interlibrary loan, not retrievable by an automated download. A publisher paywall your
+library passes is not a reason to exclude. Reserve `no_full_text` for a paper you genuinely cannot
+read after trying your library, and name what you tried in the note.
 
 ## 5. Screening and sampling (Part B)
 
@@ -222,3 +253,6 @@ a reviewer comment explicitly requires it.
 | 16 September 2026 | Part B searched OpenAlex instead of Scopus and Web of Science. | Those two need institutional credentials. OpenAlex is open, so the whole identification step is reproducible from the released script without an account. The concept, dataset, year and document-type criteria are unchanged. |
 | 16 September 2026 | Each dataset term is searched over title-and-abstract and over title alone; conference papers included; preprints and records without a language field retrieved and excluded at screening; year floor 2011. | A first run excluded conference papers, which section 4 admits, dropped records whose language field is empty, and used a 2012 floor that excluded the DEAP origin paper because OpenAlex dates it to its 2011 online publication. Retrieving wider and excluding at screening puts every exclusion in the PRISMA flow instead of hiding it in the query. |
 | 16 September 2026 | Section 9 states the single conclusion the design supports and rules out any prevalence claim. Design frozen. | Keeps the audit to what Reviewer 1 requested: a reproducible search, two coders, agreement, cautious conclusions. FACED is not audited; it is an external replication dataset in the experiments and needs no literature component. |
+| 16 September 2026 | Version 1.3. Section 4.1 added: four clarifications of the eligibility rules, covering peer-reviewed book chapters, a preprint whose published version appears later in the ordered frame, multimodal studies that report no EEG-only result, and what counts as an obtainable full text. | An AI-assisted workflow pilot screened a stretch of the frame to test the materials and exercise the tooling. It showed that the recurring ambiguities fell on exactly these four cases, and that disagreement concentrated there rather than being spread across the criteria. Writing the rules down before human coding begins prevents two coders resolving the same ambiguity differently and depressing the reliability estimate for a reason that has nothing to do with the literature. The clarifications restate the existing criteria for recurring situations; they do not widen or narrow eligibility. |
+| 16 September 2026 | The pilot contributes no observation to the audit. Its outputs are archived outside the audit materials under names that cannot be mistaken for coder sheets. | The pilot was produced by an AI model, not by a human coder. Protocol section 6 requires two human coders and forbids a language model from making screening or coding decisions. No pilot row enters the audit dataset, the screening decisions, the coding decisions or the agreement statistics, which are computed only from the two human coders' own sheets before adjudication. |
+| 16 September 2026 | Coders must have institutional full-text access. | Coding requires a verbatim quotation with a page or section number for the split, normalization and claim questions, which cannot be taken from an abstract. The pilot could not retrieve 40 of 45 full texts from IEEE, Elsevier, Springer and SSRN without a library. |
