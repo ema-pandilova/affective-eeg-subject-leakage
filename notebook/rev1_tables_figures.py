@@ -397,10 +397,10 @@ def supp_window_level():
                 lab = "training median" if scheme == "global" else "participant median"
                 body.append(f"{lab} & {ds} & {t} & " + " & ".join(r[f'{p}_window'] for p in PROTOCOLS) + " & " +
                             " & ".join(r[f'{p}_trial_range_5_partitions'] for p in ["P1", "P2", "P3"]) + " \\\\")
-    write_table("supp_S2_window_level", pd.DataFrame(rows), body,
+    write_table("supp_S1_window_level", pd.DataFrame(rows), body,
                 "Window-level AUC (window probabilities scored individually) with 95\\% participant-bootstrap intervals, and "
                 "the range of trial-level AUC over five fold partitions (the primary seed and four further seeds) for P1 to P3. "
-                "P4 has a single partition.", "tab:S2", "@{}lllccccccc@{}",
+                "P4 has a single partition.", "tab:S1", "@{}lllccccccc@{}",
                 "Labels & Dataset & Target & P1 & P2 & P3 & P4 & P1 range & P2 range & P3 range \\\\")
 
 
@@ -438,13 +438,13 @@ def supp_identity_removal():
                                 f"{r['P3_identity_decoding_after_identity_removal']} / {r['P3_identity_decoding_after_random_removal']} \\\\")
             body.append("\\addlinespace")
     if rows:
-        write_table("supp_S3_identity_removal", pd.DataFrame(rows), body[:-1],
+        write_table("supp_S2_identity_removal", pd.DataFrame(rows), body[:-1],
                     "Identity removal for every $k$. AUC: trial-level with 95\\% participant-bootstrap interval after removing the $k$ "
                     "most identity-discriminative directions; Random: mean AUC after removing $k$ random orthonormal directions (two "
                     "draws). Identity decoding (first fold, identity removal / random removal): P2, the same participants on unseen "
                     "trials (chance 0.03 DEAP, 0.04 DREAMER); P3, among the held-out participants only, with a transform fitted without "
                     "them (chance 0.14 to 0.20). $k = 0$ is the whitened representation with nothing removed.",
-                    "tab:S3", "@{}llllcccccc@{}",
+                    "tab:S2", "@{}llllcccccc@{}",
                     "Dataset & Target & Model & $k$ & P2 AUC & P2 random & P2 identity & P3 AUC & P3 random & P3 identity \\\\")
 
 
