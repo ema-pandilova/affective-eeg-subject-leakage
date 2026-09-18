@@ -1,13 +1,17 @@
 # Subject-identity leakage in affective EEG
 
-Code and data for the Perspective:
+Code for the Hypothesis and Theory article:
 
-> **Subject Identity, Evaluation Leakage, and the Category Error in EEG-Based Emotion Recognition.**
+> **Participant Identity and Evaluation Leakage in EEG-Based Emotion Recognition.**
+> Frontiers in Neuroscience, manuscript 1953177 (under revision).
 
 Much of the affective-EEG literature reports **within-subject state markers** as if they were
 **population-level biomarkers**. The dominant evaluation protocols hide the difference by letting
-subject identity leak into the test set. This repository holds the two artefacts behind that
-argument: a self-contained demonstration notebook, and the literature audit.
+participant identity reach the test set. This repository holds the analyses behind that argument.
+
+**Start at section 3.** `notebook/rev1_*.py` is the implementation behind the published results.
+The demonstration notebook (section 1) and the literature audit (section 2) predate the revision and
+are kept as legacy material; nothing reported in the article rests on them.
 
 The full empirical study is a companion paper with its own repository:
 **[qeeg-emotion-pipeline](https://github.com/ema-pandilova/qeeg-emotion-pipeline)**.
@@ -30,7 +34,13 @@ The full empirical study is a companion paper with its own repository:
 
 ---
 
-## 1. The demonstration (`notebook/`)
+## 1. The demonstration (`notebook/`) — LEGACY, superseded by the revision analyses
+
+> This notebook predates the revision. It is a self-contained teaching demonstration of the protocol
+> ladder, not the implementation behind the published results. **Every number reported in the revised
+> article comes from `notebook/rev1_*.py` (section 3).** The notebook's own figures are close to, but
+> not identical to, the article's, because the article fits the label threshold on training rows only,
+> uses unstratified shuffled folds and scores at the trial level.
 
 `demo_leakage_collapse.ipynb` runs one model and one feature set on DEAP and DREAMER under **four
 evaluation protocols**:
@@ -42,11 +52,14 @@ evaluation protocols**:
 | 3 | Subject-grouped windows | no | **no** |
 | 4 | Leave-one-subject-out (trial-level) | no | no |
 
-Protocols 1 to 3 are identical except for the grouping variable, so the gap between adjacent rows isolates a
-single leakage channel: **1→2 is correlated-window leakage, 2→3 is participant identity.** This is the
-control the argument needs — a pooled-versus-subject-grouped comparison removes *both at once* and so
-cannot attribute the loss to either. Protocol 4 also switches to leave-one-subject-out and fits a train-fold
-scaler, so it is a robustness check on the leak-free estimate rather than an isolated channel.
+Protocols 1 to 3 are identical except for the grouping variable, so the gap between adjacent rows
+**estimates the change in performance associated with progressively removing trial overlap and then
+participant overlap**. These contrasts are *not* isolated causal effects: moving from one grouping to the
+next also changes which trials share a fold, the class balance of each fold and the diversity of the
+training set, and all four protocols share the stimuli. The intermediate step is still what the argument
+needs, because a pooled-versus-subject-grouped comparison removes both overlaps at once and cannot
+attribute the loss to either. Protocol 4 also switches to leave-one-subject-out and fits a train-fold
+scaler, so it is a robustness check on the leak-free estimate rather than a further single step.
 
 What it finds (trial-level AUC, training-median labels, corrected DEAP ratings):
 
@@ -58,13 +71,15 @@ What it finds (trial-level AUC, training-median labels, corrected DEAP ratings):
 - Performance on unseen participants is **modest**: protocols 3 and 4 give AUCs from 0.454 to 0.565.
   Meanwhile the same features decode **which participant** produced a recording at 99% (DEAP) and
   88% (DREAMER), against chance of 3% and 4%.
-- Participant overlap pays largely by exposing each participant's **label prior**. Re-run with
-  per-subject-median labels, which flatten per-subject base rates to near 0.50, and the
-  participant-overlap advantage falls to +0.031 (DEAP valence), +0.007 (DEAP arousal), −0.028
-  (DREAMER valence) and +0.049 (DREAMER arousal) — it essentially disappears in all four cells.
-  The paper tests this mechanism more carefully, with a no-EEG participant-prior baseline, a
-  within/between decomposition and class-balanced reweighting, and finds that the label-prior
-  account holds for arousal but does not explain the DEAP valence advantage.
+- Participant label priors are part of the route, but this notebook cannot establish how much.
+  Re-running with per-subject-median labels shrinks the participant-overlap advantage in all four
+  cells, which an earlier version of this README read as the advantage essentially disappearing.
+  **That reading is superseded.** Per-subject-median labels use the held-out participant's own
+  ratings, so the comparison is target-derived and diagnostic rather than a mechanism test. The
+  revised article tests the mechanism properly, with a no-EEG participant-prior baseline, a
+  within/between-participant decomposition and class-balanced reweighting, and finds that the
+  label-prior account holds for arousal but **does not** explain the DEAP valence advantage
+  (`notebook/rev1_e3b_exploitation.py`).
 
 Two methodological points the notebook is deliberate about:
 
@@ -88,34 +103,40 @@ export QEEG_DATA_ROOT=/path/to/data-root      # folder holding data/deap/... and
 ```
 
 `eegnet_collapse.py` / `eegnet_seeds.py` repeat the collapse with an EEGNet trained end-to-end on the
-**raw full montage** (all 32 DEAP / 14 DREAMER electrodes), so the effect is not an artefact of the
-handcrafted features or of the compact frontal montage.
+**raw full montage** (all 32 DEAP / 14 DREAMER electrodes). **These are legacy analyses and no EEGNet
+result is reported in the revised article**, which states in its limitations that no end-to-end model
+was evaluated. They are kept because they were informative during development.
 
 Edit `build_notebook.py`, not the `.ipynb` — the notebook is a build artefact.
 
-## 2. The literature audit (`audit/`)
+## 2. The literature audit (`audit/`) — LEGACY, not evidence in the published article
+
+> **The 33-study audit is no longer part of the article's evidence and its counts are not reported
+> anywhere in the revised manuscript.** It was a purposive sample coded by a single rater, which is
+> not enough to support quantitative conclusions about evaluation practices, so the quantitative
+> claims, the audit table and its figure were withdrawn during revision. The article's literature
+> section now discusses representative published studies as illustrations only and aggregates nothing
+> into a rate.
+>
+> The files stay here as a record of what was done, and because the coding sheet may be useful to
+> others. Do not cite them as evidence for the article's conclusions.
 
 `literature_audit.csv` / `.md` code 33 affective-EEG studies on DEAP, SEED and DREAMER. Regenerate
-with `python audit/build_audit.py`.
+with `python audit/build_audit.py`. Two axes are graded separately: leakage risk grades the split
+alone, and normalization scope is graded on its own axis, because a subject-independent split can
+still be compromised by statistics estimated from the held-out participant's own recording.
 
-Two axes are graded **separately**, which matters:
+`audit_materials/` holds the protocol, rubric and agreement tooling prepared for a systematic
+two-coder audit. That audit was **not** carried out, and nothing in the article depends on it.
 
-- **Leakage risk** grades the *split* only — whether participants bridge the train/test boundary.
-- **Normalization scope** is graded on its own axis, because a subject-independent split can still be
-  compromised by statistics estimated from the held-out participant's own recording. Per-subject
-  normalization is therefore **not** treated as automatically clean.
+## 3. The revision analyses (`notebook/rev1_*.py`) — AUTHORITATIVE
 
-Of the 12 studies with a clean subject-independent split, only 8 report verified train-only
-normalization; the other 4 could not be confirmed from their text.
+> **This is the implementation behind the published article.** Every number, table and figure in the
+> revised manuscript is produced by these scripts, on verified official DEAP ratings and across three
+> datasets: DEAP, DREAMER and FACED (123 participants). Where anything else in this repository
+> disagrees with them, these scripts are correct and the other material is legacy.
 
-**This is a purposive, single-coder sample.** It shows that leaky evaluation is common in influential
-work. It is *not* a random sample, cannot support a prevalence estimate for the field, and none is
-offered.
-
-## 3. The revision analyses (`notebook/rev1_*.py`)
-
-Written for the Frontiers major revision. These reproduce every number, table and figure in the
-revised manuscript, on corrected DEAP labels and with a third dataset, FACED (123 participants).
+Written for the Frontiers major revision.
 
 | Script | What it produces |
 |---|---|
@@ -150,8 +171,8 @@ machine-readable form, a blank 33-study coding sheet, a resolved full-text index
 and `compute_agreement.py`, which computes Cohen's kappa, Gwet's AC1 and PABAK with bootstrap
 intervals and refuses two sheets from the same coder or a coder name that looks like a language model.
 
-**The audit reported in the paper remains a single-coder purposive sample and is described as one.**
-Agreement statistics cannot be reported until two people have independently coded.
+**This audit was never carried out, and no audit is reported in the article.** The materials are
+released so the procedure is inspectable, and in case they are useful to anyone running such a review.
 
 ## 5. Data (not included)
 
