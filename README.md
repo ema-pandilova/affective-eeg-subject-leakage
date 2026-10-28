@@ -3,7 +3,6 @@
 Code for the Hypothesis and Theory article:
 
 > **Participant Identity and Evaluation Leakage in EEG-Based Emotion Recognition.**
-> Frontiers in Neuroscience, manuscript 1953177 (under revision).
 
 Much of the affective-EEG literature reports **within-subject state markers** as if they were
 **population-level biomarkers**. The dominant evaluation protocols hide the difference by letting
