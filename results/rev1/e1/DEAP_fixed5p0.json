@@ -1,0 +1,1712 @@
+{
+  "dataset": "DEAP",
+  "scheme": "fixed:5.0",
+  "counts": {
+    "windows": 37120,
+    "trials": 1280,
+    "participants": 32,
+    "stimuli": 40,
+    "windows_per_trial": [
+      29
+    ]
+  },
+  "targets": {
+    "valence": {
+      "protocols": {
+        "P1": {
+          "folds": [
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5639816810344828,
+              "test_pos": 0.572198275862069,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5648908943965517,
+              "test_pos": 0.5685614224137931,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5648572198275862,
+              "test_pos": 0.5686961206896551,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5687971443965517,
+              "test_pos": 0.5529364224137931,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5655980603448276,
+              "test_pos": 0.5657327586206896,
+              "test_participants": 32,
+              "train_participants": 32
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.565625,
+          "participant_positive_rate": {
+            "min": 0.375,
+            "max": 0.75
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.7553807782503278,
+              "ci": [
+                0.732899175022757,
+                0.7777754502290479
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": null
+            },
+            "prior_global": {
+              "auc": 0.4571624468381096,
+              "ci": [
+                0.42766085007375626,
+                0.48982181318603635
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": null
+            },
+            "prior_participant": {
+              "auc": 0.58717556341667,
+              "ci": [
+                0.5489508402194296,
+                0.6042982088421389
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": null
+            },
+            "prior_stimulus": {
+              "auc": 0.8528024265670336,
+              "ci": [
+                0.8141980791079629,
+                0.887528974455537
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": null
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.687811386112269,
+              "ci": [
+                0.6670605664468666,
+                0.7055806984945733
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            },
+            "prior_participant": {
+              "auc": 0.6001618189291138,
+              "ci": [
+                0.571185959504907,
+                0.6194307388355681
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            }
+          }
+        },
+        "P2": {
+          "folds": [
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5615234375,
+              "test_pos": 0.58203125,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.572265625,
+              "test_pos": 0.5390625,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5576171875,
+              "test_pos": 0.59765625,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5634765625,
+              "test_pos": 0.57421875,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5732421875,
+              "test_pos": 0.53515625,
+              "test_participants": 32,
+              "train_participants": 32
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.565625,
+          "participant_positive_rate": {
+            "min": 0.375,
+            "max": 0.75
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.6360845025636949,
+              "ci": [
+                0.6012688975295247,
+                0.6621289560501682
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.6384351030979181
+            },
+            "prior_global": {
+              "auc": 0.47265392106204535,
+              "ci": [
+                0.4371926214243745,
+                0.5045379561573754
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.5341676934695337,
+              "ci": [
+                0.48585743198215364,
+                0.5684251544330625
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5406290467178005
+            },
+            "prior_stimulus": {
+              "auc": 0.8398137843316507,
+              "ci": [
+                0.7996066409981331,
+                0.8758542888622861
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.8417920111564897
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.5992571002880657,
+              "ci": [
+                0.572761272712197,
+                0.6217980447502806
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            },
+            "prior_participant": {
+              "auc": 0.5341676934695337,
+              "ci": [
+                0.48585743198215364,
+                0.5684251544330625
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            }
+          }
+        },
+        "P3": {
+          "folds": [
+            {
+              "n_train": 29000,
+              "n_test": 8120,
+              "threshold": 5.0,
+              "train_pos": 0.564,
+              "test_pos": 0.5714285714285714,
+              "test_participants": 7,
+              "train_participants": 25
+            },
+            {
+              "n_train": 29000,
+              "n_test": 8120,
+              "threshold": 5.0,
+              "train_pos": 0.565,
+              "test_pos": 0.5678571428571428,
+              "test_participants": 7,
+              "train_participants": 25
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.5721153846153846,
+              "test_pos": 0.5375,
+              "test_participants": 6,
+              "train_participants": 26
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.5673076923076923,
+              "test_pos": 0.5583333333333333,
+              "test_participants": 6,
+              "train_participants": 26
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.5596153846153846,
+              "test_pos": 0.5916666666666667,
+              "test_participants": 6,
+              "train_participants": 26
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.565625,
+          "participant_positive_rate": {
+            "min": 0.375,
+            "max": 0.75
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.5314400413370961,
+              "ci": [
+                0.4934932993476055,
+                0.5713098259934685
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5303914537946042
+            },
+            "prior_global": {
+              "auc": 0.48097102428554395,
+              "ci": [
+                0.4468452448942465,
+                0.5206384243971962
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.48097102428554395,
+              "ci": [
+                0.4468452448942465,
+                0.5206384243971962
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5
+            },
+            "prior_stimulus": {
+              "auc": 0.8381344648038475,
+              "ci": [
+                0.7965895025216542,
+                0.8738424207555168
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.8421635055268429
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.5270632389772746,
+              "ci": [
+                0.49785527400914587,
+                0.5558980698574011
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            },
+            "prior_participant": {
+              "auc": 0.48097102428554395,
+              "ci": [
+                0.4468452448942465,
+                0.5206384243971962
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            }
+          }
+        },
+        "P4": {
+          "folds": [
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5685483870967742,
+              "test_pos": 0.475,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5637096774193548,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5661290322580645,
+              "test_pos": 0.55,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5709677419354838,
+              "test_pos": 0.4,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5645161290322581,
+              "test_pos": 0.6,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5596774193548387,
+              "test_pos": 0.75,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5612903225806452,
+              "test_pos": 0.7,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5661290322580645,
+              "test_pos": 0.55,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5669354838709677,
+              "test_pos": 0.525,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.567741935483871,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5645161290322581,
+              "test_pos": 0.6,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5669354838709677,
+              "test_pos": 0.525,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5693548387096774,
+              "test_pos": 0.45,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.567741935483871,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.567741935483871,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5717741935483871,
+              "test_pos": 0.375,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5661290322580645,
+              "test_pos": 0.55,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5629032258064516,
+              "test_pos": 0.65,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5653225806451613,
+              "test_pos": 0.575,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5653225806451613,
+              "test_pos": 0.575,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5669354838709677,
+              "test_pos": 0.525,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.567741935483871,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5620967741935484,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5685483870967742,
+              "test_pos": 0.475,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5669354838709677,
+              "test_pos": 0.525,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5629032258064516,
+              "test_pos": 0.65,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5596774193548387,
+              "test_pos": 0.75,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5637096774193548,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5653225806451613,
+              "test_pos": 0.575,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5620967741935484,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5629032258064516,
+              "test_pos": 0.65,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.567741935483871,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.565625,
+          "participant_positive_rate": {
+            "min": 0.375,
+            "max": 0.75
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.5354470567192655,
+              "ci": [
+                0.49760369797190723,
+                0.5792006097044609
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.6011679552557987
+            },
+            "prior_global": {
+              "auc": 0.3959616836917207,
+              "ci": [
+                0.37657125307125305,
+                0.42268887422787876
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.3959616836917207,
+              "ci": [
+                0.37657125307125305,
+                0.42268887422787876
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.5
+            },
+            "prior_stimulus": {
+              "auc": 0.8338119559600939,
+              "ci": [
+                0.7930834737002082,
+                0.8705926364100617
+              ],
+              "n": 1280,
+              "n_pos": 724,
+              "within_fold_auc": 0.8545813456160553
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.5292428885935864,
+              "ci": [
+                0.5006080538822082,
+                0.561577202468606
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            },
+            "prior_participant": {
+              "auc": 0.3959616836917207,
+              "ci": [
+                0.37657125307125305,
+                0.42268887422787876
+              ],
+              "n": 37120,
+              "n_pos": 20996
+            }
+          }
+        }
+      },
+      "contrasts": {
+        "P1-P2": {
+          "diff": 0.11929627568663292,
+          "ci": [
+            0.10212837797630545,
+            0.1454821051089486
+          ]
+        },
+        "P2-P3": {
+          "diff": 0.10464446122659876,
+          "ci": [
+            0.052114717479734604,
+            0.15523992695748898
+          ]
+        },
+        "P3-P4": {
+          "diff": -0.00400701538216941,
+          "ci": [
+            -0.02956482646101043,
+            0.021208900972732925
+          ]
+        },
+        "(P2-P3)-(P1-P2)": {
+          "diff": -0.014651814460034163,
+          "ci": [
+            -0.08527078626602061,
+            0.04308561485429109
+          ]
+        },
+        "P1: eeg-prior_participant": {
+          "diff": 0.1682052148336578,
+          "ci": [
+            0.14540689163969542,
+            0.21619773945640117
+          ]
+        },
+        "P1: eeg-prior_stimulus": {
+          "diff": -0.09742164831670586,
+          "ci": [
+            -0.13289706455206576,
+            -0.05535071234192967
+          ]
+        },
+        "P2: eeg-prior_participant": {
+          "diff": 0.10191680909416112,
+          "ci": [
+            0.06337203828506768,
+            0.14959263089013816
+          ]
+        },
+        "P2: eeg-prior_stimulus": {
+          "diff": -0.2037292817679558,
+          "ci": [
+            -0.2531291959669289,
+            -0.1545222349848735
+          ]
+        },
+        "P3: eeg-prior_participant": {
+          "diff": 0.050469017051552156,
+          "ci": [
+            -0.00030763522136772185,
+            0.10282261715790637
+          ]
+        },
+        "P3: eeg-prior_stimulus": {
+          "diff": -0.30669442346675135,
+          "ci": [
+            -0.35514609593682034,
+            -0.2504042873412455
+          ]
+        },
+        "P4: eeg-prior_participant": {
+          "diff": 0.13948537302754482,
+          "ci": [
+            0.10154497312349396,
+            0.17943186792009574
+          ]
+        },
+        "P4: eeg-prior_stimulus": {
+          "diff": -0.29836489924082843,
+          "ci": [
+            -0.34484969135874416,
+            -0.24201641736446913
+          ]
+        }
+      },
+      "partition_seeds": {
+        "18": {
+          "P1": 0.7540566993918677,
+          "P2": 0.6338611431296951,
+          "P3": 0.5385895703326842
+        },
+        "19": {
+          "P1": 0.7555124408760283,
+          "P2": 0.6412441869708653,
+          "P3": 0.546804821336301
+        },
+        "20": {
+          "P1": 0.7579792519575501,
+          "P2": 0.6274792320839462,
+          "P3": 0.5324188163281529
+        },
+        "21": {
+          "P1": 0.7553931992527525,
+          "P2": 0.6323308756309869,
+          "P3": 0.560698954648436
+        }
+      }
+    },
+    "arousal": {
+      "protocols": {
+        "P1": {
+          "folds": [
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5894733297413793,
+              "test_pos": 0.5874191810344828,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5891029094827587,
+              "test_pos": 0.5889008620689655,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.587957974137931,
+              "test_pos": 0.5934806034482759,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5897090517241379,
+              "test_pos": 0.5864762931034483,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5890692349137931,
+              "test_pos": 0.5890355603448276,
+              "test_participants": 32,
+              "train_participants": 32
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.5890625,
+          "participant_positive_rate": {
+            "min": 0.2,
+            "max": 0.85
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.75465451684804,
+              "ci": [
+                0.7276135616392397,
+                0.7791407882162259
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": null
+            },
+            "prior_global": {
+              "auc": 0.4818471321519702,
+              "ci": [
+                0.45025907446862673,
+                0.5113392652192282
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": null
+            },
+            "prior_participant": {
+              "auc": 0.662282780809069,
+              "ci": [
+                0.6049908484682109,
+                0.6945981833634496
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": null
+            },
+            "prior_stimulus": {
+              "auc": 0.7050660104285382,
+              "ci": [
+                0.6626276351586864,
+                0.7523565457364811
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": null
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.7102801881313613,
+              "ci": [
+                0.67356436656562,
+                0.7384626923965008
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            },
+            "prior_participant": {
+              "auc": 0.673496638362192,
+              "ci": [
+                0.6256633928477346,
+                0.7078378767068138
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            }
+          }
+        },
+        "P2": {
+          "folds": [
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5859375,
+              "test_pos": 0.6015625,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5830078125,
+              "test_pos": 0.61328125,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5947265625,
+              "test_pos": 0.56640625,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5947265625,
+              "test_pos": 0.56640625,
+              "test_participants": 32,
+              "train_participants": 32
+            },
+            {
+              "n_train": 29696,
+              "n_test": 7424,
+              "threshold": 5.0,
+              "train_pos": 0.5869140625,
+              "test_pos": 0.59765625,
+              "test_participants": 32,
+              "train_participants": 32
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.5890625,
+          "participant_positive_rate": {
+            "min": 0.2,
+            "max": 0.85
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.6675600851226916,
+              "ci": [
+                0.614745297830971,
+                0.7037706351386165
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.6726262626262626
+            },
+            "prior_global": {
+              "auc": 0.47869915583302236,
+              "ci": [
+                0.45012560589784034,
+                0.5057769571948323
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.6381995643009147,
+              "ci": [
+                0.5765524639747412,
+                0.679335653567848
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.644084595959596
+            },
+            "prior_stimulus": {
+              "auc": 0.6663876309870804,
+              "ci": [
+                0.6212432099210465,
+                0.7144859922684824
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.6716414141414141
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.6393919663316108,
+              "ci": [
+                0.5880711661047429,
+                0.6783161866269998
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            },
+            "prior_participant": {
+              "auc": 0.6381995643009147,
+              "ci": [
+                0.5765524639747412,
+                0.679335653567848
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            }
+          }
+        },
+        "P3": {
+          "folds": [
+            {
+              "n_train": 29000,
+              "n_test": 8120,
+              "threshold": 5.0,
+              "train_pos": 0.57,
+              "test_pos": 0.6571428571428571,
+              "test_participants": 7,
+              "train_participants": 25
+            },
+            {
+              "n_train": 29000,
+              "n_test": 8120,
+              "threshold": 5.0,
+              "train_pos": 0.605,
+              "test_pos": 0.5321428571428571,
+              "test_participants": 7,
+              "train_participants": 25
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.5846153846153846,
+              "test_pos": 0.6083333333333333,
+              "test_participants": 6,
+              "train_participants": 26
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.5836538461538462,
+              "test_pos": 0.6125,
+              "test_participants": 6,
+              "train_participants": 26
+            },
+            {
+              "n_train": 30160,
+              "n_test": 6960,
+              "threshold": 5.0,
+              "train_pos": 0.6019230769230769,
+              "test_pos": 0.5333333333333333,
+              "test_participants": 6,
+              "train_participants": 26
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.5890625,
+          "participant_positive_rate": {
+            "min": 0.2,
+            "max": 0.85
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.4710189508930823,
+              "ci": [
+                0.41569584504453905,
+                0.5287197783505088
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.4934105481917024
+            },
+            "prior_global": {
+              "auc": 0.4443777672439007,
+              "ci": [
+                0.3807973755680451,
+                0.5095962760345886
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.4443777672439007,
+              "ci": [
+                0.3807973755680451,
+                0.5095962760345886
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5
+            },
+            "prior_stimulus": {
+              "auc": 0.6697095843713124,
+              "ci": [
+                0.6267038006206272,
+                0.7169794111782042
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.6789289606406975
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.4752732401417403,
+              "ci": [
+                0.4316429727661189,
+                0.5222192617245429
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            },
+            "prior_participant": {
+              "auc": 0.4443777672439007,
+              "ci": [
+                0.3807973755680451,
+                0.5095962760345886
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            }
+          }
+        },
+        "P4": {
+          "folds": [
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5887096774193549,
+              "test_pos": 0.6,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5887096774193549,
+              "test_pos": 0.6,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.6016129032258064,
+              "test_pos": 0.2,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5951612903225807,
+              "test_pos": 0.4,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.592741935483871,
+              "test_pos": 0.475,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5943548387096774,
+              "test_pos": 0.425,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5879032258064516,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5887096774193549,
+              "test_pos": 0.6,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5879032258064516,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5903225806451613,
+              "test_pos": 0.55,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5959677419354839,
+              "test_pos": 0.375,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5814516129032258,
+              "test_pos": 0.825,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5806451612903226,
+              "test_pos": 0.85,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5862903225806452,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5911290322580646,
+              "test_pos": 0.525,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5919354838709677,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5879032258064516,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5879032258064516,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5862903225806452,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5830645161290322,
+              "test_pos": 0.775,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.582258064516129,
+              "test_pos": 0.8,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5879032258064516,
+              "test_pos": 0.625,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5975806451612903,
+              "test_pos": 0.325,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5814516129032258,
+              "test_pos": 0.825,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5838709677419355,
+              "test_pos": 0.75,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5943548387096774,
+              "test_pos": 0.425,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5862903225806452,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5919354838709677,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5862903225806452,
+              "test_pos": 0.675,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5919354838709677,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5919354838709677,
+              "test_pos": 0.5,
+              "test_participants": 1,
+              "train_participants": 31
+            },
+            {
+              "n_train": 35960,
+              "n_test": 1160,
+              "threshold": 5.0,
+              "train_pos": 0.5854838709677419,
+              "test_pos": 0.7,
+              "test_participants": 1,
+              "train_participants": 31
+            }
+          ],
+          "trials_with_mixed_labels": 0,
+          "trial_positive_rate": 0.5890625,
+          "participant_positive_rate": {
+            "min": 0.2,
+            "max": 0.85
+          },
+          "trial_level": {
+            "eeg": {
+              "auc": 0.4469672519692186,
+              "ci": [
+                0.39056548051307377,
+                0.5071846009343672
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5231043710972346
+            },
+            "prior_global": {
+              "auc": 0.32370324051194643,
+              "ci": [
+                0.2892553822031395,
+                0.37010416368389293
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5
+            },
+            "prior_participant": {
+              "auc": 0.32370324051194643,
+              "ci": [
+                0.2892553822031395,
+                0.37010416368389293
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.5
+            },
+            "prior_stimulus": {
+              "auc": 0.664307470423899,
+              "ci": [
+                0.6196737338878199,
+                0.7139820977260634
+              ],
+              "n": 1280,
+              "n_pos": 754,
+              "within_fold_auc": 0.7000892060660124
+            }
+          },
+          "window_level": {
+            "eeg": {
+              "auc": 0.4577969757533972,
+              "ci": [
+                0.4139168900260601,
+                0.5047251681259102
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            },
+            "prior_participant": {
+              "auc": 0.32370324051194643,
+              "ci": [
+                0.2892553822031395,
+                0.37010416368389293
+              ],
+              "n": 37120,
+              "n_pos": 21866
+            }
+          }
+        }
+      },
+      "contrasts": {
+        "P1-P2": {
+          "diff": 0.08709443172534836,
+          "ci": [
+            0.06726187227648918,
+            0.12393654965753416
+          ]
+        },
+        "P2-P3": {
+          "diff": 0.19654113422960928,
+          "ci": [
+            0.11488943580328217,
+            0.26331338686609795
+          ]
+        },
+        "P3-P4": {
+          "diff": 0.024051698923863718,
+          "ci": [
+            0.0023113196913023123,
+            0.04264156171145239
+          ]
+        },
+        "(P2-P3)-(P1-P2)": {
+          "diff": 0.10944670250426092,
+          "ci": [
+            0.004834238051236643,
+            0.18766461778662172
+          ]
+        },
+        "P1: eeg-prior_participant": {
+          "diff": 0.09237173603897098,
+          "ci": [
+            0.07170606813797889,
+            0.14210086651267448
+          ]
+        },
+        "P1: eeg-prior_stimulus": {
+          "diff": 0.04958850641950174,
+          "ci": [
+            -0.006130425072275372,
+            0.10120543035095088
+          ]
+        },
+        "P2: eeg-prior_participant": {
+          "diff": 0.02936052082177687,
+          "ci": [
+            0.012695777417327128,
+            0.0591193350676489
+          ]
+        },
+        "P2: eeg-prior_stimulus": {
+          "diff": 0.0011724541356111784,
+          "ci": [
+            -0.07472292150858198,
+            0.0613666722248933
+          ]
+        },
+        "P3: eeg-prior_participant": {
+          "diff": 0.02664118364918161,
+          "ci": [
+            -0.035054085611028664,
+            0.0903934310019366
+          ]
+        },
+        "P3: eeg-prior_stimulus": {
+          "diff": -0.19869063347823013,
+          "ci": [
+            -0.26621387615553044,
+            -0.13231229604376307
+          ]
+        },
+        "P4: eeg-prior_participant": {
+          "diff": 0.12326401145727217,
+          "ci": [
+            0.05970381979413995,
+            0.1881615574655657
+          ]
+        },
+        "P4: eeg-prior_stimulus": {
+          "diff": -0.21734021845468043,
+          "ci": [
+            -0.28492997973305323,
+            -0.14355189727499096
+          ]
+        }
+      },
+      "partition_seeds": {
+        "18": {
+          "P1": 0.7537644602676725,
+          "P2": 0.6470030559449729,
+          "P3": 0.48666175832820646
+        },
+        "19": {
+          "P1": 0.7539560871801596,
+          "P2": 0.6474543877520147,
+          "P3": 0.45907756855704934
+        },
+        "20": {
+          "P1": 0.7528643180603322,
+          "P2": 0.6473737027362306,
+          "P3": 0.4935729342114552
+        },
+        "21": {
+          "P1": 0.7552344403989875,
+          "P2": 0.6432335528638138,
+          "P3": 0.44245141249205755
+        }
+      }
+    }
+  },
+  "_manifest": {
+    "command": "rev1_e1_protocols.py --dataset DEAP --scheme fixed:5.0",
+    "written": "2026-10-29 10:56:54 +0100",
+    "python": "3.10.12",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "seed": 17,
+    "n_boot": 1000,
+    "xgb_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "eval_metric": "logloss",
+      "random_state": 17,
+      "n_jobs": 4,
+      "verbosity": 0
+    },
+    "git": {
+      "commit": "99612edb68e95eaff8b849e4737edee8070933db",
+      "branch": "main",
+      "pipeline_files": [
+        "notebook/run_protocols.py",
+        "notebook/deap_labels.py",
+        "notebook/rev1_protocols.py",
+        "notebook/rev1_label_diff.py",
+        "notebook/rev1_provenance.py",
+        "notebook/rev1_labelfix.sh"
+      ],
+      "pipeline_files_clean": true,
+      "dirty_pipeline_files": []
+    },
+    "script_sha256": {
+      "run_protocols.py": "0f58cc422c743bd8ae8a0980c982bd96a35fa82a875e99c4e401db1f3462d907",
+      "deap_labels.py": "5d570b94cc648d7470bc85d632d9cbd99587d6a08a17d7aa3ce144b7d23cd3d2",
+      "rev1_provenance.py": "a1988a016a9ae2b214494f35a4371ebbf14591d8fb34483c849342e76cd23e4c",
+      "rev1_common.py": "5b2cbf9a1e91d69c9e161e4f5b4afdbab812d666da811100396d127dc01a03e0",
+      "rev1_e1_protocols.py": "9ce947e4822c6fee6b62c4176dbd15d142dd64f5bfe2265babdece0e6421146e"
+    },
+    "inputs_sha256": {
+      "cache/DEAP.npz": "46d8d30db6c4ca3288caad8d800d2adc3ce943604913c59e03b86b15cb56a374",
+      "cache/DREAMER.npz": "10ef8d03c42ddc08f3e1c5345b681546a5d252154b59ef9ca73155e64faeed05",
+      "cache/FACED.npz": "4a02a2c22dc74a172272a66d918066048ba782369bcb41462854faf8cc9f4f92",
+      "deap_labels_corrected.csv": "a7aff60e656a8ad5dfa7b94610446cf54e56a004b9a971e96c1bbaa91150db06"
+    },
+    "runtime_s": 1876.6
+  }
+}

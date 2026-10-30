@@ -58,6 +58,11 @@ def load(name):
 
 
 def labels(r, tr, scheme, subj):
+    if scheme.startswith("fixed:"):
+        # Threshold prespecified from the rating scale, identical in every fold and every protocol,
+        # so that label definition cannot vary with the partition. Robustness analysis only.
+        thr = float(scheme.split(":", 1)[1])
+        return (r >= thr).astype(int), thr
     if scheme == "global":
         thr = float(np.median(r[tr]))
         return (r >= thr).astype(int), thr

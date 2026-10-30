@@ -13,6 +13,7 @@ No held-out label enters any prior: every rate is computed from y[train] after t
 Also: partition variability (P1-P3 refit on four further fold seeds) and the subject-identity probe.
 
     python rev1_e1_protocols.py --dataset DEAP --scheme global
+    python rev1_e1_protocols.py --dataset DEAP --scheme fixed:5.0   # robustness: threshold fixed a priori
 Writes results/rev1/e1/<dataset>_<scheme>.json and oof/<dataset>_<scheme>_<target>_<protocol>.parquet
 """
 from __future__ import annotations
@@ -64,8 +65,10 @@ def identity_probe(D):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", required=True, choices=["DEAP", "DREAMER", "FACED"])
-    ap.add_argument("--scheme", required=True, choices=["global", "participant"])
+    ap.add_argument("--scheme", required=True,
+                    help='"global", "participant", or "fixed:<value>" for a prespecified threshold')
     a = ap.parse_args()
+    tag = a.scheme.replace(":", "").replace(".", "p")   # "fixed:5.0" -> "fixed5p0", safe in filenames
     t0 = time.time()
     D = C.load(a.dataset)
     Dp = C.draws(D["subj"])
@@ -85,7 +88,7 @@ if __name__ == "__main__":
         trial_tables, boots = {}, {}
         for p in protocols:
             df, folds = run_protocol(D, target, a.scheme, p, C.SEED)
-            df.to_parquet(out_dir / "oof" / f"{a.dataset}_{a.scheme}_{target}_{p}.parquet")
+            df.to_parquet(out_dir / "oof" / f"{a.dataset}_{tag}_{target}_{p}.parquet")
             T = C.to_trials(df, SCORES)
             trial_tables[p] = T
             entry = dict(folds=folds, trials_with_mixed_labels=int(T.label_mixed.sum()),
@@ -136,5 +139,5 @@ if __name__ == "__main__":
         res["targets"][target] = cell
 
     res["_manifest"] = C.manifest("rev1_e1_protocols.py", runtime_s=round(time.time() - t0, 1))
-    C.dump(res, out_dir / f"{a.dataset}_{a.scheme}.json")
+    C.dump(res, out_dir / f"{a.dataset}_{tag}.json")
     print(f"done {a.dataset}/{a.scheme} in {time.time()-t0:.0f}s", flush=True)
